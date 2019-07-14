@@ -14,22 +14,29 @@ import backgroundImg from './../img/background.jpg'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+		background:'transparent',
+		
 	},
 	menuButton: {
         // marginRight: theme.spacing(2),
-        marginLeft: "auto"
+		marginLeft: "auto",
+		color:"black"
 	},
 	img: {
-		
+		marginTop:"10px",
     },
-    background:{
+    container:{
         backgroundImage: `url(${backgroundImg})`,
         backgroundSize: "cover",
         backgroundPosition:"20% 50%",
         height:"100vh"
         
-    }
+	},
+	AppBar:{
+		background:'transparent',
+		boxShadow:'none',
+	}
 }));
 
 export default function TemplatePage(props) {
@@ -40,16 +47,15 @@ export default function TemplatePage(props) {
 				<CssBaseline />
 
 				
-                <Container maxWidth="lg" className={classes.background} >
+                <Container maxWidth="lg" className={classes.container} >
                     <div className={classes.root}>
-					<AppBar position="static">
-						<Toolbar>
+					<AppBar position="static"  className={classes.AppBar}>
+						<Toolbar disableGutters={true}>
 							
 							<img src={logo} className={classes.img} alt="Kitten" height="75" width="75" />
                             <IconButton
 								edge="start"
 								className={classes.menuButton}
-								color="inherit"
 								aria-label="Menu"
 							>
 								<MenuIcon />
