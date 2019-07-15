@@ -9,7 +9,9 @@ import TemplatePage from './pages/TemplatePage';
 
 class App extends Component {
 	state = {
-		drawer: false
+		drawer: false,
+		email:'',
+		password:'',
 	};
 
 	toggleDrawer = open => event => {
@@ -21,6 +23,10 @@ class App extends Component {
 		}
 		this.setState({ drawer: open });
 	};
+
+	handleChange = name => event => {
+    	this.setState({ ...this.state, [name]: event.target.value });
+  	};
 
 	render() {
 		return (
@@ -39,7 +45,7 @@ class App extends Component {
 							// )}
 							component={Home}
 						/>
-						<Route exact path="/login" component={Login} />
+						<Route exact path="/login" render={props => (<Login {...props} email={this.state.email} password={this.state.password} handleChange={this.handleChange} />)} />
 						<Route exact path="/signup" component={Signup} />
 						<Route exact path="/expenses" component={Expenses} />
 					</Switch>

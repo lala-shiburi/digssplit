@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 			window.location.href === 'http://localhost:3000/'
 				? `url(${backgroundImg})`
 				: '',
-		backgroundColor: 'grey',
+		backgroundColor: 'white',
 		backgroundSize: 'cover',
 		backgroundPosition: '20% 50%',
 		height: '100vh'
