@@ -27,7 +27,11 @@ const useStyles = makeStyles(theme => ({
 		marginTop: '10px'
 	},
 	container: {
-		backgroundImage: `url(${backgroundImg})`,
+		backgroundImage:
+			window.location.href === 'http://localhost:3000/'
+				? `url(${backgroundImg})`
+				: '',
+		backgroundColor: 'grey',
 		backgroundSize: 'cover',
 		backgroundPosition: '20% 50%',
 		height: '100vh'
@@ -49,13 +53,17 @@ export default function TemplatePage(props) {
 				<div className={classes.root}>
 					<AppBar position="static" className={classes.AppBar}>
 						<Toolbar disableGutters={true}>
-							<img
-								src={logo}
-								className={classes.img}
-								alt="Kitten"
-								height="75"
-								width="75"
-							/>
+							{window.location.href === 'http://localhost:3000/' ? (
+								<img
+									src={logo}
+									className={classes.img}
+									alt="logo"
+									height="75"
+									width="75"
+								/>
+							) : (
+								''
+							)}
 							<IconButton
 								edge="start"
 								className={classes.menuButton}
@@ -68,7 +76,7 @@ export default function TemplatePage(props) {
 					</AppBar>
 				</div>
 				{props.children}
-				<TemporaryDrawer drawer={drawer} toggleDrawer={toggleDrawer}/>
+				<TemporaryDrawer drawer={drawer} toggleDrawer={toggleDrawer} />
 			</Container>
 		</React.Fragment>
 	);
