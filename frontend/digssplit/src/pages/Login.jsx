@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
+import Divider from '@material-ui/core/Divider';
+import { Button } from '@material-ui/core';
 
 import CustomButton from './../components/Button';
 import Textfield from './../components/Textfield';
-
 import logoblack from './../img/digssplit_logo_black.png';
-import { Button } from '@material-ui/core';
 
 export default function Login(props) {
 	const { handleChange, email, password } = props;
@@ -50,13 +50,32 @@ export default function Login(props) {
 
 			<Grid
 				container
+				alignItems="left"
+				style={{
+					top: '35vh',
+					left: '30px',
+					position: 'absolute',
+					fontSize: '25px'
+				}}
+			>
+				<Grid item xs={12}>
+					<Divider
+						style={{ width: '78%', marginBottom: '7px' }}
+						variant="middle"
+					/>
+				</Grid>
+				<Grid item>Sign in</Grid>
+			</Grid>
+
+			<Grid
+				container
 				spacing={3}
 				direction="row"
 				alignItems="flex-start"
 				justify="center"
 				style={{
 					position: 'absolute',
-					bottom: '50vh',
+					bottom: '27vh',
 					left: '80px',
 					color: '#495057'
 				}}
@@ -93,6 +112,40 @@ export default function Login(props) {
 							value={password}
 							handleChange={handleChange}
 						/>
+					</Grid>
+					<Grid
+						Item
+						xs={12}
+						style={{ position: 'relative', left: '135px', top: '10px' }}
+					>
+						<CustomButton text={'Sign in'} />
+					</Grid>
+				</Grid>
+
+				<Grid container>
+					<Grid item>
+						<Divider
+							style={{
+								width: '78%',
+								marginBottom: '7px',
+								position: 'relative',
+								left: '0'
+							}}
+						/>
+					</Grid>
+					<Grid item>Don't have an account?</Grid>
+					<Grid item>
+						<Divider
+							style={{
+								width: '78%',
+								marginBottom: '7px',
+								position: 'relative',
+								left: '0'
+							}}
+						/>
+					</Grid>
+					<Grid item>
+						<CustomButton text={'SIGN UP FOR A NEW ACCOUNT'} />
 					</Grid>
 				</Grid>
 			</Grid>
