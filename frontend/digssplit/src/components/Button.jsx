@@ -20,7 +20,7 @@ export default function CustomButton(props) {
 
     return (
         <React.Fragment>
-            <Button onClick={props.onClick} variant="contained" className={classes.button}>
+            <Button onClick={props.onClick} variant="contained" className={classes.button} style={props.style}>
                 {props.text}
             </Button>
             

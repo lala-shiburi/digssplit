@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import { Box, Grid, Button, Divider, Typography } from '@material-ui/core';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
-import Divider from '@material-ui/core/Divider';
-import { Button } from '@material-ui/core';
+import 'typeface-roboto';
 
 import CustomButton from './../components/Button';
 import Textfield from './../components/Textfield';
@@ -14,11 +12,34 @@ export default function Login(props) {
 
 	const styles = {
 		logo: {
-			position: 'absolute',
 			width: '195px',
 			height: '129px',
 			left: '85px',
 			top: '93px'
+		},
+		logoContainer: {
+			textAlign: 'center'
+		},
+		signIn: {
+			paddingLeft: '15px',
+			margin: '10px 0'
+		},
+		textFieldGrid: {
+			color: '#495057',
+			margin: '9px 0'
+		},
+		icon: {
+			position: 'relative',
+			top: '2px'
+		},
+		signInButton: {
+			position: 'relative',
+			left: '180px',
+			marginBottom: '20px'
+		},
+		caption: {
+			margin: '15px auto',
+			color: '#495057'
 		}
 	};
 	return (
@@ -34,60 +55,30 @@ export default function Login(props) {
 				<KeyboardArrowLeft /> BACK TO HOME
 			</Button>
 
-			<Grid
-				container
-				spacing={3}
-				direction="row"
-				alignItems="flex-start"
-				justify="center"
-			>
-				<Grid item xs={12}>
+			<Grid container>
+				<Grid item xs={12} style={styles.logoContainer}>
 					<Box>
 						<img src={logoblack} style={styles.logo} alt="logo" />
 					</Box>
 				</Grid>
-			</Grid>
-
-			<Grid
-				container
-				alignItems="left"
-				style={{
-					top: '35vh',
-					left: '30px',
-					position: 'absolute',
-					fontSize: '25px'
-				}}
-			>
 				<Grid item xs={12}>
-					<Divider
-						style={{ width: '78%', marginBottom: '7px' }}
-						variant="middle"
-					/>
+					<Divider style={styles.divider} variant="middle" />
 				</Grid>
-				<Grid item>Sign in</Grid>
-			</Grid>
+				<Grid item xs={12}>
+					<Typography style={styles.signIn} variant="h5" gutterBottom>
+						Sign in
+					</Typography>
+				</Grid>
 
-			<Grid
-				container
-				spacing={3}
-				direction="row"
-				alignItems="flex-start"
-				justify="center"
-				style={{
-					position: 'absolute',
-					bottom: '27vh',
-					left: '80px',
-					color: '#495057'
-				}}
-			>
 				<Grid
 					container
+					alignItems="center"
+					justify="center"
 					spacing={1}
-					alignItems="flex-end"
-					style={{ marginBottom: '20px' }}
+					style={styles.textFieldGrid}
 				>
 					<Grid item>
-						<Email />
+						<Email style={styles.icon} />
 					</Grid>
 
 					<Grid item>
@@ -99,9 +90,14 @@ export default function Login(props) {
 						/>
 					</Grid>
 				</Grid>
-				<Grid container spacing={1} alignItems="flex-end">
+				<Grid
+					container
+					justify="center"
+					spacing={1}
+					style={styles.textFieldGrid}
+				>
 					<Grid item>
-						<LockOutlined style={{}} />
+						<LockOutlined style={styles.icon} />
 					</Grid>
 
 					<Grid item>
@@ -113,41 +109,27 @@ export default function Login(props) {
 							handleChange={handleChange}
 						/>
 					</Grid>
-					<Grid
-						Item
-						xs={12}
-						style={{ position: 'relative', left: '135px', top: '10px' }}
-					>
-						<CustomButton text={'Sign in'} />
-					</Grid>
 				</Grid>
 
-				<Grid container>
-					<Grid item>
-						<Divider
-							style={{
-								width: '78%',
-								marginBottom: '7px',
-								position: 'relative',
-								left: '0'
-							}}
-						/>
-					</Grid>
-					<Grid item>Don't have an account?</Grid>
-					<Grid item>
-						<Divider
-							style={{
-								width: '78%',
-								marginBottom: '7px',
-								position: 'relative',
-								left: '0'
-							}}
-						/>
-					</Grid>
-					<Grid item>
-						<CustomButton text={'SIGN UP FOR A NEW ACCOUNT'} />
-					</Grid>
+				<Grid Item xs={12}>
+					<CustomButton style={styles.signInButton} text={'Sign in'} />
 				</Grid>
+
+				<Grid item xs={12}>
+					<Divider variant="middle" style={styles.divider} />
+				</Grid>
+				<Grid item style={styles.caption}>
+					<Typography variant="caption" display="block" gutterBottom>
+						Don't have an account?
+					</Typography>
+				</Grid>
+
+				<Grid item xs={12} style={{textAlign:'center'}}>
+					<CustomButton text={'SIGN UP FOR A NEW ACCOUNT'} />
+				</Grid>
+				<Grid item xs={12} />
+				<Grid item xs={12} />
+				<Grid item xs={12} />
 			</Grid>
 		</div>
 	);
