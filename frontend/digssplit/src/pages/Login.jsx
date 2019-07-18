@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Box, Grid, Button, Divider, Typography } from '@material-ui/core';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
 import 'typeface-roboto';
@@ -127,9 +127,7 @@ export default function Login(props) {
 				<Grid item xs={12} style={{textAlign:'center'}}>
 					<CustomButton text={'SIGN UP FOR A NEW ACCOUNT'} />
 				</Grid>
-				<Grid item xs={12} />
-				<Grid item xs={12} />
-				<Grid item xs={12} />
+				
 			</Grid>
 		</div>
 	);
