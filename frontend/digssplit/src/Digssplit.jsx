@@ -15,9 +15,30 @@ class App extends Component {
 		emailSignUp: '',
 		passwordSignUp: '',
 		passwordSignUpConfirm: '',
-		createDigs: "true",
+		createDigs: 'true',
 		joiningDigs: '',
-		digs:'',
+		digs: '',
+		categories: ['utilities', 'transport', 'booze'],
+		expenses: [
+			{
+				name: 'Electricity',
+				category: 'utilities',
+				membersOwing: 'Lala',
+				ownerId: '12'
+			},
+			{
+				name: 'Uber',
+				category: 'transport',
+				membersOwing: 'Lala',
+				ownerId: '12'
+			},
+			{
+				name: 'Black Label',
+				category: 'booze',
+				membersOwing: 'Lala',
+				ownerId: '12'
+			}
+		]
 	};
 
 	toggleDrawer = open => event => {
@@ -91,7 +112,19 @@ class App extends Component {
 									/>
 								)}
 							/>
-							<Route exact path="/expenses" component={Expenses} />
+							<Route
+								exact
+								path="/expenses"
+								render={props => 
+								<Expenses 
+								{...props} 
+								categories={this.state.categories}
+								expenses={this.state.expenses}
+
+								/>
+									
+								}
+							/>
 						</Switch>
 					</BrowserRouter>
 				</TemplatePage>

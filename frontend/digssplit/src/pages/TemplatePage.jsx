@@ -11,7 +11,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import TemporaryDrawer from '../components/Drawer';
 import logo from './../img/digssplit_logo.png';
-import backgroundImg from './../img/background.jpg';
+import backgroundImgHome from './../img/background.jpg';
+import backgroundImg from './../img/tile_subtlebg.png';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -29,8 +30,8 @@ const useStyles = makeStyles(theme => ({
 	container: {
 		backgroundImage:
 			window.location.href === 'http://localhost:3000/'
-				? `url(${backgroundImg})`
-				: '',
+				? `url(${backgroundImgHome})`
+				: `url(${backgroundImg})`,
 		backgroundColor: 'white',
 		backgroundSize: 'cover',
 		backgroundPosition: '20% 50%',
