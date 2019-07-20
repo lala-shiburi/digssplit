@@ -7,7 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Add, PersonAdd, RemoveRedEye } from '@material-ui/icons';
-import MailIcon from '@material-ui/icons/Mail';
 
 import CustomButton from './Button'
 

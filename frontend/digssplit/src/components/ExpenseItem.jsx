@@ -27,7 +27,7 @@ const styles = {
 };
 
 export default function ExpenseItem(props) {
-	const { category, expenses,handleCheckBox } = props;
+	const { category, expenses, handleCheckBox } = props;
 	const filtered = (category, expenses) => {
 		let filtered = expenses.filter(expense => expense.category === category);
 		return filtered;
@@ -35,8 +35,8 @@ export default function ExpenseItem(props) {
 
 	return (
 		<React.Fragment>
-			{filtered(category, expenses).map(items => (
-				<Card>
+			{filtered(category, expenses).map((items,index) => (
+				<Card key={index}>
 					<CardContent>
 						<Typography varient="h5" style={styles.expenseName}>
 							{items.name}
@@ -47,7 +47,7 @@ export default function ExpenseItem(props) {
 						</Typography>
 						<Divider style={styles.divider} varient="middle" />
 						{items.membersOwing.map((member, index) => (
-							<React.Fragment>
+							<React.Fragment key={index}>
 								<CheckBox
 									member={member}
 									item={items.name}
@@ -61,7 +61,7 @@ export default function ExpenseItem(props) {
 							{Math.round((items.amount / items.membersOwing.length) * 100) /
 								100}
 						</Grid>
-						<Grid item><Button>Update payments</Button></Grid>
+						
 					</CardContent>
 					<CardActions>
 						<Button>Delete</Button>

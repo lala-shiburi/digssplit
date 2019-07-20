@@ -24,26 +24,25 @@ class App extends Component {
 				name: 'Electricity',
 				category: 'utilities',
 				amount: 2000,
-				membersOwing: [1,2,3],
+				membersOwing: [1, 2, 3],
 				ownerId: '12'
 			},
 			{
 				name: 'Uber',
 				category: 'transport',
 				amount: 100,
-				membersOwing: [0,1,2],
+				membersOwing: [0, 1, 2],
 				ownerId: '12'
 			},
 			{
 				name: 'Black Label',
 				category: 'booze',
 				amount: 1000,
-				membersOwing: [1,2,3],
+				membersOwing: [1, 2, 3],
 				ownerId: '12'
 			}
 		],
-		payed:[]
-		
+		payed: []
 	};
 
 	toggleDrawer = open => event => {
@@ -68,42 +67,68 @@ class App extends Component {
 		this.setState({ joiningDigs: input });
 	};
 
-	handleCheckBox= e => {
-		// const { checkboxes, checkbox } = this.state;
-		// // checkboxes[index] = !checkboxes[index];
-		// function isUserId(element) {
-		// 	return Object.keys(element) == 1;
-		// }
-		// let index = checkbox.findIndex(isUserId);
-		// checkbox[index][userId] = !checkbox[index][userId];
-		// console.log(index,checkbox);
-		//  this.setState({
-		// 	checkbox
-		// 	});
-		console.log('you clicked something there chief',e.target.value)
-		const{payed}=this.state;
-		let userId= e.target.value;
-		// var array1 = [1,2,3,4,5,6,7,8,9],
-    	// array2 = [1,2,3,4,5,6,7,8,9,10],
-    	// result = [];
-
-		// result = array2.filter(function(item){
-  		// 	if ( array1.indexOf(item) !== -1 ) return item;
-		// });
-		let index=payed.indexOf(userId);
-		if( index !== -1){
-			payed.splice(index,1)
-		}else{
-			payed.push(userId)
+	handleCheckBox = e => {
+		
+		console.log('you clicked something there chief', e.target.checked);
+		const { payed } = this.state;
+		let userId = e.target.value;
+		let index = payed.indexOf(userId);
+		if (index !== -1) {
+			payed.splice(index, 1);
+		} else {
+			payed.push(userId);
 		}
 
-		this.setState({payed})
+		this.setState({ payed });
 
 		console.log(payed);
-		// console.log(index);
-		// this.setState({
-		// 	checkboxes
-		// });
+		
+	};
+
+	updatePayments = () => {
+		const { expenses, payed } = this.state;
+		//let index = payed.indexOf(',');
+		//let newArray=item.splice()
+		let payedExpenses = payed.map(payer => {
+			let expense = payer.split(',');
+			return expense[1];
+		});
+
+		let expensePayer = payed.map(payer => {
+			let expense = payer.split(',');
+			return expense[0];
+		});
+		let filteredExpense = expenses.filter(expense => {
+			return payedExpenses.indexOf(expense.name) !== -1;
+		});
+		let indexes = [];
+		expenses.map((filtered, index) => {
+			filteredExpense.map(fil => {
+				if (fil.name == filtered.name) {
+					indexes.push(index);
+				}
+				return fil.name;
+			});
+		});
+
+		expensePayer.map(payer => {
+			indexes.map((indexes, index) => {
+				console.log(expenses[indexes].membersOwing.indexOf(parseInt(payer)));
+				expenses[indexes].membersOwing.splice(
+					expenses[indexes].membersOwing.indexOf(parseInt(payer)),
+					1
+				);
+			});
+		});
+
+		this.setState({expenses,payed:[]});
+		console.log(filteredExpense, indexes, expenses, expensePayer);
+		payedExpenses = [];
+		expensePayer = [];
+		filteredExpense = [];
+		indexes = [];
+
+		console.log(filteredExpense, indexes, expenses, expensePayer);
 	};
 
 	render() {
@@ -165,6 +190,7 @@ class App extends Component {
 										expenses={this.state.expenses}
 										checkbox={this.state.checkbox}
 										handleCheckBox={this.handleCheckBox}
+										updatePayments={this.updatePayments}
 									/>
 								)}
 							/>
