@@ -68,7 +68,6 @@ class App extends Component {
 	};
 
 	handleCheckBox = e => {
-		
 		console.log('you clicked something there chief', e.target.checked);
 		const { payed } = this.state;
 		let userId = e.target.value;
@@ -82,7 +81,6 @@ class App extends Component {
 		this.setState({ payed });
 
 		console.log(payed);
-		
 	};
 
 	updatePayments = () => {
@@ -114,14 +112,19 @@ class App extends Component {
 		expensePayer.map(payer => {
 			indexes.map((indexes, index) => {
 				console.log(expenses[indexes].membersOwing.indexOf(parseInt(payer)));
+				let amountPerPayer =
+					expenses[indexes].amount / expenses[indexes].membersOwing.length;
 				expenses[indexes].membersOwing.splice(
 					expenses[indexes].membersOwing.indexOf(parseInt(payer)),
 					1
 				);
+				expenses[indexes].amount = Math.round(
+					((expenses[indexes].amount - amountPerPayer) * 100)/100
+				);
 			});
 		});
 
-		this.setState({expenses,payed:[]});
+		this.setState({ expenses, payed: [] });
 		console.log(filteredExpense, indexes, expenses, expensePayer);
 		payedExpenses = [];
 		expensePayer = [];
