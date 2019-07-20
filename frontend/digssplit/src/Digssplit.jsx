@@ -23,22 +23,27 @@ class App extends Component {
 			{
 				name: 'Electricity',
 				category: 'utilities',
-				membersOwing: 'Lala',
+				amount: 2000,
+				membersOwing: [1,2,3],
 				ownerId: '12'
 			},
 			{
 				name: 'Uber',
 				category: 'transport',
-				membersOwing: 'Lala',
+				amount: 100,
+				membersOwing: [0,1,2],
 				ownerId: '12'
 			},
 			{
 				name: 'Black Label',
 				category: 'booze',
-				membersOwing: 'Lala',
+				amount: 1000,
+				membersOwing: [1,2,3],
 				ownerId: '12'
 			}
-		]
+		],
+		payed:[]
+		
 	};
 
 	toggleDrawer = open => event => {
@@ -61,6 +66,44 @@ class App extends Component {
 
 	handleAutoComplete = input => {
 		this.setState({ joiningDigs: input });
+	};
+
+	handleCheckBox= e => {
+		// const { checkboxes, checkbox } = this.state;
+		// // checkboxes[index] = !checkboxes[index];
+		// function isUserId(element) {
+		// 	return Object.keys(element) == 1;
+		// }
+		// let index = checkbox.findIndex(isUserId);
+		// checkbox[index][userId] = !checkbox[index][userId];
+		// console.log(index,checkbox);
+		//  this.setState({
+		// 	checkbox
+		// 	});
+		console.log('you clicked something there chief',e.target.value)
+		const{payed}=this.state;
+		let userId= e.target.value;
+		// var array1 = [1,2,3,4,5,6,7,8,9],
+    	// array2 = [1,2,3,4,5,6,7,8,9,10],
+    	// result = [];
+
+		// result = array2.filter(function(item){
+  		// 	if ( array1.indexOf(item) !== -1 ) return item;
+		// });
+		let index=payed.indexOf(userId);
+		if( index !== -1){
+			payed.splice(index,1)
+		}else{
+			payed.push(userId)
+		}
+
+		this.setState({payed})
+
+		console.log(payed);
+		// console.log(index);
+		// this.setState({
+		// 	checkboxes
+		// });
 	};
 
 	render() {
@@ -115,15 +158,15 @@ class App extends Component {
 							<Route
 								exact
 								path="/expenses"
-								render={props => 
-								<Expenses 
-								{...props} 
-								categories={this.state.categories}
-								expenses={this.state.expenses}
-
-								/>
-									
-								}
+								render={props => (
+									<Expenses
+										{...props}
+										categories={this.state.categories}
+										expenses={this.state.expenses}
+										checkbox={this.state.checkbox}
+										handleCheckBox={this.handleCheckBox}
+									/>
+								)}
 							/>
 						</Switch>
 					</BrowserRouter>

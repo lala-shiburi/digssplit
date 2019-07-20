@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import TemporaryDrawer from '../components/Drawer';
 import logo from './../img/digssplit_logo.png';
+import logoBlack from './../img/digssplit_logo_black.png';
 import backgroundImgHome from './../img/background.jpg';
 import backgroundImg from './../img/tile_subtlebg.png';
 
@@ -63,7 +64,15 @@ export default function TemplatePage(props) {
 									width="75"
 								/>
 							) : (
-								''
+								window.location.href === 'http://localhost:3000/expenses'? (
+									<img
+									src={logoBlack}
+									className={classes.img}
+									alt="logo"
+									height="75"
+									width="75"
+								/>
+								):''
 							)}
 							<IconButton
 								edge="start"
