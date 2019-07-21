@@ -42,7 +42,8 @@ class App extends Component {
 				ownerId: '12'
 			}
 		],
-		payed: []
+		payed: [],
+		isDialogOpen:false
 	};
 
 	toggleDrawer = open => event => {
@@ -119,7 +120,7 @@ class App extends Component {
 					1
 				);
 				expenses[indexes].amount = Math.round(
-					((expenses[indexes].amount - amountPerPayer) * 100)/100
+					((expenses[indexes].amount - amountPerPayer) * 100) / 100
 				);
 			});
 		});
@@ -132,6 +133,18 @@ class App extends Component {
 		indexes = [];
 
 		console.log(filteredExpense, indexes, expenses, expensePayer);
+	};
+
+	handleAddExpense = expense => {
+		console.log(expense);
+		const { expenses } = this.state;
+		expenses.push(expense);
+	};
+
+	handleDialog = () => {
+		this.setState(prevState => ({
+			isDialogOpen: !prevState.isDialogOpen
+		}));
 	};
 
 	render() {
@@ -194,6 +207,9 @@ class App extends Component {
 										checkbox={this.state.checkbox}
 										handleCheckBox={this.handleCheckBox}
 										updatePayments={this.updatePayments}
+										handleAddExpense={this.handleAddExpense}
+										handleDialog={this.handleDialog}
+										open={this.state.isDialogOpen}
 									/>
 								)}
 							/>
