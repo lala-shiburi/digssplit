@@ -39,6 +39,7 @@ export default function FormDialog(props) {
 		open,
 		handleChange,
 		handleChangeSelect,
+		handleAddExpense,
 		expensename,
 		amount,
 		categoriesList,
@@ -91,7 +92,7 @@ export default function FormDialog(props) {
 				</DialogContent>
 				<DialogActions style={styles.dialogActions}>
 					<CustomButton
-						onClick={handleDialog}
+						onClick={handleAddExpense}
 						style={styles.signInButton}
 						text={'Save'}
 					/>

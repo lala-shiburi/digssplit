@@ -55,6 +55,7 @@ export default function Expenses(props) {
 					handleDialog={handleDialog}
 					handleChange={handleChange}
 					handleChangeSelect={handleChangeSelect}
+					handleAddExpense={handleAddExpense}
 					selectedCategory={selectedCategory}
 					selectedMembers={selectedMembers}
 					

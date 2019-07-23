@@ -21,21 +21,21 @@ class App extends Component {
 		expenses: [
 			{
 				name: 'Electricity',
-				category: 'utilities',
+				category: 'UTILITIES',
 				amount: 2000,
 				membersOwing: [1, 2, 3],
 				ownerId: '12'
 			},
 			{
 				name: 'Uber',
-				category: 'transport',
+				category: 'TRANSPORT',
 				amount: 100,
 				membersOwing: [0, 1, 2],
 				ownerId: '12'
 			},
 			{
 				name: 'Black Label',
-				category: 'booze',
+				category: 'BOOZE',
 				amount: 1000,
 				membersOwing: [1, 2, 3],
 				ownerId: '12'
@@ -48,15 +48,16 @@ class App extends Component {
 		categoriesList: [
 			'UTILITIES',
 			'HOUSEHOLD ITEMS',
+			'TRANSPORT',
 			'FOOD',
 			'ENTERTAINMENT',
 			'BOOZE',
 			'LOAN SHARK'
 		],
-		categories: ['utilities', 'transport', 'booze'],
+		categories: ['UTILITIES', 'TRANSPORT', 'BOOZE'],
 		selectedCategory: '',
 		members: [0, 1, 2, 3, 4],
-		selectedMembers:[]
+		selectedMembers: []
 	};
 
 	toggleDrawer = open => event => {
@@ -69,12 +70,10 @@ class App extends Component {
 		this.setState({ drawer: open });
 	};
 
-	 handleChange = name => event => {
-	 	this.setState({ ...this.state, [name]: event.target.value });
-	 	console.log('THis works?');
-	 };
-
-	
+	handleChange = name => event => {
+		this.setState({ ...this.state, [name]: event.target.value });
+		console.log('THis works?');
+	};
 
 	handleChangeRadio = event => {
 		this.setState({ createDigs: event.target.value });
@@ -151,10 +150,25 @@ class App extends Component {
 		console.log(filteredExpense, indexes, expenses, expensePayer);
 	};
 
-	handleAddExpense = expense => {
-		console.log(expense);
-		const { expenses } = this.state;
+	handleAddExpense = () => {
+		const {
+			expenses,
+			expensename,
+			amount,
+			selectedCategory,
+			selectedMembers
+		} = this.state;
+		let expense = {
+			name: expensename,
+			category: selectedCategory,
+			amount: amount,
+			membersOwing: selectedMembers,
+			ownerId: '12'
+		};
 		expenses.push(expense);
+
+		this.setState({ expenses });
+		this.handleDialog();
 	};
 
 	handleDialog = () => {
