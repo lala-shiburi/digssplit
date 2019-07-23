@@ -18,7 +18,6 @@ class App extends Component {
 		createDigs: 'true',
 		joiningDigs: '',
 		digs: '',
-		categories: ['utilities', 'transport', 'booze'],
 		expenses: [
 			{
 				name: 'Electricity',
@@ -43,7 +42,21 @@ class App extends Component {
 			}
 		],
 		payed: [],
-		isDialogOpen:false
+		isDialogOpen: false,
+		expensename: '',
+		amount: '',
+		categoriesList: [
+			'UTILITIES',
+			'HOUSEHOLD ITEMS',
+			'FOOD',
+			'ENTERTAINMENT',
+			'BOOZE',
+			'LOAN SHARK'
+		],
+		categories: ['utilities', 'transport', 'booze'],
+		selectedCategory: '',
+		members: [0, 1, 2, 3, 4],
+		selectedMembers:[]
 	};
 
 	toggleDrawer = open => event => {
@@ -56,9 +69,12 @@ class App extends Component {
 		this.setState({ drawer: open });
 	};
 
-	handleChange = name => event => {
-		this.setState({ ...this.state, [name]: event.target.value });
-	};
+	 handleChange = name => event => {
+	 	this.setState({ ...this.state, [name]: event.target.value });
+	 	console.log('THis works?');
+	 };
+
+	
 
 	handleChangeRadio = event => {
 		this.setState({ createDigs: event.target.value });
@@ -205,11 +221,19 @@ class App extends Component {
 										categories={this.state.categories}
 										expenses={this.state.expenses}
 										checkbox={this.state.checkbox}
+										expensename={this.state.expensename}
+										amount={this.state.amount}
+										members={this.state.members}
+										categoriesList={this.state.categoriesList}
+										selectedCategory={this.state.selectedCategory}
 										handleCheckBox={this.handleCheckBox}
 										updatePayments={this.updatePayments}
 										handleAddExpense={this.handleAddExpense}
 										handleDialog={this.handleDialog}
+										handleChange={this.handleChange}
+										handleChangeSelect={this.handleChangeSelect}
 										open={this.state.isDialogOpen}
+										selectedMembers={this.state.selectedMembers}
 									/>
 								)}
 							/>

@@ -27,11 +27,12 @@ const CssTextField = withStyles({
 
 export default function Textfield(props) {
     //const classes = useStyles();
-    const {placeholder,handleChange,type,value,name}=props
+    const {placeholder,handleChange,type,value,name,style}=props
 	return (
 		<div>
 			<CssTextField
 				// className={classes.margin}
+				style={style}
 				id="custom-css-standard-input"
                 placeholder={placeholder}
                 onChange={handleChange(name)}

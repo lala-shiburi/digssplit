@@ -11,7 +11,7 @@ const styles = {
 		position: 'fixed',
 		bottom: '4vh',
 		right: '10vw',
-		backgroundColor:'#e91e63'
+		backgroundColor: '#e91e63'
 	}
 };
 export default function Expenses(props) {
@@ -21,9 +21,17 @@ export default function Expenses(props) {
 		checkbox,
 		handleCheckBox,
 		updatePayments,
+		handleChange,
 		handleAddExpense,
+		handleChangeSelect,
+		categoriesList,
+		members,
+		selectedCategory,
 		open,
-		handleDialog
+		handleDialog,
+		expensename,
+		amount,
+		selectedMembers
 	} = props;
 	return (
 		<React.Fragment>
@@ -38,7 +46,19 @@ export default function Expenses(props) {
 				<Grid item>
 					<Button onClick={updatePayments}>Update payments</Button>
 				</Grid>
-				<Modal open={open} handleDialog={handleDialog} />
+				<Modal
+					open={open}
+					expensename={expensename}
+					amount={amount}
+					members={members}
+					categoriesList={categoriesList}
+					handleDialog={handleDialog}
+					handleChange={handleChange}
+					handleChangeSelect={handleChangeSelect}
+					selectedCategory={selectedCategory}
+					selectedMembers={selectedMembers}
+					
+				/>
 			</Grid>
 			<Fab color="primary" aria-label="Add" style={styles.button}>
 				<AddIcon onClick={handleDialog} />
