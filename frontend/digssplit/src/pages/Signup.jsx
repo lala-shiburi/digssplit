@@ -15,10 +15,12 @@ import {
 	LockOutlined,
 	Home
 } from '@material-ui/icons';
+import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
 import CustomButton from './../components/Button';
 import Textfield from './../components/Textfield';
+import LinkButton from './../components/LinkButton';
 import AutoComplete from './../components/AutoComplete';
 import logoblack from './../img/digssplit_logo_black.png';
 
@@ -66,11 +68,12 @@ export default function Signup(props) {
 			color: '#495057'
 		},
 		span: {
-			color: '#e91e63'
+			color: '#e91e63',
+			textDecoration: 'none'
 		},
 		radioButton: {
 			color: '#495057'
-		},
+		}
 		// digs: {
 		// 	margin: '15px 0 15px',
 		// 	color: '#495057'
@@ -79,16 +82,18 @@ export default function Signup(props) {
 	};
 	return (
 		<div style={{ flexGrow: '1' }}>
-			<Button
+			<LinkButton
 				style={{
 					background: '#fafafa',
+					color: 'rgba(0, 0, 0, 0.87)',
 					fontSize: '12px',
 					top: '15px',
 					position: 'absolute'
 				}}
+				to="/"
 			>
 				<KeyboardArrowLeft /> BACK TO HOME
-			</Button>
+			</LinkButton>
 
 			<Grid container>
 				<Grid item xs={12} style={styles.logoContainer}>
@@ -219,7 +224,9 @@ export default function Signup(props) {
 				<Grid item style={styles.caption}>
 					<Typography variant="caption" display="block" gutterBottom>
 						Already have an account? then please{' '}
-						<span style={styles.span}> sign in here</span>
+						<span style={styles.span}>
+							<NavLink style={styles.span} to="/login">sign in here</NavLink>{' '}
+						</span>
 					</Typography>
 				</Grid>
 			</Grid>

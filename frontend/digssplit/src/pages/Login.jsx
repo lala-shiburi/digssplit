@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Grid, Button, Divider, Typography } from '@material-ui/core';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
+import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
+import LinkButton from './../components/LinkButton';
 import CustomButton from './../components/Button';
 import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
@@ -44,16 +46,18 @@ export default function Login(props) {
 	};
 	return (
 		<div style={{ flexGrow: '1' }}>
-			<Button
+			<LinkButton
 				style={{
 					background: '#fafafa',
+					color: 'rgba(0, 0, 0, 0.87)',
 					fontSize: '12px',
 					top: '15px',
 					position: 'absolute'
 				}}
+				to="/"
 			>
 				<KeyboardArrowLeft /> BACK TO HOME
-			</Button>
+			</LinkButton>
 
 			<Grid container>
 				<Grid item xs={12} style={styles.logoContainer}>
@@ -124,10 +128,9 @@ export default function Login(props) {
 					</Typography>
 				</Grid>
 
-				<Grid item xs={12} style={{textAlign:'center'}}>
-					<CustomButton text={'SIGN UP FOR A NEW ACCOUNT'} />
+				<Grid item xs={12} style={{ textAlign: 'center' }}>
+					<LinkButton to='/signup'>SIGN UP FOR A NEW ACCOUNT</LinkButton>
 				</Grid>
-				
 			</Grid>
 		</div>
 	);

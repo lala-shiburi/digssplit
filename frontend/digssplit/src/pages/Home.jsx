@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Grid, Paper } from '@material-ui/core';
 
 import CustomButton from '../components/Button';
+import LinkButton from '../components/LinkButton';
 
 export default class Home extends Component {
 	handlesClick = ButtonEvent => {
@@ -10,22 +11,22 @@ export default class Home extends Component {
 
 	render() {
 		const styles = {
-            mainContainer:{
-              position:'relative',
-              top:'17vh'  
-            },
+			mainContainer: {
+				position: 'relative',
+				top: '17vh'
+			},
 			heading: {
 				color: 'White',
-                textShadow: '2px 1px 2px rgba(0, 0, 0, 0.98)',
-                fontSize:'45px',
-            },
-            paper:{
-                textAlign:'center',
-                backgroundColor: 'rgba(255,255,255,0.6)'
-            },
-            button:{
-                fontSize:'20px',
-            }
+				textShadow: '2px 1px 2px rgba(0, 0, 0, 0.98)',
+				fontSize: '45px'
+			},
+			paper: {
+				textAlign: 'center',
+				backgroundColor: 'rgba(255,255,255,0.6)'
+			},
+			button: {
+				fontSize: '20px'
+			}
 		};
 
 		return (
@@ -39,10 +40,14 @@ export default class Home extends Component {
 
 					<Grid item xs={12}>
 						<Paper elevation="14" style={styles.paper}>
-							<CustomButton style={styles.button}
+							{/* <CustomButton
+								style={styles.button}
 								text={'LOG IN / SIGN UP'}
 								onClick={this.handlesClick}
-							/>
+							/> */}
+							<LinkButton style={styles.button} to="/login">
+								LOG IN / SIGN UP
+							</LinkButton>
 						</Paper>
 					</Grid>
 				</Grid>

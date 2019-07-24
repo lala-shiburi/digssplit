@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import {withRouter} from 'react-router-dom'
 
 import TemporaryDrawer from '../components/Drawer';
 import logo from './../img/digssplit_logo.png';
@@ -26,11 +27,15 @@ const useStyles = makeStyles(theme => ({
 	img: {
 		marginTop: '10px'
 	},
-	container: {
-		backgroundImage:
-			window.location.href === 'http://localhost:3000/'
-				? `url(${backgroundImgHome})`
-				: `url(${backgroundImg})`,
+	containerHome: {
+		backgroundImage: `url(${backgroundImgHome})`,
+		backgroundColor: 'white',
+		backgroundSize: 'cover',
+		backgroundPosition: '20% 50%',
+		height: '100vh'
+	},
+	containerOther: {
+		backgroundImage: `url(${backgroundImg})`,
 		backgroundColor: 'white',
 		backgroundSize: 'cover',
 		backgroundPosition: '20% 50%',
@@ -42,14 +47,24 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function TemplatePage(props) {
+ function TemplatePage(props) {
 	const classes = useStyles();
-	const { drawer, toggleDrawer } = props;
+	const { drawer, toggleDrawer, currentPath } = props;
+	const currentLocation=()=>(
+		window.location.href
+	)
 	return (
 		<React.Fragment>
 			<CssBaseline />
 
-			<Container maxWidth="lg" className={classes.container}>
+			<Container
+				maxWidth="lg"
+				className={
+					currentLocation() === 'http://localhost:3000/'
+						? classes.containerHome
+						: classes.containerOther
+				}
+			>
 				<div className={classes.root}>
 					<AppBar position="static" className={classes.AppBar}>
 						<Toolbar disableGutters={true}>
@@ -61,16 +76,16 @@ export default function TemplatePage(props) {
 									height="75"
 									width="75"
 								/>
-							) : (
-								window.location.href === 'http://localhost:3000/expenses'? (
-									<img
+							) : window.location.href === 'http://localhost:3000/expenses' ? (
+								<img
 									src={logoBlack}
 									className={classes.img}
 									alt="logo"
 									height="75"
 									width="75"
 								/>
-								):''
+							) : (
+								''
 							)}
 							<IconButton
 								edge="start"
@@ -89,3 +104,5 @@ export default function TemplatePage(props) {
 		</React.Fragment>
 	);
 }
+
+export default withRouter(TemplatePage)

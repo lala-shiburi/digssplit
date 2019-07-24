@@ -41,6 +41,7 @@ class App extends Component {
 				ownerId: '12'
 			}
 		],
+		path:'',
 		payed: [],
 		isDialogOpen: false,
 		expensename: '',
@@ -70,6 +71,10 @@ class App extends Component {
 		this.setState({ drawer: open });
 	};
 
+	currentPath=()=>(
+		window.location.href
+	);
+	
 	handleChange = name => event => {
 		this.setState({ ...this.state, [name]: event.target.value });
 		console.log('THis works?');
@@ -176,15 +181,21 @@ class App extends Component {
 			isDialogOpen: !prevState.isDialogOpen
 		}));
 	};
+	componentDidMount(){
+		this.setState({path:window.location.href})
+	}
 
 	render() {
 		return (
 			<div className="App">
-				<TemplatePage
+				
+					<BrowserRouter>
+					<TemplatePage
 					drawer={this.state.drawer}
 					toggleDrawer={this.toggleDrawer}
+					path={this.state.path}
+					currentPath={this.currentPath}
 				>
-					<BrowserRouter>
 						<Switch>
 							<Route
 								exact
@@ -252,8 +263,9 @@ class App extends Component {
 								)}
 							/>
 						</Switch>
+						</TemplatePage>
 					</BrowserRouter>
-				</TemplatePage>
+		
 			</div>
 		);
 	}

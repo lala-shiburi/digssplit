@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -8,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Add, PersonAdd, RemoveRedEye } from '@material-ui/icons';
 
-import CustomButton from './Button'
+import LinkButton from './../components/LinkButton';
 
 const useStyles = makeStyles({
 	list: {
@@ -16,6 +17,10 @@ const useStyles = makeStyles({
 	},
 	fullList: {
 		width: 'auto'
+	},
+	navlink: {
+		textDecoration: 'none',
+		color:'inherit'
 	}
 });
 
@@ -41,16 +46,24 @@ export default function TemporaryDrawer(props) {
 								) : index === 1 ? (
 									<PersonAdd />
 								) : (
-									<RemoveRedEye />
+									<NavLink className={classes.navlink} to="/expenses">
+										<RemoveRedEye />
+									</NavLink>
 								)}
 							</ListItemIcon>
-							<ListItemText primary={text} />
+							{index === 2 ? (
+								<NavLink className={classes.navlink} to="/expenses">
+									<ListItemText primary={text} />
+								</NavLink>
+							) : (
+								<ListItemText primary={text} />
+							)}
 						</ListItem>
 					)
 				)}
 			</List>
 			<Divider />
-			<CustomButton text={'LOG IN/SIGN UP'}  />
+			<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>
 		</div>
 	);
 
