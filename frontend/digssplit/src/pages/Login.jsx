@@ -10,7 +10,7 @@ import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
 
 export default function Login(props) {
-	const { handleChange, email, password } = props;
+	const { handleChange, email, password, signIn } = props;
 
 	const styles = {
 		logo: {
@@ -116,7 +116,10 @@ export default function Login(props) {
 				</Grid>
 
 				<Grid Item xs={12}>
-					<CustomButton style={styles.signInButton} text={'Sign in'} />
+					{/* <CustomButton style={styles.signInButton} text={'Sign n'} /> */}
+					<LinkButton onClick={signIn} style={styles.signInButton} to="/expenses">
+						Sign in
+					</LinkButton>
 				</Grid>
 
 				<Grid item xs={12}>
@@ -129,7 +132,7 @@ export default function Login(props) {
 				</Grid>
 
 				<Grid item xs={12} style={{ textAlign: 'center' }}>
-					<LinkButton to='/signup'>SIGN UP FOR A NEW ACCOUNT</LinkButton>
+					<LinkButton to="/signup">SIGN UP FOR A NEW ACCOUNT</LinkButton>
 				</Grid>
 			</Grid>
 		</div>

@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
 	button: {
 		margin: theme.spacing(1),
 		backgroundColor: '#e91e63',
+		padding:'6px 16px',
 		color: 'white'
 	},
 	input: {

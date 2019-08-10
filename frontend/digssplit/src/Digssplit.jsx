@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -41,7 +42,7 @@ class App extends Component {
 				ownerId: '12'
 			}
 		],
-		path:'',
+		path: '',
 		payed: [],
 		isDialogOpen: false,
 		expensename: '',
@@ -58,8 +59,12 @@ class App extends Component {
 		categories: ['UTILITIES', 'TRANSPORT', 'BOOZE'],
 		selectedCategory: '',
 		members: [0, 1, 2, 3, 4],
-		selectedMembers: []
+		selectedMembers: [],
+		AUTH_TOKEN: '',
+		AUTHENTICATED: false
 	};
+
+	// axios.defaults.headers.common['Authorization'] = this.state.AUTH_TOKEN;
 
 	toggleDrawer = open => event => {
 		if (
@@ -71,10 +76,25 @@ class App extends Component {
 		this.setState({ drawer: open });
 	};
 
-	currentPath=()=>(
-		window.location.href
-	);
-	
+	currentPath = () => window.location.href;
+
+	signIn = () => {
+		console.log('You are trying to login');
+		axios
+			.post('http://localhost:8000/rest-auth/login/', {
+				email: this.state.email,
+				password: this.state.password
+			})
+			.then((response) =>{
+				console.log(response.data.key);
+				let auth = 'Token ' + response.data.key;
+				this.setState({ AUTH_TOKEN: auth });
+			})
+			.catch((error)=> {
+				console.log(error);
+			});
+	};
+
 	handleChange = name => event => {
 		this.setState({ ...this.state, [name]: event.target.value });
 		console.log('THis works?');
@@ -181,21 +201,20 @@ class App extends Component {
 			isDialogOpen: !prevState.isDialogOpen
 		}));
 	};
-	componentDidMount(){
-		this.setState({path:window.location.href})
+	componentDidMount() {
+		this.setState({ path: window.location.href });
 	}
 
 	render() {
 		return (
 			<div className="App">
-				
-					<BrowserRouter>
+				<BrowserRouter>
 					<TemplatePage
-					drawer={this.state.drawer}
-					toggleDrawer={this.toggleDrawer}
-					path={this.state.path}
-					currentPath={this.currentPath}
-				>
+						drawer={this.state.drawer}
+						toggleDrawer={this.toggleDrawer}
+						path={this.state.path}
+						currentPath={this.currentPath}
+					>
 						<Switch>
 							<Route
 								exact
@@ -217,6 +236,7 @@ class App extends Component {
 										email={this.state.email}
 										password={this.state.password}
 										handleChange={this.handleChange}
+										signIn={this.signIn}
 									/>
 								)}
 							/>
@@ -263,9 +283,8 @@ class App extends Component {
 								)}
 							/>
 						</Switch>
-						</TemplatePage>
-					</BrowserRouter>
-		
+					</TemplatePage>
+				</BrowserRouter>
 			</div>
 		);
 	}
