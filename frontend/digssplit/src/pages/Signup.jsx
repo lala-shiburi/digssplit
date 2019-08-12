@@ -13,7 +13,8 @@ import {
 	KeyboardArrowLeft,
 	Email,
 	LockOutlined,
-	Home
+	Home,
+	Person
 } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
@@ -30,10 +31,12 @@ export default function Signup(props) {
 		emailSignUp,
 		passwordSignUp,
 		passwordSignUpConfirm,
+		usernameSignUp,
 		handleChangeRadio,
 		createDigs,
 		handleAutoComplete,
-		digs
+		digs,
+		signUp
 	} = props;
 
 	const styles = {
@@ -161,6 +164,26 @@ export default function Signup(props) {
 					style={styles.textFieldGrid}
 				>
 					<Grid item>
+						<Person style={styles.icon} />
+					</Grid>
+
+					<Grid item>
+						<Textfield
+							name="usernameSignUp"
+							placeholder={'username'}
+							value={usernameSignUp}
+							handleChange={handleChange}
+						/>
+					</Grid>
+				</Grid>
+				<Grid
+					container
+					alignItems="center"
+					justify="center"
+					spacing={1}
+					style={styles.textFieldGrid}
+				>
+					<Grid item>
 						<Email style={styles.icon} />
 					</Grid>
 
@@ -215,7 +238,13 @@ export default function Signup(props) {
 				</Grid>
 
 				<Grid Item xs={12}>
-					<CustomButton style={styles.signInButton} text={'Sign up'} />
+					<LinkButton
+						onClick={signUp}
+						style={styles.signInButton}
+						to="/expenses"
+					>
+						Sign up
+					</LinkButton>
 				</Grid>
 
 				<Grid item xs={12}>
@@ -225,7 +254,9 @@ export default function Signup(props) {
 					<Typography variant="caption" display="block" gutterBottom>
 						Already have an account? then please{' '}
 						<span style={styles.span}>
-							<NavLink style={styles.span} to="/login">sign in here</NavLink>{' '}
+							<NavLink style={styles.span} to="/login">
+								sign in here
+							</NavLink>{' '}
 						</span>
 					</Typography>
 				</Grid>

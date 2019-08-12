@@ -11,8 +11,10 @@ import TemplatePage from './pages/TemplatePage';
 class App extends Component {
 	state = {
 		drawer: false,
+		username: '',
 		email: '',
 		password: '',
+		usernameSignUp: '',
 		emailSignUp: '',
 		passwordSignUp: '',
 		passwordSignUpConfirm: '',
@@ -85,12 +87,32 @@ class App extends Component {
 				email: this.state.email,
 				password: this.state.password
 			})
-			.then((response) =>{
+			.then(response => {
 				console.log(response.data.key);
 				let auth = 'Token ' + response.data.key;
 				this.setState({ AUTH_TOKEN: auth });
 			})
-			.catch((error)=> {
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	signUp = () => {
+		console.log('You are trying to sign up');
+		axios
+			.post('http://localhost:8000/rest-auth/registration/', {
+				username: this.state.usernameSignUp,
+				email: this.state.emailSignUp,
+				password1: this.state.passwordSignUp,
+				password2: this.state.passwordSignUpConfirm,
+				digs: { name: this.state.digs }
+			})
+			.then(response => {
+				console.log(response.data.key);
+				let auth = 'Token ' + response.data.key;
+				this.setState({ AUTH_TOKEN: auth });
+			})
+			.catch(error => {
 				console.log(error);
 			});
 	};
@@ -246,6 +268,7 @@ class App extends Component {
 								render={props => (
 									<Signup
 										{...props}
+										usernameSignUp={this.state.usernameSignUp}
 										emailSignUp={this.state.emailSignUp}
 										passwordSignUp={this.state.passwordSignUp}
 										passwordSignUpConfirm={this.state.passwordSignUpConfirm}
@@ -254,6 +277,7 @@ class App extends Component {
 										createDigs={this.state.createDigs}
 										handleAutoComplete={this.handleAutoComplete}
 										digs={this.state.digs}
+										signUp={this.signUp}
 									/>
 								)}
 							/>
