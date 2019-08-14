@@ -7,11 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const suggestions = [
-	{ label: 'The Shack' },
-	{ label: 'The Burg' },
-	
-];
+
 
 function renderInput(inputProps) {
 	const { InputProps, classes, ref, ...other } = inputProps;
@@ -64,7 +60,7 @@ renderSuggestion.propTypes = {
 	suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired
 };
 
-function getSuggestions(value, { showEmpty = false } = {}) {
+function getSuggestions(value,suggestions ,{ showEmpty = false } = {}) {
 	const inputValue = deburr(value.trim()).toLowerCase();
 	const inputLength = inputValue.length;
 	let count = 0;
@@ -112,7 +108,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function IntegrationDownshift(props) {
-	const { handleAutoComplete } = props;
+	const { handleAutoComplete,suggestions } = props;
 	const classes = useStyles();
 
 	return (
@@ -155,7 +151,7 @@ export default function IntegrationDownshift(props) {
 							<div {...getMenuProps()}>
 								{isOpen ? (
 									<Paper className={classes.paper} square>
-										{getSuggestions(inputValue).map((suggestion, index) =>
+										{getSuggestions(inputValue,suggestions).map((suggestion, index) =>
 											renderSuggestion({
 												suggestion,
 												index,

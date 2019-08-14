@@ -21,6 +21,7 @@ class App extends Component {
 		createDigs: 'true',
 		joiningDigs: '',
 		digs: '',
+		existingDigs: [],
 		expenses: [
 			{
 				name: 'Electricity',
@@ -111,6 +112,19 @@ class App extends Component {
 				console.log(response.data.key);
 				let auth = 'Token ' + response.data.key;
 				this.setState({ AUTH_TOKEN: auth });
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	getDigs = () => {
+		axios
+			.get('http://localhost:8000/digs/')
+			.then(response => {
+				console.log(response);
+				let digsArray = response.data.map(dig => ({ label: dig.name }));
+				this.setState({ existingDigs: digsArray });
 			})
 			.catch(error => {
 				console.log(error);
@@ -225,6 +239,7 @@ class App extends Component {
 	};
 	componentDidMount() {
 		this.setState({ path: window.location.href });
+		this.getDigs();
 	}
 
 	render() {
@@ -278,6 +293,7 @@ class App extends Component {
 										handleAutoComplete={this.handleAutoComplete}
 										digs={this.state.digs}
 										signUp={this.signUp}
+										suggestions={this.state.existingDigs}
 									/>
 								)}
 							/>

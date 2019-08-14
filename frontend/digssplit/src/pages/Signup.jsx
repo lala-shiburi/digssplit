@@ -36,7 +36,8 @@ export default function Signup(props) {
 		createDigs,
 		handleAutoComplete,
 		digs,
-		signUp
+		signUp,
+		suggestions
 	} = props;
 
 	const styles = {
@@ -151,7 +152,10 @@ export default function Signup(props) {
 								handleChange={handleChange}
 							/>
 						) : (
-							<AutoComplete handleAutoComplete={handleAutoComplete} />
+							<AutoComplete
+								suggestions={suggestions}
+								handleAutoComplete={handleAutoComplete}
+							/>
 						)}
 					</Grid>
 				</Grid>
