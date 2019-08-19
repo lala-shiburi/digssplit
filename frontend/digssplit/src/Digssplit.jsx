@@ -348,6 +348,7 @@ class App extends Component {
 										expensename={this.state.expensename}
 										amount={this.state.amount}
 										digsMates={this.state.digsMates}
+										username={this.state.user.username}
 										categoriesList={this.state.categoriesList}
 										selectedCategory={this.state.selectedCategory}
 										handleCheckBox={this.handleCheckBox}

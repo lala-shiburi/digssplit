@@ -17,6 +17,7 @@ export default function ExpenseCategory(props) {
 		expenses,
 		checkbox,
 		handleCheckBox,
+		username,
 		updatePayments,
 		digsMates
 	} = props;
@@ -33,6 +34,7 @@ export default function ExpenseCategory(props) {
 								checkbox={checkbox}
 								updatePayments={updatePayments}
 								handleCheckBox={handleCheckBox}
+								username={username}
 								digsMates={digsMates}
 								category={category}
 								expenses={expenses}

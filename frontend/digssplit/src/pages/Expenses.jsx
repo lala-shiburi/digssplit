@@ -29,6 +29,7 @@ export default function Expenses(props) {
 		selectedCategory,
 		open,
 		handleDialog,
+		username,
 		expensename,
 		amount,
 		selecteddigsMates
@@ -40,6 +41,7 @@ export default function Expenses(props) {
 					checkbox={checkbox}
 					updatePayments={updatePayments}
 					handleCheckBox={handleCheckBox}
+					username={username}
 					categories={categories}
 					digsMates={digsMates}
 					expenses={expenses}
