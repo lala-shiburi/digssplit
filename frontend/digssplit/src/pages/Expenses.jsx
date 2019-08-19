@@ -25,13 +25,13 @@ export default function Expenses(props) {
 		handleAddExpense,
 		handleChangeSelect,
 		categoriesList,
-		members,
+		digsMates,
 		selectedCategory,
 		open,
 		handleDialog,
 		expensename,
 		amount,
-		selectedMembers
+		selecteddigsMates
 	} = props;
 	return (
 		<React.Fragment>
@@ -41,6 +41,7 @@ export default function Expenses(props) {
 					updatePayments={updatePayments}
 					handleCheckBox={handleCheckBox}
 					categories={categories}
+					digsMates={digsMates}
 					expenses={expenses}
 				/>
 				<Grid item>
@@ -50,15 +51,14 @@ export default function Expenses(props) {
 					open={open}
 					expensename={expensename}
 					amount={amount}
-					members={members}
+					digsMates={digsMates}
 					categoriesList={categoriesList}
 					handleDialog={handleDialog}
 					handleChange={handleChange}
 					handleChangeSelect={handleChangeSelect}
 					handleAddExpense={handleAddExpense}
 					selectedCategory={selectedCategory}
-					selectedMembers={selectedMembers}
-					
+					selecteddigsMates={selecteddigsMates}
 				/>
 			</Grid>
 			<Fab color="primary" aria-label="Add" style={styles.button}>

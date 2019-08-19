@@ -17,11 +17,12 @@ export default function ExpenseCategory(props) {
 		expenses,
 		checkbox,
 		handleCheckBox,
-		updatePayments
+		updatePayments,
+		digsMates
 	} = props;
 	return (
 		<React.Fragment>
-			{categories.map((category,index) => (
+			{categories.map((category, index) => (
 				<Grid container style={styles.category} key={index}>
 					<Grid item xs={12}>
 						<Paper>
@@ -32,6 +33,7 @@ export default function ExpenseCategory(props) {
 								checkbox={checkbox}
 								updatePayments={updatePayments}
 								handleCheckBox={handleCheckBox}
+								digsMates={digsMates}
 								category={category}
 								expenses={expenses}
 							/>

@@ -58,14 +58,14 @@ function getStyles(name, personName, theme) {
 export default function MultipleSelect(props) {
 	const classes = useStyles();
 	const theme = useTheme();
-	const { handleChange, name, selectedMembers, members } = props;
+	const { handleChange, name, selecteddigsMates, digsMates } = props;
 
 	return (
 		<FormControl className={clsx(classes.formControl, classes.noLabel)}>
 			<Select
 				multiple
 				displayEmpty
-				value={selectedMembers}
+				value={selecteddigsMates}
 				onChange={handleChange(name)}
 				input={<Input id="select-multiple-placeholder" />}
 				renderValue={selected => {
@@ -80,7 +80,7 @@ export default function MultipleSelect(props) {
 				<MenuItem disabled value="">
 					<em>Select debtors</em>
 				</MenuItem>
-				{members.map(member => (
+				{digsMates.map(member => (
 					<MenuItem
 						key={member}
 						value={member}

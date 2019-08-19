@@ -43,9 +43,9 @@ export default function FormDialog(props) {
 		expensename,
 		amount,
 		categoriesList,
-		members,
+		digsMates,
 		selectedCategory,
-		selectedMembers
+		selecteddigsMates
 	} = props;
 	return (
 		<div>
@@ -84,10 +84,10 @@ export default function FormDialog(props) {
 					/>
 
 					<MultiSelect
-						selectedMembers={selectedMembers}
-						name="selectedMembers"
+						selecteddigsMates={selecteddigsMates}
+						name="selecteddigsMates"
 						handleChange={handleChange}
-						members={members}
+						digsMates={digsMates.map(member => member.username)}
 					/>
 				</DialogContent>
 				<DialogActions style={styles.dialogActions}>

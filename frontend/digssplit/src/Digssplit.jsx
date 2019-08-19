@@ -60,10 +60,10 @@ class App extends Component {
 			'BOOZE',
 			'LOAN SHARK'
 		],
-		categories: ['UTILITIES', 'TRANSPORT', 'BOOZE'],
+		categories: ['UTILITIES', 'BOOZE'],
 		selectedCategory: '',
-		members: [0, 1, 2, 3, 4],
-		selectedMembers: [],
+		digsMates: [0, 1, 2, 3, 4],
+		selecteddigsMates: [],
 		AUTH_TOKEN: '',
 		AUTHENTICATED: false
 	};
@@ -103,9 +103,21 @@ class App extends Component {
 			});
 			let responseUser = getUser.data;
 
-			const getMembers = await axios.get(`http://localhost:8000/users/?digs=${responseUser.digs.id}`);
-			const members = getMembers.data
-			this.setState({ AUTH_TOKEN: responseKey, user: responseUser,members});
+			const getDigsMates = await axios.get(
+				`http://localhost:8000/users/?digs=${responseUser.digs.id}`
+			);
+			const digsMates = getDigsMates.data;
+
+			const getDigsExpenses = await axios.get(
+				`http://localhost:8000/expenses/?digs=${responseUser.digs.id}`
+			);
+			const expenses = getDigsExpenses.data;
+			this.setState({
+				AUTH_TOKEN: responseKey,
+				user: responseUser,
+				digsMates,
+				expenses
+			});
 		} catch (err) {
 			console.log(err);
 		}
@@ -244,13 +256,13 @@ class App extends Component {
 			expensename,
 			amount,
 			selectedCategory,
-			selectedMembers
+			selecteddigsMates
 		} = this.state;
 		let expense = {
 			name: expensename,
 			category: selectedCategory,
 			amount: amount,
-			membersOwing: selectedMembers,
+			membersOwing: selecteddigsMates,
 			ownerId: '12'
 		};
 		expenses.push(expense);
@@ -335,7 +347,7 @@ class App extends Component {
 										checkbox={this.state.checkbox}
 										expensename={this.state.expensename}
 										amount={this.state.amount}
-										members={this.state.members}
+										digsMates={this.state.digsMates}
 										categoriesList={this.state.categoriesList}
 										selectedCategory={this.state.selectedCategory}
 										handleCheckBox={this.handleCheckBox}
@@ -345,7 +357,7 @@ class App extends Component {
 										handleChange={this.handleChange}
 										handleChangeSelect={this.handleChangeSelect}
 										open={this.state.isDialogOpen}
-										selectedMembers={this.state.selectedMembers}
+										selecteddigsMates={this.state.selecteddigsMates}
 									/>
 								)}
 							/>
