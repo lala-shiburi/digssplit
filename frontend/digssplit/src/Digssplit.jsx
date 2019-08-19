@@ -12,6 +12,7 @@ class App extends Component {
 	state = {
 		drawer: false,
 		username: '',
+		user: '',
 		email: '',
 		password: '',
 		usernameSignUp: '',
@@ -81,21 +82,33 @@ class App extends Component {
 
 	currentPath = () => window.location.href;
 
-	signIn = () => {
+	signIn = async () => {
 		console.log('You are trying to login');
-		axios
-			.post('http://localhost:8000/rest-auth/login/', {
-				email: this.state.email,
-				password: this.state.password
-			})
-			.then(response => {
-				console.log(response.data.key);
-				let auth = 'Token ' + response.data.key;
-				this.setState({ AUTH_TOKEN: auth });
-			})
-			.catch(error => {
-				console.log(error);
+		try {
+			const signIn = await axios.post(
+				'http://localhost:8000/rest-auth/login/',
+				{
+					email: this.state.email,
+					password: this.state.password
+				}
+			);
+			let responseKey = 'Token ' + signIn.data.key;
+			// let auth = 'Token ' + response.data.key;
+			// this.setState({ AUTH_TOKEN: auth }, () => {
+			// 	this.getUser();
+			// });
+
+			const getUser = await axios.get('http://localhost:8000/users/current', {
+				headers: { Authorization: `${responseKey}` }
 			});
+			let responseUser = getUser.data;
+
+			const getMembers = await axios.get(`http://localhost:8000/users/?digs=${responseUser.digs.id}`);
+			const members = getMembers.data
+			this.setState({ AUTH_TOKEN: responseKey, user: responseUser,members});
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	signUp = () => {
@@ -125,6 +138,20 @@ class App extends Component {
 				console.log(response);
 				let digsArray = response.data.map(dig => ({ label: dig.name }));
 				this.setState({ existingDigs: digsArray });
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	getUser = () => {
+		axios
+			.get('http://localhost:8000/users/current', {
+				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+			})
+			.then(response => {
+				console.log(response.data);
+				this.setState({ user: response.data });
 			})
 			.catch(error => {
 				console.log(error);
