@@ -12,8 +12,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Person from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import Person from '@material-ui/icons/Person';
 
 import CheckBox from './../components/CheckBox';
 
@@ -38,7 +37,6 @@ export default function ExpenseItem(props) {
 		let filtered = expenses.filter(
 			expense => fullCategory(expense.category) === category
 		);
-		console.log(filtered);
 		return filtered;
 	};
 
@@ -64,18 +62,8 @@ export default function ExpenseItem(props) {
 
 	const DigsmateName = id => {
 		let usernameArray = digsMates.map(digsmate => {
-			console.log(
-				'username',
-				digsmate.username,
-				'id',
-				digsmate.id,
-				'given',
-				id
-			);
-			console.log(digsmate.id === id);
 			return digsmate.id === id ? digsmate.username : '';
 		});
-		console.log(usernameArray);
 		return usernameArray[0];
 	};
 

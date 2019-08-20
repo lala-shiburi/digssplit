@@ -250,24 +250,54 @@ class App extends Component {
 		console.log(filteredExpense, indexes, expenses, expensePayer);
 	};
 
+	DigsmateId = members_owing => {
+		let digsMatesId = members_owing.map(digsmateUsername => {
+			return this.state.digsMates.map(mate => {
+				return mate.username === digsmateUsername ? mate.id : '';
+			});
+		});
+		return digsMatesId;
+	};
+
 	handleAddExpense = () => {
 		const {
 			expenses,
 			expensename,
 			amount,
 			selectedCategory,
-			selecteddigsMates
+			selecteddigsMates,
+			user
 		} = this.state;
+		let selectedDigsMatesID = this.DigsmateId(selecteddigsMates)[0];
+		console.log(selectedDigsMatesID);
 		let expense = {
 			name: expensename,
-			category: selectedCategory,
 			amount: amount,
-			membersOwing: selecteddigsMates,
-			ownerId: '12'
+			category: selectedCategory.substring(0, 1),
+			members_owing: selectedDigsMatesID,
+			digs: user.digs.id
 		};
+		axios.post('http://localhost:8000/expenses/',expense ,
+				{
+					headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+				}
+			)
+			.then(response => {
+				console.log(response.data);
+			})
+			.catch(error => {
+				console.log(error);
+			});
 		expenses.push(expense);
 
-		this.setState({ expenses });
+		this.setState({
+			expenses,
+			expensename: '',
+			selectedCategory: '',
+			amount: '',
+			selecteddigsMates: []
+		});
+
 		this.handleDialog();
 	};
 
