@@ -114,6 +114,7 @@ class App extends Component {
 			const expenses = getDigsExpenses.data;
 			this.setState({
 				AUTH_TOKEN: responseKey,
+				AUTHENTICATED: true,
 				user: responseUser,
 				digsMates,
 				expenses
@@ -136,7 +137,7 @@ class App extends Component {
 			.then(response => {
 				console.log(response.data.key);
 				let auth = 'Token ' + response.data.key;
-				this.setState({ AUTH_TOKEN: auth });
+				this.setState({ AUTH_TOKEN: auth, AUTHENTICATED: true });
 			})
 			.catch(error => {
 				console.log(error);
@@ -277,11 +278,10 @@ class App extends Component {
 			members_owing: selectedDigsMatesID,
 			digs: user.digs.id
 		};
-		axios.post('http://localhost:8000/expenses/',expense ,
-				{
-					headers: { Authorization: `${this.state.AUTH_TOKEN}` }
-				}
-			)
+		axios
+			.post('http://localhost:8000/expenses/', expense, {
+				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+			})
 			.then(response => {
 				console.log(response.data);
 			})
@@ -374,6 +374,7 @@ class App extends Component {
 										{...props}
 										categories={this.state.categories}
 										expenses={this.state.expenses}
+										AUTHENTICATED={this.state.AUTHENTICATED}
 										checkbox={this.state.checkbox}
 										expensename={this.state.expensename}
 										amount={this.state.amount}

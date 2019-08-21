@@ -32,10 +32,13 @@ export default function Expenses(props) {
 		username,
 		expensename,
 		amount,
-		selecteddigsMates
+		selecteddigsMates,
+		AUTHENTICATED
 	} = props;
 	return (
 		<React.Fragment>
+			{AUTHENTICATED ? (
+			<>
 			<Grid container>
 				<ExpenseCategory
 					checkbox={checkbox}
@@ -66,6 +69,10 @@ export default function Expenses(props) {
 			<Fab color="primary" aria-label="Add" style={styles.button}>
 				<AddIcon onClick={handleDialog} />
 			</Fab>
+			</>
+			)
+			: <><h1>Please login wena msunu</h1></>			
+			}
 		</React.Fragment>
 	);
 }
