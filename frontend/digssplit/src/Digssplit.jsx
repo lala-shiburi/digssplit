@@ -65,7 +65,8 @@ class App extends Component {
 		digsMates: [0, 1, 2, 3, 4],
 		selecteddigsMates: [],
 		AUTH_TOKEN: '',
-		AUTHENTICATED: false
+		AUTHENTICATED: false,
+		error: ''
 	};
 
 	// axios.defaults.headers.common['Authorization'] = this.state.AUTH_TOKEN;
@@ -81,6 +82,11 @@ class App extends Component {
 	};
 
 	currentPath = () => window.location.href;
+
+	handleSubmit(event) {
+		event.preventDefault();
+		alert('Your favorite flavor is: ');
+	}
 
 	signIn = async () => {
 		console.log('You are trying to login');
@@ -120,12 +126,12 @@ class App extends Component {
 				expenses
 			});
 		} catch (err) {
-			console.log(err);
+			console.log(err.response.data.non_field_errors);
+			this.setState({ error: err.response.data.non_field_errors });
 		}
 	};
 
 	signUp = () => {
-		console.log('You are trying to sign up');
 		axios
 			.post('http://localhost:8000/rest-auth/registration/', {
 				username: this.state.usernameSignUp,
@@ -342,7 +348,7 @@ class App extends Component {
 										email={this.state.email}
 										password={this.state.password}
 										handleChange={this.handleChange}
-										signIn={this.signIn}
+										handleSubmit={this.handleSubmit}
 									/>
 								)}
 							/>

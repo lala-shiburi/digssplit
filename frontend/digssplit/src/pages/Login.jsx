@@ -1,5 +1,13 @@
 import React from 'react';
-import { Box, Grid, Button, Divider, Typography } from '@material-ui/core';
+import {
+	Box,
+	Grid,
+	Button,
+	Divider,
+	Typography,
+	FormControl,
+	Input
+} from '@material-ui/core';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
@@ -10,7 +18,7 @@ import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
 
 export default function Login(props) {
-	const { handleChange, email, password, signIn } = props;
+	const { handleChange, email, password, handleSubmit } = props;
 
 	const styles = {
 		logo: {
@@ -36,7 +44,7 @@ export default function Login(props) {
 		},
 		signInButton: {
 			position: 'relative',
-			left: '180px',
+			left: '130px',
 			marginBottom: '20px'
 		},
 		caption: {
@@ -73,54 +81,64 @@ export default function Login(props) {
 						Sign in
 					</Typography>
 				</Grid>
+				<form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+					<Grid
+						container
+						alignItems="center"
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
+					>
+						<Grid item>
+							<Email style={styles.icon} />
+						</Grid>
 
-				<Grid
-					container
-					alignItems="center"
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<Email style={styles.icon} />
+						<Grid item>
+							<FormControl
+								name="email"
+								handleChange={handleChange}
+								value={email}
+							>
+								<Input placeholder={'Email address'} />
+							</FormControl>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
+					>
+						<Grid item>
+							<LockOutlined style={styles.icon} />
+						</Grid>
+
+						<Grid item>
+							<FormControl
+								value={password}
+								handleChange={handleChange}
+								name="password"
+							>
+								<Input placeholder={'Password'} type="password" />
+							</FormControl>
+						</Grid>
 					</Grid>
 
-					<Grid item>
-						<Textfield
-							name="email"
-							placeholder={'Email address'}
-							value={email}
-							handleChange={handleChange}
+					<Grid Item xs={12}>
+						{/* <LinkButton
+							onClick={signIn}
+							style={styles.signInButton}
+							to="/expenses"
+						>
+							Sign in
+						</LinkButton> */}
+						<CustomButton
+							type="submit"
+							style={styles.signInButton}
+							text={'Sign in'}
 						/>
 					</Grid>
-				</Grid>
-				<Grid
-					container
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<LockOutlined style={styles.icon} />
-					</Grid>
-
-					<Grid item>
-						<Textfield
-							name="password"
-							placeholder={'Password'}
-							type="password"
-							value={password}
-							handleChange={handleChange}
-						/>
-					</Grid>
-				</Grid>
-
-				<Grid Item xs={12}>
-					{/* <CustomButton style={styles.signInButton} text={'Sign n'} /> */}
-					<LinkButton onClick={signIn} style={styles.signInButton} to="/expenses">
-						Sign in
-					</LinkButton>
-				</Grid>
+				</form>
 
 				<Grid item xs={12}>
 					<Divider variant="middle" style={styles.divider} />
