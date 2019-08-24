@@ -83,9 +83,9 @@ class App extends Component {
 
 	currentPath = () => window.location.href;
 
-	handleSubmit(event) {
+	handleSubmit=(event)=> {
 		event.preventDefault();
-		alert('Your favorite flavor is: ');
+		this.signIn();
 	}
 
 	signIn = async () => {
@@ -127,7 +127,8 @@ class App extends Component {
 			});
 		} catch (err) {
 			console.log(err.response.data.non_field_errors);
-			this.setState({ error: err.response.data.non_field_errors });
+			// this.setState({ error: err.response.data.non_field_errors });
+			this.setState({ error: err.response.data });
 		}
 	};
 
@@ -177,7 +178,8 @@ class App extends Component {
 			});
 	};
 
-	handleChange = name => event => {
+	handleChange = event => {
+		let name = event.target.name
 		this.setState({ ...this.state, [name]: event.target.value });
 		console.log('THis works?');
 	};
@@ -349,6 +351,7 @@ class App extends Component {
 										password={this.state.password}
 										handleChange={this.handleChange}
 										handleSubmit={this.handleSubmit}
+										error={this.state.error}
 									/>
 								)}
 							/>

@@ -6,7 +6,9 @@ import {
 	Divider,
 	Typography,
 	FormControl,
-	Input
+	FormHelperText,
+	Input,
+	CircularProgress
 } from '@material-ui/core';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
@@ -18,7 +20,7 @@ import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
 
 export default function Login(props) {
-	const { handleChange, email, password, handleSubmit } = props;
+	const { handleChange, email, password, handleSubmit, error } = props;
 
 	const styles = {
 		logo: {
@@ -26,6 +28,9 @@ export default function Login(props) {
 			height: '129px',
 			left: '85px',
 			top: '93px'
+		},
+		error: {
+			color: 'red'
 		},
 		logoContainer: {
 			textAlign: 'center'
@@ -66,6 +71,9 @@ export default function Login(props) {
 			>
 				<KeyboardArrowLeft /> BACK TO HOME
 			</LinkButton>
+			<div style={styles.loading}>
+				<CircularProgress color="secondary" />
+			</div>
 
 			<Grid container>
 				<Grid item xs={12} style={styles.logoContainer}>
@@ -94,12 +102,20 @@ export default function Login(props) {
 						</Grid>
 
 						<Grid item>
-							<FormControl
-								name="email"
-								handleChange={handleChange}
-								value={email}
-							>
-								<Input placeholder={'Email address'} />
+							<FormControl>
+								<Input
+									name="email"
+									onChange={handleChange}
+									value={email}
+									type="email"
+									required
+									placeholder={'Email address'}
+								/>
+								{error.email ? (
+									<FormHelperText error id="my-helper-text">
+										{error.email}
+									</FormHelperText>
+								) : null}
 							</FormControl>
 						</Grid>
 					</Grid>
@@ -114,15 +130,35 @@ export default function Login(props) {
 						</Grid>
 
 						<Grid item>
-							<FormControl
-								value={password}
-								handleChange={handleChange}
-								name="password"
-							>
-								<Input placeholder={'Password'} type="password" />
+							<FormControl>
+								<Input
+									value={password}
+									onChange={handleChange}
+									name="password"
+									required
+									placeholder={'Password'}
+									type="password"
+								/>
+								{error.password ? (
+									<FormHelperText error id="my-helper-text">
+										{error.password}
+									</FormHelperText>
+								) : null}
 							</FormControl>
 						</Grid>
 					</Grid>
+					{error.non_field_errors ? (
+						<Grid item xs={12}>
+							<Typography
+								align="center"
+								style={styles.error}
+								variant="subtitle2"
+								gutterBottom
+							>
+								{error.non_field_errors}
+							</Typography>
+						</Grid>
+					) : null}
 
 					<Grid Item xs={12}>
 						{/* <LinkButton
