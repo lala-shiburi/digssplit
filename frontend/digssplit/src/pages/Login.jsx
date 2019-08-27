@@ -15,6 +15,7 @@ import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
 import LinkButton from './../components/LinkButton';
+import Loader from './../components/loader'
 import CustomButton from './../components/Button';
 import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
@@ -55,7 +56,8 @@ export default function Login(props) {
 		caption: {
 			margin: '15px auto',
 			color: '#495057'
-		}
+		},
+		
 	};
 	return (
 		<div style={{ flexGrow: '1' }}>
@@ -71,9 +73,7 @@ export default function Login(props) {
 			>
 				<KeyboardArrowLeft /> BACK TO HOME
 			</LinkButton>
-			<div style={styles.loading}>
-				<CircularProgress color="secondary" />
-			</div>
+			<Loader />
 
 			<Grid container>
 				<Grid item xs={12} style={styles.logoContainer}>
