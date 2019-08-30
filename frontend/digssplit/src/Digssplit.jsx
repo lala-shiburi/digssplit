@@ -22,6 +22,7 @@ class App extends Component {
 		createDigs: 'true',
 		joiningDigs: '',
 		digs: '',
+		loading:false,
 		existingDigs: [],
 		expenses: [
 			{
@@ -85,6 +86,7 @@ class App extends Component {
 
 	handleSubmit=(event)=> {
 		event.preventDefault();
+		this.setState({loading:true})
 		this.signIn();
 	}
 
@@ -123,12 +125,13 @@ class App extends Component {
 				AUTHENTICATED: true,
 				user: responseUser,
 				digsMates,
-				expenses
+				expenses,
+				loading:true
 			});
 		} catch (err) {
-			console.log(err.response.data.non_field_errors);
+			// console.log(err.response.data.non_field_errors);
 			// this.setState({ error: err.response.data.non_field_errors });
-			this.setState({ error: err.response.data });
+			this.setState({ error: err.response.data,loading:false });
 		}
 	};
 
@@ -352,6 +355,7 @@ class App extends Component {
 										handleChange={this.handleChange}
 										handleSubmit={this.handleSubmit}
 										error={this.state.error}
+										loading={this.state.loading}
 									/>
 								)}
 							/>

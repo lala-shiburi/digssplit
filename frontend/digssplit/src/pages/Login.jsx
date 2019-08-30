@@ -7,21 +7,20 @@ import {
 	Typography,
 	FormControl,
 	FormHelperText,
-	Input,
-	CircularProgress
+	Input
 } from '@material-ui/core';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
 import LinkButton from './../components/LinkButton';
-import Loader from './../components/loader'
+import Loader from './../components/loader';
 import CustomButton from './../components/Button';
 import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
 
 export default function Login(props) {
-	const { handleChange, email, password, handleSubmit, error } = props;
+	const { handleChange, email, password, handleSubmit, error, loading } = props;
 
 	const styles = {
 		logo: {
@@ -56,8 +55,7 @@ export default function Login(props) {
 		caption: {
 			margin: '15px auto',
 			color: '#495057'
-		},
-		
+		}
 	};
 	return (
 		<div style={{ flexGrow: '1' }}>
@@ -73,7 +71,7 @@ export default function Login(props) {
 			>
 				<KeyboardArrowLeft /> BACK TO HOME
 			</LinkButton>
-			<Loader />
+			{loading ? <Loader /> : null}
 
 			<Grid container>
 				<Grid item xs={12} style={styles.logoContainer}>

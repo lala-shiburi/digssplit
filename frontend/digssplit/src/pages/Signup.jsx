@@ -7,7 +7,10 @@ import {
 	Typography,
 	RadioGroup,
 	FormControlLabel,
-	Radio
+	Radio,
+	FormControl,
+	FormHelperText,
+	Input
 } from '@material-ui/core';
 import {
 	KeyboardArrowLeft,
@@ -20,6 +23,7 @@ import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
 import CustomButton from './../components/Button';
+import Loader from './../components/loader';
 import Textfield from './../components/Textfield';
 import LinkButton from './../components/LinkButton';
 import AutoComplete from './../components/AutoComplete';
@@ -37,8 +41,18 @@ export default function Signup(props) {
 		handleAutoComplete,
 		digs,
 		signUp,
-		suggestions
+		suggestions,
+		handleSubmit,
+		error,
+		loading
 	} = props;
+
+	const doesDigsExist=(digs)=>{
+		const currentDigs=suggestions.filter(suggestion=>(
+			suggestion.label === digs
+		))
+		return currentDigs;
+	}
 
 	const styles = {
 		logo: {
@@ -99,6 +113,8 @@ export default function Signup(props) {
 				<KeyboardArrowLeft /> BACK TO HOME
 			</LinkButton>
 
+			{loading ? <Loader /> : null}
+
 			<Grid container>
 				<Grid item xs={12} style={styles.logoContainer}>
 					<Box>
@@ -113,143 +129,165 @@ export default function Signup(props) {
 						Sign Up
 					</Typography>
 				</Grid>
-				<Grid item xs={12}>
-					<RadioGroup
-						aria-label="CreateDigs"
-						name="CreateDigs"
-						style={{ alignContent: 'center' }}
-						value={createDigs}
-						onChange={handleChangeRadio}
-					>
-						<FormControlLabel
-							value="true"
-							control={<Radio style={styles.radioButton} />}
-							label="Create new digs"
-						/>
-						<FormControlLabel
-							value="false"
-							control={<Radio style={styles.radioButton} />}
-							label="Join existing digs"
-						/>
-					</RadioGroup>
-				</Grid>
-				<Grid
-					container
-					alignItems="center"
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<Home style={styles.icon} />
-					</Grid>
-					<Grid item>
-						{createDigs === 'true' ? (
-							<Textfield
-								name="digs"
-								placeholder={'Enter digs name'}
-								value={digs}
-								handleChange={handleChange}
+				<form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+					<Grid item xs={12}>
+						<RadioGroup
+							aria-label="CreateDigs"
+							name="CreateDigs"
+							style={{ alignContent: 'center' }}
+							value={createDigs}
+							onChange={handleChangeRadio}
+						>
+							<FormControlLabel
+								value="true"
+								control={<Radio style={styles.radioButton} />}
+								label="Create new digs"
 							/>
-						) : (
-							<AutoComplete
-								suggestions={suggestions}
-								handleAutoComplete={handleAutoComplete}
+							<FormControlLabel
+								value="false"
+								control={<Radio style={styles.radioButton} />}
+								label="Join existing digs"
 							/>
-						)}
+						</RadioGroup>
 					</Grid>
-				</Grid>
-
-				<Grid
-					container
-					alignItems="center"
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<Person style={styles.icon} />
-					</Grid>
-
-					<Grid item>
-						<Textfield
-							name="usernameSignUp"
-							placeholder={'username'}
-							value={usernameSignUp}
-							handleChange={handleChange}
-						/>
-					</Grid>
-				</Grid>
-				<Grid
-					container
-					alignItems="center"
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<Email style={styles.icon} />
-					</Grid>
-
-					<Grid item>
-						<Textfield
-							name="emailSignUp"
-							placeholder={'Email address'}
-							value={emailSignUp}
-							handleChange={handleChange}
-						/>
-					</Grid>
-				</Grid>
-				<Grid
-					container
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<LockOutlined style={styles.icon} />
-					</Grid>
-
-					<Grid item>
-						<Textfield
-							name="passwordSignUp"
-							placeholder={'Password'}
-							type="password"
-							value={passwordSignUp}
-							handleChange={handleChange}
-						/>
-					</Grid>
-				</Grid>
-				<Grid
-					container
-					justify="center"
-					spacing={1}
-					style={styles.textFieldGrid}
-				>
-					<Grid item>
-						<LockOutlined style={styles.icon} />
-					</Grid>
-
-					<Grid item>
-						<Textfield
-							name="passwordSignUpConfirm"
-							placeholder={'Password (again)'}
-							type="password"
-							value={passwordSignUpConfirm}
-							handleChange={handleChange}
-						/>
-					</Grid>
-				</Grid>
-
-				<Grid Item xs={12}>
-					<LinkButton
-						onClick={signUp}
-						style={styles.signInButton}
-						to="/expenses"
+					<Grid
+						container
+						alignItems="center"
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
 					>
-						Sign up
-					</LinkButton>
-				</Grid>
+						<Grid item>
+							<Home style={styles.icon} />
+						</Grid>
+						<Grid item>
+							{createDigs === 'true' ? (
+								<FormControl>
+									<Input
+										name="digs"
+										placeholder={'Enter digs name'}
+										value={digs}
+										onChange={handleChange}
+									/>
+									{doesDigsExist(digs).length ? (
+									<FormHelperText error id="my-helper-text">
+										Ahh that name is already taken hey
+									</FormHelperText>
+								) : null}
+								</FormControl>
+							) : (
+								<AutoComplete
+									suggestions={suggestions}
+									handleAutoComplete={handleAutoComplete}
+								/>
+							)}
+						</Grid>
+					</Grid>
+
+					<Grid
+						container
+						alignItems="center"
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
+					>
+						<Grid item>
+							<Person style={styles.icon} />
+						</Grid>
+
+						<Grid item>
+							<FormControl>
+								<Input
+									name="usernameSignUp"
+									placeholder={'username'}
+									value={usernameSignUp}
+									onChange={handleChange}
+								/>
+							</FormControl>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						alignItems="center"
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
+					>
+						<Grid item>
+							<Email style={styles.icon} />
+						</Grid>
+
+						<Grid item>
+							<FormControl>
+							<Input
+								name="emailSignUp"
+								placeholder={'Email address'}
+								value={emailSignUp}
+								onChange={handleChange}
+							/>
+							</FormControl>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
+					>
+						<Grid item>
+							<LockOutlined style={styles.icon} />
+						</Grid>
+
+						<Grid item>
+							<FormControl>
+							<Input
+								name="passwordSignUp"
+								placeholder={'Password'}
+								type="password"
+								value={passwordSignUp}
+								onChange={handleChange}
+							/>
+							</FormControl>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						justify="center"
+						spacing={1}
+						style={styles.textFieldGrid}
+					>
+						<Grid item>
+							<LockOutlined style={styles.icon} />
+						</Grid>
+
+						<Grid item>
+							<FormControl>
+							<Input
+								name="passwordSignUpConfirm"
+								placeholder={'Password (again)'}
+								type="password"
+								value={passwordSignUpConfirm}
+								onChange={handleChange}
+							/>
+							</FormControl>
+						</Grid>
+					</Grid>
+
+					<Grid Item xs={12}>
+						{/* <LinkButton
+							onClick={signUp}
+							style={styles.signInButton}
+							to="/expenses"
+						>
+							Sign up
+						</LinkButton> */}
+						<CustomButton
+							type="submit"
+							style={styles.signInButton}
+							text={'Sign up'}
+						/>
+					</Grid>
+				</form>
 
 				<Grid item xs={12}>
 					<Divider variant="middle" style={styles.divider} />
