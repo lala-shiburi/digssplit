@@ -22,7 +22,7 @@ class App extends Component {
 		createDigs: 'true',
 		joiningDigs: '',
 		digs: '',
-		loading:false,
+		loading: false,
 		existingDigs: [],
 		expenses: [
 			{
@@ -84,11 +84,21 @@ class App extends Component {
 
 	currentPath = () => window.location.href;
 
-	handleSubmit=(event)=> {
+	handleSubmitSignIn = event => {
 		event.preventDefault();
-		this.setState({loading:true})
+		this.setState({ loading: true });
 		this.signIn();
-	}
+	};
+	handleSubmitSignUp = event => {
+		event.preventDefault();
+		const { passwordSignUp, passwordSignUpConfirm } = this.state;
+		if (passwordSignUp === passwordSignUpConfirm) {
+			this.setState({ loading: true });
+			this.signUp();
+		} else {
+			this.setState({ error: { password: "The passwords don't match" } });
+		}
+	};
 
 	signIn = async () => {
 		console.log('You are trying to login');
@@ -126,12 +136,12 @@ class App extends Component {
 				user: responseUser,
 				digsMates,
 				expenses,
-				loading:true
+				loading: true
 			});
 		} catch (err) {
 			// console.log(err.response.data.non_field_errors);
 			// this.setState({ error: err.response.data.non_field_errors });
-			this.setState({ error: err.response.data,loading:false });
+			this.setState({ error: err.response.data, loading: false });
 		}
 	};
 
@@ -142,15 +152,20 @@ class App extends Component {
 				email: this.state.emailSignUp,
 				password1: this.state.passwordSignUp,
 				password2: this.state.passwordSignUpConfirm,
-				digs: { name: this.state.digs }
+				digs: { name: this.state.joiningDigs ? this.state.joiningDigs: this.state.digs }
 			})
 			.then(response => {
 				console.log(response.data.key);
 				let auth = 'Token ' + response.data.key;
-				this.setState({ AUTH_TOKEN: auth, AUTHENTICATED: true });
+				this.setState({
+					AUTH_TOKEN: auth,
+					AUTHENTICATED: true,
+					loading: false
+				});
 			})
 			.catch(error => {
 				console.log(error);
+				this.setState({ error: error.response.data, loading: false });
 			});
 	};
 
@@ -182,7 +197,7 @@ class App extends Component {
 	};
 
 	handleChange = event => {
-		let name = event.target.name
+		let name = event.target.name;
 		this.setState({ ...this.state, [name]: event.target.value });
 		console.log('THis works?');
 	};
@@ -353,7 +368,7 @@ class App extends Component {
 										email={this.state.email}
 										password={this.state.password}
 										handleChange={this.handleChange}
-										handleSubmit={this.handleSubmit}
+										handleSubmit={this.handleSubmitSignIn}
 										error={this.state.error}
 										loading={this.state.loading}
 									/>
@@ -373,9 +388,12 @@ class App extends Component {
 										handleChangeRadio={this.handleChangeRadio}
 										createDigs={this.state.createDigs}
 										handleAutoComplete={this.handleAutoComplete}
+										error={this.state.error}
+										loading={this.state.loading}
 										digs={this.state.digs}
 										signUp={this.signUp}
 										suggestions={this.state.existingDigs}
+										handleSubmit={this.handleSubmitSignUp}
 									/>
 								)}
 							/>

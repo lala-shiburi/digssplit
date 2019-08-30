@@ -7,13 +7,12 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
-
-
 function renderInput(inputProps) {
 	const { InputProps, classes, ref, ...other } = inputProps;
 
 	return (
 		<TextField
+			required
 			InputProps={{
 				inputRef: ref,
 				classes: {
@@ -60,7 +59,7 @@ renderSuggestion.propTypes = {
 	suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired
 };
 
-function getSuggestions(value,suggestions ,{ showEmpty = false } = {}) {
+function getSuggestions(value, suggestions, { showEmpty = false } = {}) {
 	const inputValue = deburr(value.trim()).toLowerCase();
 	const inputLength = inputValue.length;
 	let count = 0;
@@ -98,7 +97,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	inputRoot: {
 		flexWrap: 'wrap',
-		width: '100%',
+		width: '100%'
 		// left: '18%'
 	},
 	inputInput: {
@@ -108,7 +107,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function IntegrationDownshift(props) {
-	const { handleAutoComplete,suggestions } = props;
+	const { handleAutoComplete, suggestions } = props;
 	const classes = useStyles();
 
 	return (
@@ -116,7 +115,9 @@ export default function IntegrationDownshift(props) {
 			<Downshift
 				id="downshift-simple"
 				// onStateChange={state => }
-				onChange={selection=>{handleAutoComplete(selection)}}
+				onChange={selection => {
+					handleAutoComplete(selection);
+				}}
 			>
 				{({
 					clearSelection,
@@ -151,14 +152,15 @@ export default function IntegrationDownshift(props) {
 							<div {...getMenuProps()}>
 								{isOpen ? (
 									<Paper className={classes.paper} square>
-										{getSuggestions(inputValue,suggestions).map((suggestion, index) =>
-											renderSuggestion({
-												suggestion,
-												index,
-												itemProps: getItemProps({ item: suggestion.label }),
-												highlightedIndex,
-												selectedItem
-											})
+										{getSuggestions(inputValue, suggestions).map(
+											(suggestion, index) =>
+												renderSuggestion({
+													suggestion,
+													index,
+													itemProps: getItemProps({ item: suggestion.label }),
+													highlightedIndex,
+													selectedItem
+												})
 										)}
 									</Paper>
 								) : null}

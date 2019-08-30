@@ -47,12 +47,12 @@ export default function Signup(props) {
 		loading
 	} = props;
 
-	const doesDigsExist=(digs)=>{
-		const currentDigs=suggestions.filter(suggestion=>(
-			suggestion.label === digs
-		))
+	const doesDigsExist = digs => {
+		const currentDigs = suggestions.filter(
+			suggestion => suggestion.label === digs
+		);
 		return currentDigs;
-	}
+	};
 
 	const styles = {
 		logo: {
@@ -167,16 +167,18 @@ export default function Signup(props) {
 										name="digs"
 										placeholder={'Enter digs name'}
 										value={digs}
+										required
 										onChange={handleChange}
 									/>
 									{doesDigsExist(digs).length ? (
-									<FormHelperText error id="my-helper-text">
-										Ahh that name is already taken hey
-									</FormHelperText>
-								) : null}
+										<FormHelperText error id="my-helper-text">
+											Ahh that name is already taken hey
+										</FormHelperText>
+									) : null}
 								</FormControl>
 							) : (
 								<AutoComplete
+									required
 									suggestions={suggestions}
 									handleAutoComplete={handleAutoComplete}
 								/>
@@ -199,6 +201,7 @@ export default function Signup(props) {
 							<FormControl>
 								<Input
 									name="usernameSignUp"
+									required
 									placeholder={'username'}
 									value={usernameSignUp}
 									onChange={handleChange}
@@ -219,12 +222,19 @@ export default function Signup(props) {
 
 						<Grid item>
 							<FormControl>
-							<Input
-								name="emailSignUp"
-								placeholder={'Email address'}
-								value={emailSignUp}
-								onChange={handleChange}
-							/>
+								<Input
+									name="emailSignUp"
+									placeholder={'Email address'}
+									required
+									type="email"
+									value={emailSignUp}
+									onChange={handleChange}
+								/>
+								{error.email ? (
+									<FormHelperText error id="my-helper-text">
+										{error.email}
+									</FormHelperText>
+								) : null}
 							</FormControl>
 						</Grid>
 					</Grid>
@@ -240,13 +250,19 @@ export default function Signup(props) {
 
 						<Grid item>
 							<FormControl>
-							<Input
-								name="passwordSignUp"
-								placeholder={'Password'}
-								type="password"
-								value={passwordSignUp}
-								onChange={handleChange}
-							/>
+								<Input
+									name="passwordSignUp"
+									placeholder={'Password'}
+									type="password"
+									required
+									value={passwordSignUp}
+									onChange={handleChange}
+								/>
+								{error.password1 ? (
+									<FormHelperText error id="my-helper-text">
+										{error.password1}
+									</FormHelperText>
+								) : null}
 							</FormControl>
 						</Grid>
 					</Grid>
@@ -262,13 +278,19 @@ export default function Signup(props) {
 
 						<Grid item>
 							<FormControl>
-							<Input
-								name="passwordSignUpConfirm"
-								placeholder={'Password (again)'}
-								type="password"
-								value={passwordSignUpConfirm}
-								onChange={handleChange}
-							/>
+								<Input
+									name="passwordSignUpConfirm"
+									placeholder={'Password (again)'}
+									type="password"
+									required
+									value={passwordSignUpConfirm}
+									onChange={handleChange}
+								/>
+								{error.password ? (
+									<FormHelperText error id="my-helper-text">
+										{error.password}
+									</FormHelperText>
+								) : null}
 							</FormControl>
 						</Grid>
 					</Grid>
@@ -282,6 +304,7 @@ export default function Signup(props) {
 							Sign up
 						</LinkButton> */}
 						<CustomButton
+							disabled={doesDigsExist(digs).length ? true: false}
 							type="submit"
 							style={styles.signInButton}
 							text={'Sign up'}
