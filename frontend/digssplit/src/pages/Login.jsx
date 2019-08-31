@@ -9,6 +9,7 @@ import {
 	FormHelperText,
 	Input
 } from '@material-ui/core';
+import {Redirect} from 'react-router-dom'
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
@@ -20,7 +21,7 @@ import Textfield from './../components/Textfield';
 import logoblack from './../img/digssplit_logo_black.png';
 
 export default function Login(props) {
-	const { handleChange, email, password, handleSubmit, error, loading } = props;
+	const { handleChange, email, password, handleSubmit, error, loading,AUTHENTICATED} = props;
 
 	const styles = {
 		logo: {
@@ -57,6 +58,9 @@ export default function Login(props) {
 			color: '#495057'
 		}
 	};
+	if(AUTHENTICATED){
+		return <Redirect push to="/expenses" /> 
+	}else{
 	return (
 		<div style={{ flexGrow: '1' }}>
 			<LinkButton
@@ -189,4 +193,5 @@ export default function Login(props) {
 			</Grid>
 		</div>
 	);
+					}
 }

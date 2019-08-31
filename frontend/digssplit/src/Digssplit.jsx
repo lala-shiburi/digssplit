@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import {
+	BrowserRouter,
+	Route,
+	Switch,
+	withRouter,
+	Redirect
+} from 'react-router-dom';
 import axios from 'axios';
 
 import Home from './pages/Home';
@@ -152,7 +158,11 @@ class App extends Component {
 				email: this.state.emailSignUp,
 				password1: this.state.passwordSignUp,
 				password2: this.state.passwordSignUpConfirm,
-				digs: { name: this.state.joiningDigs ? this.state.joiningDigs: this.state.digs }
+				digs: {
+					name: this.state.joiningDigs
+						? this.state.joiningDigs
+						: this.state.digs
+				}
 			})
 			.then(response => {
 				console.log(response.data.key);
@@ -367,6 +377,7 @@ class App extends Component {
 										{...props}
 										email={this.state.email}
 										password={this.state.password}
+										AUTHENTICATED={this.state.AUTHENTICATED}
 										handleChange={this.handleChange}
 										handleSubmit={this.handleSubmitSignIn}
 										error={this.state.error}
@@ -390,6 +401,7 @@ class App extends Component {
 										handleAutoComplete={this.handleAutoComplete}
 										error={this.state.error}
 										loading={this.state.loading}
+										AUTHENTICATED={this.state.AUTHENTICATED}
 										digs={this.state.digs}
 										signUp={this.signUp}
 										suggestions={this.state.existingDigs}

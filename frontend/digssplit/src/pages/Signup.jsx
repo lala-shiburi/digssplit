@@ -12,6 +12,7 @@ import {
 	FormHelperText,
 	Input
 } from '@material-ui/core';
+import {Redirect} from 'react-router-dom';
 import {
 	KeyboardArrowLeft,
 	Email,
@@ -44,9 +45,11 @@ export default function Signup(props) {
 		suggestions,
 		handleSubmit,
 		error,
-		loading
+		loading,
+		AUTHENTICATED
 	} = props;
-
+	
+	
 	const doesDigsExist = digs => {
 		const currentDigs = suggestions.filter(
 			suggestion => suggestion.label === digs
@@ -98,7 +101,14 @@ export default function Signup(props) {
 		// 	// marginLeft: '27%',
 		// }
 	};
+
+	if(AUTHENTICATED){ 
+	return <Redirect push to="/expenses" />}
+	 else{
+	
 	return (
+		
+	
 		<div style={{ flexGrow: '1' }}>
 			<LinkButton
 				style={{
@@ -304,7 +314,7 @@ export default function Signup(props) {
 							Sign up
 						</LinkButton> */}
 						<CustomButton
-							disabled={doesDigsExist(digs).length ? true: false}
+							disabled={doesDigsExist(digs).length ? true : false}
 							type="submit"
 							style={styles.signInButton}
 							text={'Sign up'}
@@ -327,5 +337,7 @@ export default function Signup(props) {
 				</Grid>
 			</Grid>
 		</div>
-	);
+					
+	);}
+					
 }
