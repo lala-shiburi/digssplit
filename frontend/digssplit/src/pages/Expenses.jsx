@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Button, Fab } from '@material-ui/core';
+import {Redirect} from 'react-router-dom'
 import AddIcon from '@material-ui/icons/Add';
 import 'typeface-roboto';
 
@@ -71,7 +72,7 @@ export default function Expenses(props) {
 			</Fab>
 			</>
 			)
-			: <><h1>Please login wena msunu</h1></>			
+			: <Redirect push to="/" />		
 			}
 		</React.Fragment>
 	);

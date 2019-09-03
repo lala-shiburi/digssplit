@@ -14,67 +14,47 @@ import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import TemplatePage from './pages/TemplatePage';
 
+const initialState = {
+	drawer: false,
+	username: '',
+	user: JSON.parse(localStorage.getItem('user')) || '',
+	email: '',
+	password: '',
+	usernameSignUp: '',
+	emailSignUp: '',
+	passwordSignUp: '',
+	passwordSignUpConfirm: '',
+	createDigs: 'true',
+	joiningDigs: '',
+	digs: '',
+	loading: false,
+	existingDigs: [],
+	expenses: JSON.parse(localStorage.getItem('expenses')) || '',
+	path: '',
+	payed: [],
+	isDialogOpen: false,
+	expensename: '',
+	amount: '',
+	categoriesList: [
+		'UTILITIES',
+		'HOUSEHOLD ITEMS',
+		'TRANSPORT',
+		'FOOD',
+		'ENTERTAINMENT',
+		'BOOZE',
+		'LOAN SHARK'
+	],
+	categories: ['UTILITIES', 'BOOZE'],
+	selectedCategory: '',
+	digsMates: JSON.parse(localStorage.getItem('digsMates')) || [0, 1, 2, 3, 4],
+	selecteddigsMates: [],
+	AUTH_TOKEN: localStorage.getItem('AUTH_TOKEN') || '',
+	AUTHENTICATED: localStorage.getItem('AUTHENTICATED') || false,
+	error: ''
+};
+
 class App extends Component {
-	state = {
-		drawer: false,
-		username: '',
-		user: '',
-		email: '',
-		password: '',
-		usernameSignUp: '',
-		emailSignUp: '',
-		passwordSignUp: '',
-		passwordSignUpConfirm: '',
-		createDigs: 'true',
-		joiningDigs: '',
-		digs: '',
-		loading: false,
-		existingDigs: [],
-		expenses: [
-			{
-				name: 'Electricity',
-				category: 'UTILITIES',
-				amount: 2000,
-				membersOwing: [1, 2, 3],
-				ownerId: '12'
-			},
-			{
-				name: 'Uber',
-				category: 'TRANSPORT',
-				amount: 100,
-				membersOwing: [0, 1, 2],
-				ownerId: '12'
-			},
-			{
-				name: 'Black Label',
-				category: 'BOOZE',
-				amount: 1000,
-				membersOwing: [1, 2, 3],
-				ownerId: '12'
-			}
-		],
-		path: '',
-		payed: [],
-		isDialogOpen: false,
-		expensename: '',
-		amount: '',
-		categoriesList: [
-			'UTILITIES',
-			'HOUSEHOLD ITEMS',
-			'TRANSPORT',
-			'FOOD',
-			'ENTERTAINMENT',
-			'BOOZE',
-			'LOAN SHARK'
-		],
-		categories: ['UTILITIES', 'BOOZE'],
-		selectedCategory: '',
-		digsMates: [0, 1, 2, 3, 4],
-		selecteddigsMates: [],
-		AUTH_TOKEN: '',
-		AUTHENTICATED: false,
-		error: ''
-	};
+	state = initialState;
 
 	// axios.defaults.headers.common['Authorization'] = this.state.AUTH_TOKEN;
 
@@ -117,10 +97,6 @@ class App extends Component {
 				}
 			);
 			let responseKey = 'Token ' + signIn.data.key;
-			// let auth = 'Token ' + response.data.key;
-			// this.setState({ AUTH_TOKEN: auth }, () => {
-			// 	this.getUser();
-			// });
 
 			const getUser = await axios.get('http://localhost:8000/users/current', {
 				headers: { Authorization: `${responseKey}` }
@@ -142,8 +118,13 @@ class App extends Component {
 				user: responseUser,
 				digsMates,
 				expenses,
-				loading: true
+				loading: false
 			});
+			localStorage.setItem('AUTH_TOKEN', responseKey);
+			localStorage.setItem('AUTHENTICATED', true);
+			localStorage.setItem('user', JSON.stringify(responseUser));
+			localStorage.setItem('digsMates', JSON.stringify(digsMates));
+			localStorage.setItem('expenses', JSON.stringify(expenses));
 		} catch (err) {
 			// console.log(err.response.data.non_field_errors);
 			// this.setState({ error: err.response.data.non_field_errors });
@@ -151,32 +132,55 @@ class App extends Component {
 		}
 	};
 
-	signUp = () => {
-		axios
-			.post('http://localhost:8000/rest-auth/registration/', {
-				username: this.state.usernameSignUp,
-				email: this.state.emailSignUp,
-				password1: this.state.passwordSignUp,
-				password2: this.state.passwordSignUpConfirm,
-				digs: {
-					name: this.state.joiningDigs
-						? this.state.joiningDigs
-						: this.state.digs
+	signUp = async () => {
+		try {
+			const signUp = await axios.post(
+				'http://localhost:8000/rest-auth/registration/',
+				{
+					username: this.state.usernameSignUp,
+					email: this.state.emailSignUp,
+					password1: this.state.passwordSignUp,
+					password2: this.state.passwordSignUpConfirm,
+					digs: {
+						name: this.state.joiningDigs
+							? this.state.joiningDigs
+							: this.state.digs
+					}
 				}
-			})
-			.then(response => {
-				console.log(response.data.key);
-				let auth = 'Token ' + response.data.key;
-				this.setState({
-					AUTH_TOKEN: auth,
-					AUTHENTICATED: true,
-					loading: false
-				});
-			})
-			.catch(error => {
-				console.log(error);
-				this.setState({ error: error.response.data, loading: false });
+			);
+
+			let responseKey = 'Token ' + signUp.data.key;
+			const getUser = await axios.get('http://localhost:8000/users/current', {
+				headers: { Authorization: `${responseKey}` }
 			});
+			let responseUser = getUser.data;
+
+			const getDigsMates = await axios.get(
+				`http://localhost:8000/users/?digs=${responseUser.digs.id}`
+			);
+			const digsMates = getDigsMates.data;
+
+			const getDigsExpenses = await axios.get(
+				`http://localhost:8000/expenses/?digs=${responseUser.digs.id}`
+			);
+			const expenses = getDigsExpenses.data;
+			this.setState({
+				AUTH_TOKEN: responseKey,
+				AUTHENTICATED: true,
+				user: responseUser,
+				digsMates,
+				expenses,
+				loading: false
+			});
+			localStorage.setItem('AUTH_TOKEN', responseKey);
+			localStorage.setItem('AUTHENTICATED', true);
+			localStorage.setItem('user', JSON.stringify(responseUser));
+			localStorage.setItem('digsMates', JSON.stringify(digsMates));
+			localStorage.setItem('expenses', JSON.stringify(expenses));
+		} catch (error) {
+			console.log(error);
+			this.setState({ error: error.response.data, loading: false });
+		}
 	};
 
 	getDigs = () => {
@@ -342,6 +346,7 @@ class App extends Component {
 			isDialogOpen: !prevState.isDialogOpen
 		}));
 	};
+
 	componentDidMount() {
 		this.setState({ path: window.location.href });
 		this.getDigs();
