@@ -210,6 +210,11 @@ class App extends Component {
 			});
 	};
 
+	signOut=()=>{
+		this.setState(initialState);
+		localStorage.clear();
+	}
+
 	handleChange = event => {
 		let name = event.target.name;
 		this.setState({ ...this.state, [name]: event.target.value });
@@ -359,8 +364,9 @@ class App extends Component {
 					<TemplatePage
 						drawer={this.state.drawer}
 						toggleDrawer={this.toggleDrawer}
+						AUTHENTICATED={this.state.AUTHENTICATED}
+						signOut={this.signOut}
 						path={this.state.path}
-						currentPath={this.currentPath}
 					>
 						<Switch>
 							<Route

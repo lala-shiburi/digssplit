@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 
  function TemplatePage(props) {
 	const classes = useStyles();
-	const { drawer, toggleDrawer, currentPath } = props;
+	const { drawer, toggleDrawer,AUTHENTICATED,signOut } = props;
 	const currentLocation=()=>(
 		window.location.href
 	)
@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 					</AppBar>
 				</div>
 				{props.children}
-				<TemporaryDrawer drawer={drawer} toggleDrawer={toggleDrawer} />
+				<TemporaryDrawer AUTHENTICATED={AUTHENTICATED} signOut={signOut} drawer={drawer} toggleDrawer={toggleDrawer} />
 			</Container>
 		</React.Fragment>
 	);

@@ -20,14 +20,14 @@ const useStyles = makeStyles({
 	},
 	navlink: {
 		textDecoration: 'none',
-		color:'inherit'
+		color: 'inherit'
 	}
 });
 
 export default function TemporaryDrawer(props) {
 	const classes = useStyles();
 
-	const { toggleDrawer, drawer } = props;
+	const { toggleDrawer, drawer, AUTHENTICATED, signOut } = props;
 
 	const sideList = side => (
 		<div
@@ -63,7 +63,8 @@ export default function TemporaryDrawer(props) {
 				)}
 			</List>
 			<Divider />
-			<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>
+			{AUTHENTICATED ? <LinkButton onClick={signOut} to="/login">SIGN OUT</LinkButton> :
+			<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>}
 		</div>
 	);
 
