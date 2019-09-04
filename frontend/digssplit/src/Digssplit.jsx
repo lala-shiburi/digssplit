@@ -212,7 +212,8 @@ class App extends Component {
 
 	signOut = () => {
 		this.setState(initialState);
-		localStorage.clear();
+		window.localStorage.clear();
+		console.log('clearing')
 	};
 
 	handleChange = event => {
@@ -329,20 +330,21 @@ class App extends Component {
 		 		headers: { Authorization: `${this.state.AUTH_TOKEN}` }
 		 	})
 		 	.then(response => {
-		 		console.log(response.data);
+				 expenses.push(response.data);
+				 console.log(expenses)
+				 this.setState({expenses,
+					expensename: '',
+					selectedCategory: '',
+					amount: '',
+					selecteddigsMates: []},()=>(
+						localStorage.setItem('expenses',JSON.stringify(this.state.expenses))
+					))
 		 	})
 		 	.catch(error => {
 		 		console.log(error);
 		 	});
-		expenses.push(expense);
-
-		this.setState({
-			expenses,
-			expensename: '',
-			selectedCategory: '',
-			amount: '',
-			selecteddigsMates: []
-		});
+	
+		console.log(expenses)
 
 		this.handleDialog();
 	};
