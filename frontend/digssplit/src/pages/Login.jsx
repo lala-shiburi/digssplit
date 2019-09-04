@@ -162,7 +162,7 @@ export default function Login(props) {
 						</Grid>
 					) : null}
 
-					<Grid Item xs={12}>
+					<Grid item xs={12}>
 						{/* <LinkButton
 							onClick={signIn}
 							style={styles.signInButton}

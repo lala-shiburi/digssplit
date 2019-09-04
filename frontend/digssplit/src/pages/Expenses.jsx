@@ -41,6 +41,8 @@ export default function Expenses(props) {
 			{AUTHENTICATED ? (
 			<>
 			<Grid container>
+				{expenses.length?
+				<>
 				<ExpenseCategory
 					checkbox={checkbox}
 					updatePayments={updatePayments}
@@ -53,6 +55,8 @@ export default function Expenses(props) {
 				<Grid item>
 					<Button onClick={updatePayments}>Update payments</Button>
 				</Grid>
+				</>
+				: <h4>You have no expenses</h4>}
 				<Modal
 					open={open}
 					expensename={expensename}

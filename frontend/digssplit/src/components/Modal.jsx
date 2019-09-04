@@ -60,6 +60,7 @@ export default function FormDialog(props) {
 				<DialogTitle id="form-dialog-title" style={styles.dialogTitle}>
 					Add new expense
 				</DialogTitle>
+				{digsMates.length>1?
 				<DialogContent>
 					<Select
 						handleChange={handleChange}
@@ -89,13 +90,18 @@ export default function FormDialog(props) {
 						handleChange={handleChange}
 						digsMates={digsMates.map(member => member.username)}
 					/>
-				</DialogContent>
+				</DialogContent>:<DialogContent>
+					<h4>Hey, please get some friends so they can owe you</h4>
+				</DialogContent>}
+
 				<DialogActions style={styles.dialogActions}>
+					{digsMates.lenth>1?
 					<CustomButton
 						onClick={handleAddExpense}
 						style={styles.signInButton}
 						text={'Save'}
-					/>
+					/>:null
+					}
 					<CustomButton
 						onClick={handleDialog}
 						style={styles.signInButton}

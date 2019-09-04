@@ -39,7 +39,7 @@ export default class Home extends Component {
 					</Grid>
 
 					<Grid item xs={12}>
-						<Paper elevation="14" style={styles.paper}>
+						<Paper elevation={14} style={styles.paper}>
 							{/* <CustomButton
 								style={styles.button}
 								text={'LOG IN / SIGN UP'}
