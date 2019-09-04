@@ -33,7 +33,7 @@ export default function SimpleSelect(props) {
 		<FormControl className={classes.formControl}>
 			<Select
 				value={selectedCategory}
-				onChange={handleChange(name)}
+				onChange={handleChange}
 				name="selectedCategory"
 				displayEmpty
 				className={classes.selectEmpty}

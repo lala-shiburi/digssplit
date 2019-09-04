@@ -35,7 +35,8 @@ export default function Textfield(props) {
 				style={style}
 				id="custom-css-standard-input"
                 placeholder={placeholder}
-                onChange={handleChange(name)}
+				onChange={handleChange}
+				name={name}
                 value={value}
                 type={type}
 			/>

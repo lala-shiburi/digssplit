@@ -66,7 +66,8 @@ export default function MultipleSelect(props) {
 				multiple
 				displayEmpty
 				value={selecteddigsMates}
-				onChange={handleChange(name)}
+				name={name}
+				onChange={handleChange}
 				input={<Input id="select-multiple-placeholder" />}
 				renderValue={selected => {
 					if (selected.length === 0) {

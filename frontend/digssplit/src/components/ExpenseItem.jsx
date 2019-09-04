@@ -61,10 +61,10 @@ export default function ExpenseItem(props) {
 	};
 
 	const DigsmateName = id => {
-		let usernameArray = digsMates.map(digsmate => {
-			return digsmate.id === id ? digsmate.username : '';
+		let usernameArray = digsMates.filter(digsmate => {
+			return digsmate.id === id;
 		});
-		return usernameArray[0];
+		return usernameArray[0].username;
 	};
 
 	return (

@@ -210,10 +210,10 @@ class App extends Component {
 			});
 	};
 
-	signOut=()=>{
+	signOut = () => {
 		this.setState(initialState);
 		localStorage.clear();
-	}
+	};
 
 	handleChange = event => {
 		let name = event.target.name;
@@ -298,9 +298,10 @@ class App extends Component {
 
 	DigsmateId = members_owing => {
 		let digsMatesId = members_owing.map(digsmateUsername => {
-			return this.state.digsMates.map(mate => {
+			let filterId = this.state.digsMates.filter(mate => {
 				return mate.username === digsmateUsername ? mate.id : '';
 			});
+			return filterId[0].id
 		});
 		return digsMatesId;
 	};
@@ -314,8 +315,8 @@ class App extends Component {
 			selecteddigsMates,
 			user
 		} = this.state;
-		let selectedDigsMatesID = this.DigsmateId(selecteddigsMates)[0];
-		console.log(selectedDigsMatesID);
+		let selectedDigsMatesID = this.DigsmateId(selecteddigsMates);
+	
 		let expense = {
 			name: expensename,
 			amount: amount,
@@ -323,16 +324,16 @@ class App extends Component {
 			members_owing: selectedDigsMatesID,
 			digs: user.digs.id
 		};
-		axios
-			.post('http://localhost:8000/expenses/', expense, {
-				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
-			})
-			.then(response => {
-				console.log(response.data);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		 axios
+		 	.post('http://localhost:8000/expenses/', expense, {
+		 		headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+		 	})
+		 	.then(response => {
+		 		console.log(response.data);
+		 	})
+		 	.catch(error => {
+		 		console.log(error);
+		 	});
 		expenses.push(expense);
 
 		this.setState({
