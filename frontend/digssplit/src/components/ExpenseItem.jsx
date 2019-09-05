@@ -35,30 +35,12 @@ export default function ExpenseItem(props) {
 	const { category, expenses, handleCheckBox, digsMates, username } = props;
 	const filtered = (category, expenses) => {
 		let filtered = expenses.filter(
-			expense => fullCategory(expense.category) === category
+			expense => expense.category === category
 		);
 		return filtered;
 	};
 
-	const fullCategory = firstLetter => {
-		switch (firstLetter) {
-			case 'U':
-				return 'UTILITIES';
-			case 'H':
-				return 'HOUSEHOLD ITEMS';
-			case 'T':
-				return 'TRANSPORT';
-			case 'F':
-				return 'FOOD';
-			case 'E':
-				return 'ENTERTAINMENT';
-			case 'B':
-				return 'BOOZE';
-
-			default:
-				return 'LOAN SHARK';
-		}
-	};
+	
 
 	const DigsmateName = id => {
 		let usernameArray = digsMates.filter(digsmate => {

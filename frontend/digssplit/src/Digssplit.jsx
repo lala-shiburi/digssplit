@@ -35,16 +35,8 @@ const initialState = {
 	isDialogOpen: false,
 	expensename: '',
 	amount: '',
-	categoriesList: [
-		'UTILITIES',
-		'HOUSEHOLD ITEMS',
-		'TRANSPORT',
-		'FOOD',
-		'ENTERTAINMENT',
-		'BOOZE',
-		'LOAN SHARK'
-	],
-	categories: ['UTILITIES', 'BOOZE'],
+
+	categories: [],
 	selectedCategory: '',
 	digsMates: JSON.parse(localStorage.getItem('digsMates')) || [0, 1, 2, 3, 4],
 	selecteddigsMates: [],
@@ -52,6 +44,16 @@ const initialState = {
 	AUTHENTICATED: localStorage.getItem('AUTHENTICATED') || false,
 	error: ''
 };
+
+const categoriesList = [
+	'UTILITIES',
+	'HOUSEHOLD ITEMS',
+	'TRANSPORT',
+	'FOOD',
+	'ENTERTAINMENT',
+	'BOOZE',
+	'LOAN SHARK'
+];
 
 class App extends Component {
 	state = initialState;
@@ -111,13 +113,20 @@ class App extends Component {
 			const getDigsExpenses = await axios.get(
 				`http://localhost:8000/expenses/?digs=${responseUser.digs.id}`
 			);
+			
 			const expenses = getDigsExpenses.data;
+			console.log('expenses', expenses);
+			const categories = [
+				...new Set(expenses.map(expense => expense.category))
+			];
+			console.log('categories', categories);
 			this.setState({
 				AUTH_TOKEN: responseKey,
 				AUTHENTICATED: true,
 				user: responseUser,
 				digsMates,
 				expenses,
+				categories,
 				loading: false
 			});
 			localStorage.setItem('AUTH_TOKEN', responseKey);
@@ -164,12 +173,18 @@ class App extends Component {
 				`http://localhost:8000/expenses/?digs=${responseUser.digs.id}`
 			);
 			const expenses = getDigsExpenses.data;
+			console.log('expenses', expenses);
+			const categories = [
+				...new Set(expenses.map(expense => expense.category))
+			];
+			console.log('categories', categories);
 			this.setState({
 				AUTH_TOKEN: responseKey,
 				AUTHENTICATED: true,
 				user: responseUser,
 				digsMates,
 				expenses,
+				categories,
 				loading: false
 			});
 			localStorage.setItem('AUTH_TOKEN', responseKey);
@@ -212,7 +227,11 @@ class App extends Component {
 
 	signOut = () => {
 		window.localStorage.clear();
-		this.setState(initialState);
+		console.log(localStorage);
+		setTimeout(() => {
+			this.setState(initialState);
+		}, 200);
+
 		console.log('clearing');
 	};
 
@@ -444,7 +463,7 @@ class App extends Component {
 										amount={this.state.amount}
 										digsMates={this.state.digsMates}
 										username={this.state.user.username}
-										categoriesList={this.state.categoriesList}
+										categoriesList={categoriesList}
 										selectedCategory={this.state.selectedCategory}
 										handleCheckBox={this.handleCheckBox}
 										updatePayments={this.updatePayments}

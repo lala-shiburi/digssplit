@@ -12,6 +12,26 @@ const styles = {
 };
 
 export default function ExpenseCategory(props) {
+
+	const fullCategory = firstLetter => {
+		switch (firstLetter) {
+			case 'U':
+				return 'UTILITIES';
+			case 'H':
+				return 'HOUSEHOLD ITEMS';
+			case 'T':
+				return 'TRANSPORT';
+			case 'F':
+				return 'FOOD';
+			case 'E':
+				return 'ENTERTAINMENT';
+			case 'B':
+				return 'BOOZE';
+
+			default:
+				return 'LOAN SHARK';
+		}
+	};
 	const {
 		categories,
 		expenses,
@@ -28,9 +48,10 @@ export default function ExpenseCategory(props) {
 					<Grid item xs={12}>
 						<Paper>
 							<Typography style={styles.heading} variant="h4" gutterBottom>
-								{category}
+								{fullCategory(category)}
 							</Typography>
 							<ExpenseItem
+								fullCategory={fullCategory}
 								checkbox={checkbox}
 								updatePayments={updatePayments}
 								handleCheckBox={handleCheckBox}
