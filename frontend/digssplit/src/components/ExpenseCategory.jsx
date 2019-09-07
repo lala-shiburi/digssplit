@@ -12,7 +12,6 @@ const styles = {
 };
 
 export default function ExpenseCategory(props) {
-
 	const fullCategory = firstLetter => {
 		switch (firstLetter) {
 			case 'U':
@@ -37,9 +36,10 @@ export default function ExpenseCategory(props) {
 		expenses,
 		checkbox,
 		handleCheckBox,
+		handleDeleteExpense,
 		username,
 		updatePayments,
-		digsMates
+		digsMates,
 	} = props;
 	return (
 		<React.Fragment>
@@ -55,6 +55,7 @@ export default function ExpenseCategory(props) {
 								checkbox={checkbox}
 								updatePayments={updatePayments}
 								handleCheckBox={handleCheckBox}
+								handleDeleteExpense={handleDeleteExpense}
 								username={username}
 								digsMates={digsMates}
 								category={category}

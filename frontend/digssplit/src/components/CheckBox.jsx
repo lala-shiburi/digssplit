@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 export default function CheckBox(props) {
-	const { digsMate, handleCheckBox,index,item} = props;
+	const { digsMate, handleCheckBox, index, item } = props;
 	return (
 		<React.Fragment>
 			<FormGroup row>
@@ -12,17 +12,14 @@ export default function CheckBox(props) {
 					control={
 						<Checkbox
 							// checked={checked}
-							onChange={(e)=>handleCheckBox(e,index)}
-							value={digsMate+','+item}
+							onChange={e => handleCheckBox(e, index)}
+							value={digsMate + ',' + item}
+							key={digsMate + ',' + item}
 						/>
 					}
 					label={digsMate}
-					
 				/>
 			</FormGroup>
-	
 		</React.Fragment>
-		
-		
 	);
 }

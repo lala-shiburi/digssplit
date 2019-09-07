@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Person from '@material-ui/icons/Person';
 
 import CheckBox from './../components/CheckBox';
-
+import AlertModal from './../components/AlertModal';
 const styles = {
 	expenseName: {
 		fontWeight: '600',
@@ -32,15 +32,18 @@ const styles = {
 };
 
 export default function ExpenseItem(props) {
-	const { category, expenses, handleCheckBox, digsMates, username } = props;
+	const {
+		category,
+		expenses,
+		handleCheckBox,
+		handleDeleteExpense,
+		digsMates,
+		username
+	} = props;
 	const filtered = (category, expenses) => {
-		let filtered = expenses.filter(
-			expense => expense.category === category
-		);
+		let filtered = expenses.filter(expense => expense.category === category);
 		return filtered;
 	};
-
-	
 
 	const DigsmateName = id => {
 		let usernameArray = digsMates.filter(digsmate => {
@@ -89,12 +92,16 @@ export default function ExpenseItem(props) {
 								100}
 						</Grid>
 					</CardContent>
-					{items.owner === username ?
-					<CardActions>
-						
-						<Button>Delete</Button>
-					</CardActions>:
-					''}
+					{items.owner === username ? (
+						<CardActions>
+							<AlertModal
+								id={items.id}
+								handleDeleteExpense={handleDeleteExpense}
+							/>
+						</CardActions>
+					) : (
+						''
+					)}
 				</Card>
 			))}
 		</React.Fragment>

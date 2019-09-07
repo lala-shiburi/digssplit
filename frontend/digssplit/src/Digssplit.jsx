@@ -36,7 +36,7 @@ const initialState = {
 	expensename: '',
 	amount: '',
 
-	categories: [],
+	categories: JSON.parse(localStorage.getItem('categories')) || [],
 	selectedCategory: '',
 	digsMates: JSON.parse(localStorage.getItem('digsMates')) || [0, 1, 2, 3, 4],
 	selecteddigsMates: [],
@@ -113,13 +113,11 @@ class App extends Component {
 			const getDigsExpenses = await axios.get(
 				`http://localhost:8000/expenses/?digs=${responseUser.digs.id}`
 			);
-			
+
 			const expenses = getDigsExpenses.data;
-			console.log('expenses', expenses);
 			const categories = [
 				...new Set(expenses.map(expense => expense.category))
 			];
-			console.log('categories', categories);
 			this.setState({
 				AUTH_TOKEN: responseKey,
 				AUTHENTICATED: true,
@@ -130,6 +128,7 @@ class App extends Component {
 				loading: false
 			});
 			localStorage.setItem('AUTH_TOKEN', responseKey);
+			localStorage.setItem('categories', JSON.stringify(categories));
 			localStorage.setItem('AUTHENTICATED', true);
 			localStorage.setItem('user', JSON.stringify(responseUser));
 			localStorage.setItem('digsMates', JSON.stringify(digsMates));
@@ -173,11 +172,9 @@ class App extends Component {
 				`http://localhost:8000/expenses/?digs=${responseUser.digs.id}`
 			);
 			const expenses = getDigsExpenses.data;
-			console.log('expenses', expenses);
 			const categories = [
 				...new Set(expenses.map(expense => expense.category))
 			];
-			console.log('categories', categories);
 			this.setState({
 				AUTH_TOKEN: responseKey,
 				AUTHENTICATED: true,
@@ -188,6 +185,7 @@ class App extends Component {
 				loading: false
 			});
 			localStorage.setItem('AUTH_TOKEN', responseKey);
+			localStorage.setItem('categories', JSON.stringify(categories));
 			localStorage.setItem('AUTHENTICATED', true);
 			localStorage.setItem('user', JSON.stringify(responseUser));
 			localStorage.setItem('digsMates', JSON.stringify(digsMates));
@@ -228,10 +226,7 @@ class App extends Component {
 	signOut = () => {
 		window.localStorage.clear();
 		console.log(localStorage);
-		setTimeout(() => {
-			this.setState(initialState);
-		}, 200);
-
+		this.setState(initialState);
 		console.log('clearing');
 	};
 
@@ -250,10 +245,10 @@ class App extends Component {
 	};
 
 	handleCheckBox = e => {
-		console.log('you clicked something there chief', e.target.checked);
 		const { payed } = this.state;
 		let userId = e.target.value;
 		let index = payed.indexOf(userId);
+		//check if the it's already selected else add it to the payed array
 		if (index !== -1) {
 			payed.splice(index, 1);
 		} else {
@@ -261,50 +256,92 @@ class App extends Component {
 		}
 
 		this.setState({ payed });
-
-		console.log(payed);
 	};
 
+	//returns the digsmates id given the name of the user
+	digsMateId = name => {
+		let userIdArray = this.state.digsMates.filter(digsmate => {
+			return digsmate.username === name;
+		});
+		return userIdArray[0].id;
+	};
+
+	//updates expenses when digmates who have payed are selected
 	updatePayments = () => {
 		const { expenses, payed } = this.state;
-		//let index = payed.indexOf(',');
-		//let newArray=item.splice()
+
+		//get the expenses name from state payed which looks like ['username,expensename']
 		let payedExpenses = payed.map(payer => {
 			let expense = payer.split(',');
 			return expense[1];
 		});
-
+		//get the usernames of the selected digsmates from payed state
 		let expensePayer = payed.map(payer => {
 			let expense = payer.split(',');
 			return expense[0];
 		});
+		console.log('expense payer', expensePayer, 'payedExpense', payedExpenses);
+		//get the expenses from state using the names of the expenses
 		let filteredExpense = expenses.filter(expense => {
 			return payedExpenses.indexOf(expense.name) !== -1;
 		});
-		let indexes = [];
-		expenses.map((filtered, index) => {
-			filteredExpense.map(fil => {
-				if (fil.name == filtered.name) {
-					indexes.push(index);
+		let filteredExpenses = [];
+		payedExpenses.map(payed => {
+			for (let i = 0; i < expenses.length; i++) {
+				if (expenses[i].name === payed) {
+					filteredExpenses.push(expenses[i]);
 				}
-				return fil.name;
-			});
+			}
+			return null;
 		});
 
-		expensePayer.map(payer => {
-			indexes.map((indexes, index) => {
-				console.log(expenses[indexes].membersOwing.indexOf(parseInt(payer)));
-				let amountPerPayer =
-					expenses[indexes].amount / expenses[indexes].membersOwing.length;
-				expenses[indexes].membersOwing.splice(
-					expenses[indexes].membersOwing.indexOf(parseInt(payer)),
-					1
-				);
-				expenses[indexes].amount = Math.round(
-					((expenses[indexes].amount - amountPerPayer) * 100) / 100
-				);
+		console.log(filteredExpenses);
+
+		//get indexes of the payed expenses from state and store them indexes array
+		let indexes = [];
+		expenses.map((expense, index) => {
+			filteredExpenses.map(filtered => {
+				if (filtered.name === expense.name) {
+					indexes.push(index);
+				}
+				return null;
 			});
+			return null;
 		});
+		expensePayer.map((payer, index) => {
+			let amountPerPayer =
+				expenses[indexes[index]].amount /
+				expenses[indexes[index]].members_owing.length;
+			let indexOfId = expenses[indexes[index]].members_owing.indexOf(
+				this.digsMateId(payer)
+			);
+			if (indexOfId !== -1) {
+				expenses[indexes[index]].members_owing.splice(indexOfId, 1);
+				expenses[indexes[index]].amount = Math.round(
+					((expenses[indexes[index]].amount - amountPerPayer) * 100) / 100
+				);
+			}
+			return null;
+		});
+
+		// expensePayer.map(payer => {
+		// 	indexes.map((indexes, index) => {
+		// 		console.log(
+		// 			expenses[indexes].members_owing.indexOf(this.digsMateId(payer))
+		// 		);
+		// 		let amountPerPayer =
+		// 			expenses[indexes].amount / expenses[indexes].members_owing.length;
+		// 		let indexOfId = expenses[indexes].members_owing.indexOf(
+		// 			this.digsMateId(payer)
+		// 		);
+		// 		if (indexOfId !== -1) {
+		// 			expenses[indexes].members_owing.splice(indexOfId, 1);
+		// 			expenses[indexes].amount = Math.round(
+		// 				((expenses[indexes].amount - amountPerPayer) * 100) / 100
+		// 			);
+		// 		}
+		// 	});
+		// });
 
 		this.setState({ expenses, payed: [] });
 		console.log(filteredExpense, indexes, expenses, expensePayer);
@@ -314,6 +351,8 @@ class App extends Component {
 		indexes = [];
 
 		console.log(filteredExpense, indexes, expenses, expensePayer);
+
+		// checkboxesClass=document.getElementsByClassName('PrivateSwitchBase-input-232');
 	};
 
 	DigsmateId = members_owing => {
@@ -324,6 +363,26 @@ class App extends Component {
 			return filterId[0].id;
 		});
 		return digsMatesId;
+	};
+
+	handleDeleteExpense = id => {
+		const { expenses } = this.state;
+		const index = expenses.findIndex(expense=>expense.id===id)
+		expenses.splice(index, 1);
+		
+		axios
+			.delete(`http://localhost:8000/expenses/${id}`, {
+				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+			})
+			.then(response => {
+				console.log(response);
+				this.setState({ expenses }, () =>
+					localStorage.setItem('expenses', JSON.stringify(this.state.expenses))
+				);
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	};
 
 	handleAddExpense = () => {
@@ -469,6 +528,7 @@ class App extends Component {
 										updatePayments={this.updatePayments}
 										handleAddExpense={this.handleAddExpense}
 										handleDialog={this.handleDialog}
+										handleDeleteExpense={this.handleDeleteExpense}
 										handleChange={this.handleChange}
 										handleChangeSelect={this.handleChangeSelect}
 										open={this.state.isDialogOpen}

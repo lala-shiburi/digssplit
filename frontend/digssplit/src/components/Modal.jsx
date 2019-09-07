@@ -95,7 +95,7 @@ export default function FormDialog(props) {
 				</DialogContent>}
 
 				<DialogActions style={styles.dialogActions}>
-					{digsMates.lenth>1?
+					{digsMates.length>1?
 					<CustomButton
 						onClick={handleAddExpense}
 						style={styles.signInButton}
