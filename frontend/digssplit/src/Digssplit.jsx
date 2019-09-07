@@ -309,17 +309,31 @@ class App extends Component {
 			return null;
 		});
 		expensePayer.map((payer, index) => {
-			let amountPerPayer =
-				expenses[indexes[index]].amount /
-				expenses[indexes[index]].members_owing.length;
-			let indexOfId = expenses[indexes[index]].members_owing.indexOf(
-				this.digsMateId(payer)
-			);
+			let expense = expenses[indexes[index]];
+			let amountPerPayer = expense.amount / expense.members_owing.length;
+			let indexOfId = expense.members_owing.indexOf(this.digsMateId(payer));
 			if (indexOfId !== -1) {
-				expenses[indexes[index]].members_owing.splice(indexOfId, 1);
-				expenses[indexes[index]].amount = Math.round(
-					((expenses[indexes[index]].amount - amountPerPayer) * 100) / 100
+				expense.members_owing.splice(indexOfId, 1);
+				expense.amount = Math.round(
+					((expense.amount - amountPerPayer) * 100) / 100
 				);
+				axios
+					.put(`http://localhost:8000/expenses/${expense.id}/`, expense,{
+						headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+					})
+					.then(response => {
+						console.log(response);
+						expenses[indexes[index]] = expense;
+						this.setState({ expenses, payed: [] }, () =>
+							localStorage.setItem(
+								'expenses',
+								JSON.stringify(this.state.expenses)
+							)
+						);
+					})
+					.catch(error => {
+						console.log(error);
+					});
 			}
 			return null;
 		});
@@ -343,7 +357,7 @@ class App extends Component {
 		// 	});
 		// });
 
-		this.setState({ expenses, payed: [] });
+		//this.setState({ expenses, payed: [] });
 		console.log(filteredExpense, indexes, expenses, expensePayer);
 		payedExpenses = [];
 		expensePayer = [];
@@ -367,9 +381,9 @@ class App extends Component {
 
 	handleDeleteExpense = id => {
 		const { expenses } = this.state;
-		const index = expenses.findIndex(expense=>expense.id===id)
+		const index = expenses.findIndex(expense => expense.id === id);
 		expenses.splice(index, 1);
-		
+
 		axios
 			.delete(`http://localhost:8000/expenses/${id}`, {
 				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
