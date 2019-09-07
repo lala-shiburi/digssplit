@@ -8,6 +8,10 @@ const styles = {
 	},
 	heading: {
 		padding: '16px 0 0 16px'
+	},
+	paper: {
+		background: 'rgba(255, 255, 255, 0.6)',
+		paddingBottom:'1px'
 	}
 };
 
@@ -39,14 +43,14 @@ export default function ExpenseCategory(props) {
 		handleDeleteExpense,
 		username,
 		updatePayments,
-		digsMates,
+		digsMates
 	} = props;
 	return (
 		<React.Fragment>
 			{categories.map((category, index) => (
 				<Grid container style={styles.category} key={index}>
 					<Grid item xs={12}>
-						<Paper>
+						<Paper style={styles.paper}>
 							<Typography style={styles.heading} variant="h4" gutterBottom>
 								{fullCategory(category)}
 							</Typography>

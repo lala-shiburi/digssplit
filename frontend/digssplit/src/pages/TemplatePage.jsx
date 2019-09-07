@@ -41,6 +41,12 @@ const useStyles = makeStyles(theme => ({
 		backgroundPosition: '20% 50%',
 		height: '100vh'
 	},
+	containerExpenses: {
+		backgroundImage: `url(${backgroundImg})`,
+		backgroundColor: 'white',
+		backgroundRepeat:'repeat',
+		height: '100%'
+	},
 	AppBar: {
 		background: 'transparent',
 		boxShadow: 'none'
@@ -62,7 +68,7 @@ const useStyles = makeStyles(theme => ({
 				className={
 					currentLocation() === 'http://localhost:3000/'
 						? classes.containerHome
-						: classes.containerOther
+						: currentLocation() === 'http://localhost:3000/expenses' ? classes.containerExpenses:classes.containerOther
 				}
 			>
 				<div className={classes.root}>

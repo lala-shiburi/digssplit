@@ -1,10 +1,11 @@
 import React from 'react';
 import { Grid, Button, Fab } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import AddIcon from '@material-ui/icons/Add';
+import { Add, Refresh } from '@material-ui/icons/';
 import 'typeface-roboto';
 
 import ExpenseCategory from './../components/ExpenseCategory';
+import CustomButton from './../components/Button';
 import Modal from './../components/Modal';
 
 const styles = {
@@ -55,7 +56,10 @@ export default function Expenses(props) {
 									handleDeleteExpense={handleDeleteExpense}
 								/>
 								<Grid item>
-									<Button onClick={updatePayments}>Update payments</Button>
+									{/* <Button onClick={updatePayments}>Update payments</Button> */}
+									<CustomButton icon={<Refresh style={{marginRight:'5px'}}/>} text={'Update Payments'} onClick={updatePayments}/>
+										
+									
 								</Grid>
 							</>
 						) : (
@@ -76,7 +80,7 @@ export default function Expenses(props) {
 						/>
 					</Grid>
 					<Fab color="primary" aria-label="Add" style={styles.button}>
-						<AddIcon onClick={handleDialog} />
+						<Add onClick={handleDialog} />
 					</Fab>
 				</>
 			) : (

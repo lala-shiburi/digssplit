@@ -28,6 +28,9 @@ const styles = {
 	divider: {
 		height: '2px',
 		width: '50%'
+	},
+	card: {
+		margin: '30px 8px'
 	}
 };
 
@@ -55,7 +58,7 @@ export default function ExpenseItem(props) {
 	return (
 		<React.Fragment>
 			{filtered(category, expenses).map((items, index) => (
-				<Card key={index}>
+				<Card style={styles.card} key={index}>
 					<CardContent>
 						<Typography varient="h5" style={styles.expenseName}>
 							{items.name}
