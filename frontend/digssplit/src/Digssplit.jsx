@@ -224,9 +224,12 @@ class App extends Component {
 	};
 
 	signOut = () => {
-		window.localStorage.clear();
+		localStorage.clear();
 		console.log(localStorage);
-		this.setState(initialState);
+		setTimeout(() => {
+			this.setState(initialState, console.log(this.state));
+		}, 200);
+
 		console.log('clearing');
 	};
 
@@ -318,7 +321,7 @@ class App extends Component {
 					((expense.amount - amountPerPayer) * 100) / 100
 				);
 				axios
-					.put(`http://localhost:8000/expenses/${expense.id}/`, expense,{
+					.put(`http://localhost:8000/expenses/${expense.id}/`, expense, {
 						headers: { Authorization: `${this.state.AUTH_TOKEN}` }
 					})
 					.then(response => {
@@ -406,7 +409,8 @@ class App extends Component {
 			amount,
 			selectedCategory,
 			selecteddigsMates,
-			user
+			user,
+			categories
 		} = this.state;
 		let selectedDigsMatesID = this.DigsmateId(selecteddigsMates);
 
@@ -423,6 +427,7 @@ class App extends Component {
 			})
 			.then(response => {
 				expenses.push(response.data);
+				categories.push(response.data.category)
 				console.log(expenses);
 				this.setState(
 					{
@@ -430,13 +435,19 @@ class App extends Component {
 						expensename: '',
 						selectedCategory: '',
 						amount: '',
-						selecteddigsMates: []
+						selecteddigsMates: [],
+						categories
 					},
-					() =>
+					() =>{
 						localStorage.setItem(
 							'expenses',
 							JSON.stringify(this.state.expenses)
+						);
+						localStorage.setItem(
+							'categories',
+							JSON.stringify(this.state.categories)
 						)
+					}
 				);
 			})
 			.catch(error => {
