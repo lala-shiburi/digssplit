@@ -14,7 +14,7 @@ import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import TemplatePage from './pages/TemplatePage';
 
-const initialState = {
+const getInitialState=() =>( {
 	drawer: false,
 	username: '',
 	user: JSON.parse(localStorage.getItem('user')) || '',
@@ -42,8 +42,11 @@ const initialState = {
 	selecteddigsMates: [],
 	AUTH_TOKEN: localStorage.getItem('AUTH_TOKEN') || '',
 	AUTHENTICATED: localStorage.getItem('AUTHENTICATED') || false,
-	error: ''
-};
+	error: '',
+	inviteModal: false,
+	inviteName: '',
+	inviteEmail: ''
+});
 
 const categoriesList = [
 	'UTILITIES',
@@ -56,7 +59,7 @@ const categoriesList = [
 ];
 
 class App extends Component {
-	state = initialState;
+	state = getInitialState();
 
 	// axios.defaults.headers.common['Authorization'] = this.state.AUTH_TOKEN;
 
@@ -225,12 +228,7 @@ class App extends Component {
 
 	signOut = () => {
 		localStorage.clear();
-		console.log(localStorage);
-		setTimeout(() => {
-			this.setState(initialState, console.log(this.state));
-		}, 200);
-
-		console.log('clearing');
+		this.setState(getInitialState());
 	};
 
 	handleChange = event => {
@@ -259,6 +257,29 @@ class App extends Component {
 		}
 
 		this.setState({ payed });
+	};
+
+	handleInviteModal = () => {
+		this.setState(prevState => ({
+			inviteModal: !prevState.inviteModal
+		}));
+	};
+
+	sendInvite = () => {
+		const { inviteName, inviteEmail } = this.state;
+		const message = `You are being invited by ${this.state.user.username} to join digssplit, go to
+		www.digssplit.herokuapp.com/signup and search for ${(this.state.user.digs.name).toUpperCase()} to sign up and join your mate.`;
+		let invite = { name: inviteName, email: inviteEmail, message: message };
+		axios
+			.post('http://localhost:8000/invite/', invite, {
+				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
+			})
+			.then(response => {
+				this.setState({ inviteName: '', inviteEmail: '', inviteModal: false });
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	};
 
 	//returns the digsmates id given the name of the user
@@ -427,7 +448,7 @@ class App extends Component {
 			})
 			.then(response => {
 				expenses.push(response.data);
-				categories.push(response.data.category)
+				categories.push(response.data.category);
 				console.log(expenses);
 				this.setState(
 					{
@@ -438,7 +459,7 @@ class App extends Component {
 						selecteddigsMates: [],
 						categories
 					},
-					() =>{
+					() => {
 						localStorage.setItem(
 							'expenses',
 							JSON.stringify(this.state.expenses)
@@ -446,7 +467,7 @@ class App extends Component {
 						localStorage.setItem(
 							'categories',
 							JSON.stringify(this.state.categories)
-						)
+						);
 					}
 				);
 			})
@@ -476,7 +497,13 @@ class App extends Component {
 				<BrowserRouter>
 					<TemplatePage
 						drawer={this.state.drawer}
+						inviteEmail={this.state.inviteEmail}
+						inviteName={this.state.inviteName}
+						inviteModal={this.state.inviteModal}
+						handleInviteModal={this.handleInviteModal}
+						sendInvite={this.sendInvite}
 						toggleDrawer={this.toggleDrawer}
+						handleChange={this.handleChange}
 						AUTHENTICATED={this.state.AUTHENTICATED}
 						signOut={this.signOut}
 						path={this.state.path}

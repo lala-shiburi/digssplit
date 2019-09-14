@@ -6,9 +6,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import TemporaryDrawer from '../components/Drawer';
+import InviteModal from '../components/InviteModal';
 import logo from './../img/digssplit_logo.png';
 import logoBlack from './../img/digssplit_logo_black.png';
 import backgroundImgHome from './../img/background.jpg';
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 	containerExpenses: {
 		backgroundImage: `url(${backgroundImg})`,
 		backgroundColor: 'white',
-		backgroundRepeat:'repeat',
+		backgroundRepeat: 'repeat',
 		height: '100%'
 	},
 	AppBar: {
@@ -53,12 +54,21 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
- function TemplatePage(props) {
+function TemplatePage(props) {
 	const classes = useStyles();
-	const { drawer, toggleDrawer,AUTHENTICATED,signOut } = props;
-	const currentLocation=()=>(
-		window.location.href
-	)
+	const {
+		drawer,
+		toggleDrawer,
+		AUTHENTICATED,
+		signOut,
+		inviteEmail,
+		inviteName,
+		inviteModal,
+		handleInviteModal,
+		sendInvite,
+		handleChange
+	} = props;
+	const currentLocation = () => window.location.href;
 	return (
 		<React.Fragment>
 			<CssBaseline />
@@ -68,7 +78,9 @@ const useStyles = makeStyles(theme => ({
 				className={
 					currentLocation() === 'http://localhost:3000/'
 						? classes.containerHome
-						: currentLocation() === 'http://localhost:3000/expenses' ? classes.containerExpenses:classes.containerOther
+						: currentLocation() === 'http://localhost:3000/expenses'
+						? classes.containerExpenses
+						: classes.containerOther
 				}
 			>
 				<div className={classes.root}>
@@ -105,10 +117,24 @@ const useStyles = makeStyles(theme => ({
 					</AppBar>
 				</div>
 				{props.children}
-				<TemporaryDrawer AUTHENTICATED={AUTHENTICATED} signOut={signOut} drawer={drawer} toggleDrawer={toggleDrawer} />
+				<TemporaryDrawer
+					AUTHENTICATED={AUTHENTICATED}
+					handleInviteModal={handleInviteModal}
+					signOut={signOut}
+					drawer={drawer}
+					toggleDrawer={toggleDrawer}
+				/>
+				<InviteModal
+					handleInviteModal={handleInviteModal}
+					sendInvite={sendInvite}
+					inviteModal={inviteModal}
+					inviteName={inviteName}
+					inviteEmail={inviteEmail}
+					handleChange={handleChange}
+				/>
 			</Container>
 		</React.Fragment>
 	);
 }
 
-export default withRouter(TemplatePage)
+export default withRouter(TemplatePage);

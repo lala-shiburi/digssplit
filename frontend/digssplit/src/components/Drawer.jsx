@@ -27,7 +27,13 @@ const useStyles = makeStyles({
 export default function TemporaryDrawer(props) {
 	const classes = useStyles();
 
-	const { toggleDrawer, drawer, AUTHENTICATED, signOut } = props;
+	const {
+		toggleDrawer,
+		drawer,
+		AUTHENTICATED,
+		signOut,
+		handleInviteModal
+	} = props;
 
 	const sideList = side => (
 		<div
@@ -39,20 +45,30 @@ export default function TemporaryDrawer(props) {
 			<List>
 				{['ADD AN EXPENSE', 'ADD A DIGSMATE', 'VIEW EXPENSES'].map(
 					(text, index) => (
-						<ListItem button key={text}>
+						<ListItem
+							onClick={index === 1 ? () => handleInviteModal() : null}
+							button
+							key={text}
+						>
 							<ListItemIcon>
 								{index === 0 ? (
 									<Add />
 								) : index === 1 ? (
 									<PersonAdd />
 								) : (
-									<NavLink className={classes.navlink} to="/expenses">
+									<NavLink
+										className={classes.navlink}
+										to={AUTHENTICATED ? '/expenses' : '/login'}
+									>
 										<RemoveRedEye />
 									</NavLink>
 								)}
 							</ListItemIcon>
 							{index === 2 ? (
-								<NavLink className={classes.navlink} to="/expenses">
+								<NavLink
+									className={classes.navlink}
+									to={AUTHENTICATED ? '/expenses' : '/login'}
+								>
 									<ListItemText primary={text} />
 								</NavLink>
 							) : (
@@ -63,8 +79,13 @@ export default function TemporaryDrawer(props) {
 				)}
 			</List>
 			<Divider />
-			{AUTHENTICATED ? <LinkButton onClick={signOut} to="/login">SIGN OUT</LinkButton> :
-			<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>}
+			{AUTHENTICATED ? (
+				<LinkButton onClick={signOut} to="/login">
+					SIGN OUT
+				</LinkButton>
+			) : (
+				<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>
+			)}
 		</div>
 	);
 
