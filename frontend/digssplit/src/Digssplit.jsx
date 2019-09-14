@@ -14,7 +14,7 @@ import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import TemplatePage from './pages/TemplatePage';
 
-const getInitialState=() =>( {
+const getInitialState = () => ({
 	drawer: false,
 	username: '',
 	user: JSON.parse(localStorage.getItem('user')) || '',
@@ -267,8 +267,10 @@ class App extends Component {
 
 	sendInvite = () => {
 		const { inviteName, inviteEmail } = this.state;
-		const message = `You are being invited by ${this.state.user.username} to join digssplit, go to
-		www.digssplit.herokuapp.com/signup and search for ${(this.state.user.digs.name).toUpperCase()} to sign up and join your mate.`;
+		const message = `You are being invited by ${
+			this.state.user.username
+		} to join digssplit, go to
+		www.digssplit.herokuapp.com/signup and search for ${this.state.user.digs.name.toUpperCase()} to sign up and join your mate.`;
 		let invite = { name: inviteName, email: inviteEmail, message: message };
 		axios
 			.post('http://localhost:8000/invite/', invite, {
@@ -506,6 +508,7 @@ class App extends Component {
 						handleChange={this.handleChange}
 						AUTHENTICATED={this.state.AUTHENTICATED}
 						signOut={this.signOut}
+						handleDialog={this.handleDialog}
 						path={this.state.path}
 					>
 						<Switch>

@@ -32,7 +32,8 @@ export default function TemporaryDrawer(props) {
 		drawer,
 		AUTHENTICATED,
 		signOut,
-		handleInviteModal
+		handleInviteModal,
+		handleDialog
 	} = props;
 
 	const sideList = side => (
@@ -43,41 +44,27 @@ export default function TemporaryDrawer(props) {
 			onKeyDown={toggleDrawer(false)}
 		>
 			<List>
-				{['ADD AN EXPENSE', 'ADD A DIGSMATE', 'VIEW EXPENSES'].map(
-					(text, index) => (
-						<ListItem
-							onClick={index === 1 ? () => handleInviteModal() : null}
-							button
-							key={text}
-						>
-							<ListItemIcon>
-								{index === 0 ? (
-									<Add />
-								) : index === 1 ? (
-									<PersonAdd />
-								) : (
-									<NavLink
-										className={classes.navlink}
-										to={AUTHENTICATED ? '/expenses' : '/login'}
-									>
-										<RemoveRedEye />
-									</NavLink>
-								)}
-							</ListItemIcon>
-							{index === 2 ? (
-								<NavLink
-									className={classes.navlink}
-									to={AUTHENTICATED ? '/expenses' : '/login'}
-								>
-									<ListItemText primary={text} />
-								</NavLink>
-							) : (
-								<ListItemText primary={text} />
-							)}
-						</ListItem>
-					)
-				)}
+				{AUTHENTICATED ?
+				<>
+				<ListItem button onClick={handleDialog}>
+					<ListItemIcon>
+						<Add />
+					</ListItemIcon>
+					<ListItemText primary={'ADD AN EXPENSE'} />
+				</ListItem>
+				<ListItem button onClick={handleInviteModal}>
+					<ListItemIcon>
+						<PersonAdd />
+					</ListItemIcon>
+					<ListItemText primary={'ADD A DIGSMATE'} />
+				</ListItem>
+				</>:
+				<ListItem>
+					<ListItemText primary={'SIGN IN FOR MORE OPTIONS'} />
+				</ListItem>
+				}
 			</List>
+			
 			<Divider />
 			{AUTHENTICATED ? (
 				<LinkButton onClick={signOut} to="/login">

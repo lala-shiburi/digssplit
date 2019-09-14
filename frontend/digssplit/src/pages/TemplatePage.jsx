@@ -66,7 +66,8 @@ function TemplatePage(props) {
 		inviteModal,
 		handleInviteModal,
 		sendInvite,
-		handleChange
+		handleChange,
+		handleDialog
 	} = props;
 	const currentLocation = () => window.location.href;
 	return (
@@ -123,6 +124,7 @@ function TemplatePage(props) {
 					signOut={signOut}
 					drawer={drawer}
 					toggleDrawer={toggleDrawer}
+					handleDialog={handleDialog}
 				/>
 				<InviteModal
 					handleInviteModal={handleInviteModal}
