@@ -47,18 +47,20 @@ const styles = {
 	formControl: {}
 };
 
-
-
 function getStyles(name, personName, theme) {
-	return {
-		
-	};
+	return {};
 }
 
 export default function MultipleSelect(props) {
 	const classes = useStyles();
 	const theme = useTheme();
-	const { handleChange, name, selecteddigsMates, digsMates } = props;
+	const {
+		handleChange,
+		name,
+		selecteddigsMates,
+		digsMates,
+		classesUnderline
+	} = props;
 
 	return (
 		<FormControl className={clsx(classes.formControl, classes.noLabel)}>
@@ -68,7 +70,9 @@ export default function MultipleSelect(props) {
 				value={selecteddigsMates}
 				name={name}
 				onChange={handleChange}
-				input={<Input id="select-multiple-placeholder" />}
+				input={
+					<Input id="select-multiple-placeholder" classes={{underline:classesUnderline}} />
+				}
 				renderValue={selected => {
 					if (selected.length === 0) {
 						return <em>Select debtors</em>;

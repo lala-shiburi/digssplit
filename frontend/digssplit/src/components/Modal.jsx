@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
+import { Dialog, makeStyles } from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -14,6 +14,19 @@ import CustomButton from './../components/Button';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="left" ref={ref} {...props} />;
+});
+const useStyles = makeStyles({
+	underline: {
+		'&:before': {
+			borderBottomColor: 'rgb(73, 80, 87)'
+		},
+		'&:after': {
+			borderBottomColor: '#e91e63'
+		},
+		'&:hover:not(.Mui-disabled):before': {
+			borderBottomColor: '#e91e63'
+		}
+	}
 });
 
 const styles = {
@@ -34,6 +47,7 @@ const styles = {
 };
 
 export default function FormDialog(props) {
+	const classes = useStyles();
 	const {
 		handleDialog,
 		open,
@@ -60,48 +74,53 @@ export default function FormDialog(props) {
 				<DialogTitle id="form-dialog-title" style={styles.dialogTitle}>
 					Add new expense
 				</DialogTitle>
-				{digsMates.length>1?
-				<DialogContent>
-					<Select
-						handleChange={handleChange}
-						name="selectedCategory"
-						categoriesList={categoriesList}
-						selectedCategory={selectedCategory}
-					/>
+				{digsMates.length > 1 ? (
+					<DialogContent>
+						<Select
+							handleChange={handleChange}
+							classesUnderline={classes.underline}
+							name="selectedCategory"
+							categoriesList={categoriesList}
+							selectedCategory={selectedCategory}
+						/>
 
-					<Textfield
-						name="expensename"
-						placeholder={'Name E.g Electricity'}
-						value={expensename}
-						handleChange={handleChange}
-						style={styles.select}
-					/>
-					<Textfield
-						name="amount"
-						placeholder={'Amount E.g 300'}
-						value={amount}
-						handleChange={handleChange}
-						style={styles.select}
-					/>
+						<Textfield
+							name="expensename"
+							placeholder={'Name E.g Electricity'}
+							value={expensename}
+							handleChange={handleChange}
+							style={styles.select}
+						/>
+						<Textfield
+							name="amount"
+							placeholder={'Amount E.g 300'}
+							value={amount}
+							handleChange={handleChange}
+							style={styles.select}
+						/>
 
-					<MultiSelect
-						selecteddigsMates={selecteddigsMates}
-						name="selecteddigsMates"
-						handleChange={handleChange}
-						digsMates={digsMates.map(member => member.username)}
-					/>
-				</DialogContent>:<DialogContent>
-					<h4>Hey, please get some friends so they can owe you</h4>
-				</DialogContent>}
+						<MultiSelect
+							selecteddigsMates={selecteddigsMates}
+							classesUnderline={classes.underline}
+							name="selecteddigsMates"
+							handleChange={handleChange}
+							digsMates={digsMates.map(member => member.username)}
+						/>
+					</DialogContent>
+				) : (
+					<DialogContent>
+						<h4>Hey, please get some friends so they can owe you</h4>
+					</DialogContent>
+				)}
 
 				<DialogActions style={styles.dialogActions}>
-					{digsMates.length>1?
-					<CustomButton
-						onClick={handleAddExpense}
-						style={styles.signInButton}
-						text={'Save'}
-					/>:null
-					}
+					{digsMates.length > 1 ? (
+						<CustomButton
+							onClick={handleAddExpense}
+							style={styles.signInButton}
+							text={'Save'}
+						/>
+					) : null}
 					<CustomButton
 						onClick={handleDialog}
 						style={styles.signInButton}

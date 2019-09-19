@@ -45,17 +45,17 @@ export default class AlertModal extends Component {
 		this.setState(prevState => ({
 			showing: !prevState.showing
 		}));
-    };
-    
-    confirmDelete=()=>{
-        this.props.handleDeleteExpense(this.props.id);
-        this.handleAlert();
-    }
+	};
+
+	confirmDelete = () => {
+		this.props.handleDeleteExpense(this.props.id);
+		this.handleAlert();
+	};
 
 	render() {
-
 		return (
 			<div>
+				{this.props.expenseDeleted}
 				<Button onClick={this.handleAlert}>Delete</Button>
 				<Dialog
 					open={this.state.showing}

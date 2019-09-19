@@ -41,7 +41,9 @@ export default function ExpenseItem(props) {
 		handleCheckBox,
 		handleDeleteExpense,
 		digsMates,
-		username
+		username,
+		confirmation,
+		expenseDeleted
 	} = props;
 	const filtered = (category, expenses) => {
 		let filtered = expenses.filter(expense => expense.category === category);
@@ -100,6 +102,8 @@ export default function ExpenseItem(props) {
 							<AlertModal
 								id={items.id}
 								handleDeleteExpense={handleDeleteExpense}
+								confirmation={confirmation}
+								expenseDeleted={expenseDeleted}
 							/>
 						</CardActions>
 					) : (

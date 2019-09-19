@@ -27,13 +27,24 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleSelect(props) {
 	const classes = useStyles();
-	const { handleChange, categoriesList, selectedCategory, name } = props;
+	const {
+		handleChange,
+		categoriesList,
+		selectedCategory,
+		name,
+		classesUnderline
+	} = props;
 
 	return (
 		<FormControl className={classes.formControl}>
 			<Select
 				value={selectedCategory}
 				onChange={handleChange}
+				input={
+					<Input
+						classes={{ underline: classesUnderline }}
+					/>
+				}
 				name="selectedCategory"
 				displayEmpty
 				className={classes.selectEmpty}
@@ -41,10 +52,11 @@ export default function SimpleSelect(props) {
 				<MenuItem value="" disabled>
 					Select Category
 				</MenuItem>
-				{categoriesList.map((category,index) => (
-					<MenuItem key={index} value={category}>{category}</MenuItem>
+				{categoriesList.map((category, index) => (
+					<MenuItem key={index} value={category}>
+						{category}
+					</MenuItem>
 				))}
-				
 			</Select>
 		</FormControl>
 	);

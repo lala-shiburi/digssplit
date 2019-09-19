@@ -9,11 +9,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { withRouter } from 'react-router-dom';
 
 import TemporaryDrawer from '../components/Drawer';
+import Loader from '../components/loader';
 import InviteModal from '../components/InviteModal';
 import logo from './../img/digssplit_logo.png';
 import logoBlack from './../img/digssplit_logo_black.png';
 import backgroundImgHome from './../img/background.jpg';
 import backgroundImg from './../img/tile_subtlebg.png';
+import Confirmation from '../components/Confirmation';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -67,13 +69,17 @@ function TemplatePage(props) {
 		handleInviteModal,
 		sendInvite,
 		handleChange,
-		handleDialog
+		handleDialog,
+		loading,
+		clearConfirmationMsg,
+		confirmationMsg
 	} = props;
 	const currentLocation = () => window.location.href;
 	return (
 		<React.Fragment>
+			{loading ? <Loader /> : confirmationMsg !=='' ? <Confirmation confirmationMsg={confirmationMsg} clearConfirmationMsg={clearConfirmationMsg}/>:null }
 			<CssBaseline />
-
+		
 			<Container
 				maxWidth="lg"
 				className={

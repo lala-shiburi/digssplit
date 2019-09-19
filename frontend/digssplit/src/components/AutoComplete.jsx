@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
 function renderInput(inputProps) {
-	const { InputProps, classes, ref, ...other } = inputProps;
+	const { InputProps, classes, ref, classesUnderline, ...other } = inputProps;
 
 	return (
 		<TextField
@@ -16,6 +16,7 @@ function renderInput(inputProps) {
 			InputProps={{
 				inputRef: ref,
 				classes: {
+					underline: classesUnderline.underline,
 					root: classes.inputRoot,
 					input: classes.inputInput
 				},
@@ -107,7 +108,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function IntegrationDownshift(props) {
-	const { handleAutoComplete, suggestions } = props;
+	const { handleAutoComplete, suggestions, classesUnderline } = props;
 	const classes = useStyles();
 
 	return (
@@ -144,6 +145,7 @@ export default function IntegrationDownshift(props) {
 							{renderInput({
 								fullWidth: true,
 								classes,
+								classesUnderline,
 								InputLabelProps: getLabelProps({ shrink: true }),
 								InputProps: { onBlur, onFocus },
 								inputProps

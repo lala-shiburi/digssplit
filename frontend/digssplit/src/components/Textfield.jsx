@@ -1,44 +1,43 @@
 import React from 'react';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
 
 const CssTextField = withStyles({
 	root: {
-		'& label.Mui-focused': {
-			color: 'green'
+		'& .MuiInput-focused': {
+			color: '#e91e63'
 		},
 		'& .MuiInput-underline:after': {
-			borderBottomColor: 'green'
+			borderBottomColor: '#e91e63'
 		},
 		'& .MuiOutlinedInput-root': {
 			'& fieldset': {
 				borderColor: 'red'
 			},
 			'&:hover fieldset': {
-				borderColor: 'yellow'
+				borderColor: '#e91e63'
 			},
 			'&.Mui-focused fieldset': {
-				borderColor: 'green'
+				borderColor: '#e91e63'
 			}
 		}
 	}
 })(TextField);
 
 export default function Textfield(props) {
-    //const classes = useStyles();
-    const {placeholder,handleChange,type,value,name,style}=props
+	//const classes = useStyles();
+	const { placeholder, handleChange, type, value, name, style } = props;
 	return (
 		<div>
 			<CssTextField
 				// className={classes.margin}
 				style={style}
 				id="custom-css-standard-input"
-                placeholder={placeholder}
+				placeholder={placeholder}
 				onChange={handleChange}
 				name={name}
-                value={value}
-                type={type}
+				value={value}
+				type={type}
 			/>
 		</div>
 	);

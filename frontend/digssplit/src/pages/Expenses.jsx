@@ -36,7 +36,9 @@ export default function Expenses(props) {
 		expensename,
 		amount,
 		selecteddigsMates,
-		AUTHENTICATED
+		AUTHENTICATED,
+		confirmation,
+		expenseDeleted
 	} = props;
 	return (
 		<React.Fragment>
@@ -54,12 +56,16 @@ export default function Expenses(props) {
 									digsMates={digsMates}
 									expenses={expenses}
 									handleDeleteExpense={handleDeleteExpense}
+									confirmation={confirmation}
+									expenseDeleted={expenseDeleted}
 								/>
 								<Grid item>
 									{/* <Button onClick={updatePayments}>Update payments</Button> */}
-									<CustomButton icon={<Refresh style={{marginRight:'5px'}}/>} text={'Update Payments'} onClick={updatePayments}/>
-										
-									
+									<CustomButton
+										icon={<Refresh style={{ marginRight: '5px' }} />}
+										text={'Update Payments'}
+										onClick={updatePayments}
+									/>
 								</Grid>
 							</>
 						) : (

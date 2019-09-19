@@ -11,7 +11,7 @@ const styles = {
 	},
 	paper: {
 		background: 'rgba(255, 255, 255, 0.6)',
-		paddingBottom:'1px'
+		paddingBottom: '1px'
 	}
 };
 
@@ -43,7 +43,9 @@ export default function ExpenseCategory(props) {
 		handleDeleteExpense,
 		username,
 		updatePayments,
-		digsMates
+		digsMates,
+		confirmation,
+		expenseDeleted
 	} = props;
 	return (
 		<React.Fragment>
@@ -60,6 +62,8 @@ export default function ExpenseCategory(props) {
 								updatePayments={updatePayments}
 								handleCheckBox={handleCheckBox}
 								handleDeleteExpense={handleDeleteExpense}
+								confirmation={confirmation}
+								expenseDeleted={expenseDeleted}
 								username={username}
 								digsMates={digsMates}
 								category={category}

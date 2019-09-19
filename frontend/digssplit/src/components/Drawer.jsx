@@ -44,27 +44,35 @@ export default function TemporaryDrawer(props) {
 			onKeyDown={toggleDrawer(false)}
 		>
 			<List>
-				{AUTHENTICATED ?
-				<>
-				<ListItem button onClick={handleDialog}>
-					<ListItemIcon>
-						<Add />
-					</ListItemIcon>
-					<ListItemText primary={'ADD AN EXPENSE'} />
-				</ListItem>
-				<ListItem button onClick={handleInviteModal}>
-					<ListItemIcon>
-						<PersonAdd />
-					</ListItemIcon>
-					<ListItemText primary={'ADD A DIGSMATE'} />
-				</ListItem>
-				</>:
-				<ListItem>
-					<ListItemText primary={'SIGN IN FOR MORE OPTIONS'} />
-				</ListItem>
-				}
+				{AUTHENTICATED ? (
+					<>
+						<ListItem button onClick={handleDialog}>
+							<ListItemIcon>
+								<Add />
+							</ListItemIcon>
+							<ListItemText primary={'ADD AN EXPENSE'} />
+						</ListItem>
+						<ListItem button onClick={handleInviteModal}>
+							<ListItemIcon>
+								<PersonAdd />
+							</ListItemIcon>
+							<ListItemText primary={'ADD A DIGSMATE'} />
+						</ListItem>
+					</>
+				) : (
+					<>
+						<ListItem>
+							<NavLink to="/about" className={classes.navlink}>
+								<ListItemText primary={'ABOUT DIGSSPLIT'} />
+							</NavLink>
+						</ListItem>
+						<ListItem>
+							<ListItemText primary={'SIGN IN FOR MORE OPTIONS'} />
+						</ListItem>
+					</>
+				)}
 			</List>
-			
+
 			<Divider />
 			{AUTHENTICATED ? (
 				<LinkButton onClick={signOut} to="/login">

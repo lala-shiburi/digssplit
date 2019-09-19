@@ -13,6 +13,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import TemplatePage from './pages/TemplatePage';
+import About from './pages/About';
+import Confirmation from './components/Confirmation';
 
 const getInitialState = () => ({
 	drawer: false,
@@ -45,7 +47,9 @@ const getInitialState = () => ({
 	error: '',
 	inviteModal: false,
 	inviteName: '',
-	inviteEmail: ''
+	inviteEmail: '',
+	expenseDeleted: false,
+	confirmationMsg: 'heyy'
 });
 
 const categoriesList = [
@@ -90,6 +94,8 @@ class App extends Component {
 			this.setState({ error: { password: "The passwords don't match" } });
 		}
 	};
+
+	clearConfirmationMsg = () => this.setState({ confirmationMsg: '' });
 
 	signIn = async () => {
 		console.log('You are trying to login');
@@ -284,6 +290,12 @@ class App extends Component {
 			});
 	};
 
+	confirmation = confirmationText =>
+		setTimeout(() => {
+			this.setState({ expenseDeleted: false });
+			return <Confirmation confirmationText={confirmationText} />;
+		}, 2000);
+
 	//returns the digsmates id given the name of the user
 	digsMateId = name => {
 		let userIdArray = this.state.digsMates.filter(digsmate => {
@@ -364,35 +376,10 @@ class App extends Component {
 			return null;
 		});
 
-		// expensePayer.map(payer => {
-		// 	indexes.map((indexes, index) => {
-		// 		console.log(
-		// 			expenses[indexes].members_owing.indexOf(this.digsMateId(payer))
-		// 		);
-		// 		let amountPerPayer =
-		// 			expenses[indexes].amount / expenses[indexes].members_owing.length;
-		// 		let indexOfId = expenses[indexes].members_owing.indexOf(
-		// 			this.digsMateId(payer)
-		// 		);
-		// 		if (indexOfId !== -1) {
-		// 			expenses[indexes].members_owing.splice(indexOfId, 1);
-		// 			expenses[indexes].amount = Math.round(
-		// 				((expenses[indexes].amount - amountPerPayer) * 100) / 100
-		// 			);
-		// 		}
-		// 	});
-		// });
-
-		//this.setState({ expenses, payed: [] });
-		console.log(filteredExpense, indexes, expenses, expensePayer);
 		payedExpenses = [];
 		expensePayer = [];
 		filteredExpense = [];
 		indexes = [];
-
-		console.log(filteredExpense, indexes, expenses, expensePayer);
-
-		// checkboxesClass=document.getElementsByClassName('PrivateSwitchBase-input-232');
 	};
 
 	DigsmateId = members_owing => {
@@ -416,7 +403,7 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log(response);
-				this.setState({ expenses }, () =>
+				this.setState({ expenses, expenseDeleted: true }, () =>
 					localStorage.setItem('expenses', JSON.stringify(this.state.expenses))
 				);
 			})
@@ -508,21 +495,14 @@ class App extends Component {
 						handleChange={this.handleChange}
 						AUTHENTICATED={this.state.AUTHENTICATED}
 						signOut={this.signOut}
+						loading={this.state.loading}
+						confirmationMsg={this.state.confirmationMsg}
+						clearConfirmationMsg={this.clearConfirmationMsg}
 						handleDialog={this.handleDialog}
 						path={this.state.path}
 					>
 						<Switch>
-							<Route
-								exact
-								path="/"
-								// render={props => (
-								// 	<Home
-								// 		{...props}
-
-								// 	/>
-								// )}
-								component={Home}
-							/>
+							<Route exact path="/" component={Home} />
 							<Route
 								exact
 								path="/login"
@@ -535,7 +515,6 @@ class App extends Component {
 										handleChange={this.handleChange}
 										handleSubmit={this.handleSubmitSignIn}
 										error={this.state.error}
-										loading={this.state.loading}
 									/>
 								)}
 							/>
@@ -588,8 +567,15 @@ class App extends Component {
 										handleChangeSelect={this.handleChangeSelect}
 										open={this.state.isDialogOpen}
 										selecteddigsMates={this.state.selecteddigsMates}
+										confirmation={this.confirmation}
+										expenseDeleted={this.state.expenseDeleted}
 									/>
 								)}
+							/>
+							<Route
+								exact
+								path="/about"
+								render={props => <About {...props} />}
 							/>
 						</Switch>
 					</TemplatePage>
