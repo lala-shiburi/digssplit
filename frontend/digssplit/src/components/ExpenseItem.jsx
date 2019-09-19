@@ -4,7 +4,6 @@ import {
 	CardContent,
 	CardActions,
 	Typography,
-	Button,
 	Divider,
 	Grid
 } from '@material-ui/core';
@@ -31,6 +30,9 @@ const styles = {
 	},
 	card: {
 		margin: '30px 8px'
+	},
+	list: {
+		padding: 0
 	}
 };
 
@@ -80,7 +82,7 @@ export default function ExpenseItem(props) {
 										index={index}
 									/>
 								) : (
-									<List>
+									<List style={styles.list}>
 										<ListItem>
 											<ListItemIcon>
 												<Person />
@@ -92,9 +94,12 @@ export default function ExpenseItem(props) {
 							</React.Fragment>
 						))}
 						<Grid item>
-							Each owes {username} R
-							{Math.round((items.amount / items.members_owing.length) * 100) /
-								100}
+							<Typography varient="body1">
+								{items.amount === 0
+									? 'Expense fully paid'
+									: `Each owes ${items.owner} R
+								${Math.round((items.amount / items.members_owing.length) * 100) / 100}`}
+							</Typography>
 						</Grid>
 					</CardContent>
 					{items.owner === username ? (

@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Expenses from './pages/Expenses';
-import TemplatePage from './pages/TemplatePage';
-import About from './pages/About';
-import Confirmation from './components/Confirmation';
+import { Home, Login, Signup, Expenses, TemplatePage, About } from './pages';
 
+//initialise state so you can call this function on loggout, it's a function to avoid reference copy.
 const getInitialState = () => ({
 	drawer: false,
 	username: '',
@@ -46,6 +41,7 @@ const getInitialState = () => ({
 	confirmationMsg: 'heyy'
 });
 
+//catogories of our expenses, it's important that they match the backend categories
 const categoriesList = [
 	'UTILITIES',
 	'HOUSEHOLD ITEMS',
@@ -69,25 +65,29 @@ class App extends Component {
 		this.setState({ drawer: open });
 	};
 
-	currentPath = () => window.location.href;
-
+	//called when login button is pressed
 	handleSubmitSignIn = event => {
 		event.preventDefault();
 		this.setState({ loading: true });
-		this.signIn();
+		this.signIn(); //call the actual signIn function
 	};
+
+	//called when signup button is pressed
 	handleSubmitSignUp = event => {
 		event.preventDefault();
 		const { passwordSignUp, passwordSignUpConfirm } = this.state;
+		//check if passwords match before calling signup function
 		if (passwordSignUp === passwordSignUpConfirm) {
 			this.setState({ loading: true });
-			this.signUp();
+			this.signUp(); //call the actual signUp function
 		} else {
 			this.setState({ error: { password: "The passwords don't match" } });
 		}
 	};
 
+	//clears cofirmation message 
 	clearConfirmationMsg = () => this.setState({ confirmationMsg: '' });
+
 
 	signIn = async () => {
 		try {
@@ -98,7 +98,7 @@ class App extends Component {
 					password: this.state.password
 				}
 			);
-			let responseKey = 'Token ' + signIn.data.key;
+			let responseKey = 'Token ' + signIn.data.key; //store key to use on requests
 
 			const getUser = await axios.get('http://localhost:8000/users/current', {
 				headers: { Authorization: `${responseKey}` }
@@ -117,7 +117,8 @@ class App extends Component {
 			const expenses = getDigsExpenses.data;
 			const categories = [
 				...new Set(expenses.map(expense => expense.category))
-			];
+			]; // get all categories from the expenses
+
 			this.setState({
 				AUTH_TOKEN: responseKey,
 				AUTHENTICATED: true,
@@ -127,6 +128,8 @@ class App extends Component {
 				categories,
 				loading: false
 			});
+
+			//store items that are going to be needed in localStorage to persist state even if user refreshes/close browser
 			localStorage.setItem('AUTH_TOKEN', responseKey);
 			localStorage.setItem('categories', JSON.stringify(categories));
 			localStorage.setItem('AUTHENTICATED', true);
@@ -134,7 +137,7 @@ class App extends Component {
 			localStorage.setItem('digsMates', JSON.stringify(digsMates));
 			localStorage.setItem('expenses', JSON.stringify(expenses));
 		} catch (err) {
-			this.setState({ error: err.response.data, loading: false });
+			this.setState({ error: err.response.data, loading: false }); //pass any errors to the state
 		}
 	};
 
@@ -198,7 +201,6 @@ class App extends Component {
 		axios
 			.get('http://localhost:8000/digs/')
 			.then(response => {
-				console.log(response);
 				let digsArray = response.data.map(dig => ({ label: dig.name }));
 				this.setState({ existingDigs: digsArray });
 			})
@@ -213,7 +215,6 @@ class App extends Component {
 				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
 			})
 			.then(response => {
-				console.log(response.data);
 				this.setState({ user: response.data });
 			})
 			.catch(error => {
@@ -308,7 +309,7 @@ class App extends Component {
 			let expense = payer.split(',');
 			return expense[0];
 		});
-		console.log('expense payer', expensePayer, 'payedExpense', payedExpenses);
+
 		//get the expenses from state using the names of the expenses
 		let filteredExpense = expenses.filter(expense => {
 			return payedExpenses.indexOf(expense.name) !== -1;
@@ -322,8 +323,6 @@ class App extends Component {
 			}
 			return null;
 		});
-
-		console.log(filteredExpenses);
 
 		//get indexes of the payed expenses from state and store them indexes array
 		let indexes = [];
@@ -350,7 +349,6 @@ class App extends Component {
 						headers: { Authorization: `${this.state.AUTH_TOKEN}` }
 					})
 					.then(response => {
-						console.log(response);
 						expenses[indexes[index]] = expense;
 						this.setState(
 							{
@@ -391,7 +389,7 @@ class App extends Component {
 
 	handleDeleteExpense = id => {
 		const { expenses } = this.state;
-		this.setState({loading:true})
+		this.setState({ loading: true });
 		const index = expenses.findIndex(expense => expense.id === id);
 		expenses.splice(index, 1);
 
@@ -400,9 +398,13 @@ class App extends Component {
 				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
 			})
 			.then(response => {
-				console.log(response);
-				this.setState({ expenses, loading:false,confirmationMsg:'Expense Deleted' }, () =>
-					localStorage.setItem('expenses', JSON.stringify(this.state.expenses))
+				this.setState(
+					{ expenses, loading: false, confirmationMsg: 'Expense Deleted' },
+					() =>
+						localStorage.setItem(
+							'expenses',
+							JSON.stringify(this.state.expenses)
+						)
 				);
 			})
 			.catch(error => {
@@ -420,7 +422,7 @@ class App extends Component {
 			user,
 			categories
 		} = this.state;
-		this.setState({loading:true})
+		this.setState({ loading: true });
 		let selectedDigsMatesID = this.DigsmateId(selecteddigsMates);
 
 		let expense = {
@@ -437,7 +439,7 @@ class App extends Component {
 			.then(response => {
 				expenses.push(response.data);
 				categories.push(response.data.category);
-				console.log(expenses);
+
 				this.setState(
 					{
 						expenses,
@@ -446,8 +448,8 @@ class App extends Component {
 						amount: '',
 						selecteddigsMates: [],
 						categories,
-						loading:false,
-						confirmationMsg:'Expense Added'
+						loading: false,
+						confirmationMsg: 'Expense Added'
 					},
 					() => {
 						localStorage.setItem(
@@ -465,8 +467,6 @@ class App extends Component {
 				console.log(error);
 			});
 
-		console.log(expenses);
-
 		this.handleDialog();
 	};
 
@@ -477,7 +477,7 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		this.setState({ path: window.location.href });
+		// this.setState({ path: window.location.href });
 		this.getDigs();
 	}
 
