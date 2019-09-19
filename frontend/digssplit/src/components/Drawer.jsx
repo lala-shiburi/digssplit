@@ -13,7 +13,8 @@ import LinkButton from './../components/LinkButton';
 
 const useStyles = makeStyles({
 	list: {
-		width: 250
+		width: 250,
+		marginTop: 60
 	},
 	fullList: {
 		width: 'auto'
@@ -21,6 +22,9 @@ const useStyles = makeStyles({
 	navlink: {
 		textDecoration: 'none',
 		color: 'inherit'
+	},
+	buttonContainer: {
+		marginTop: '20px'
 	}
 });
 
@@ -74,13 +78,15 @@ export default function TemporaryDrawer(props) {
 			</List>
 
 			<Divider />
-			{AUTHENTICATED ? (
-				<LinkButton onClick={signOut} to="/login">
-					SIGN OUT
-				</LinkButton>
-			) : (
-				<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>
-			)}
+			<div className={classes.buttonContainer}>
+				{AUTHENTICATED ? (
+					<LinkButton onClick={signOut} to="/login">
+						SIGN OUT
+					</LinkButton>
+				) : (
+					<LinkButton to="/login">LOG IN/SIGN UP</LinkButton>
+				)}
+			</div>
 		</div>
 	);
 

@@ -8,6 +8,7 @@ export default function loader() {
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
+			overflow: 'hidden',
 			height: '100vh',
 			zIndex: '1',
 			position: 'absolute',

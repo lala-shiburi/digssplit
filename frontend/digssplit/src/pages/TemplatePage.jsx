@@ -77,11 +77,19 @@ function TemplatePage(props) {
 	const currentLocation = () => window.location.href;
 	return (
 		<React.Fragment>
-			{loading ? <Loader /> : confirmationMsg !=='' ? <Confirmation confirmationMsg={confirmationMsg} clearConfirmationMsg={clearConfirmationMsg}/>:null }
+			{loading ? (
+				<Loader />
+			) : confirmationMsg !== '' ? (
+				<Confirmation
+					confirmationMsg={confirmationMsg}
+					clearConfirmationMsg={clearConfirmationMsg}
+				/>
+			) : null}
 			<CssBaseline />
-		
+
 			<Container
 				maxWidth="lg"
+				style={loading ? { position: 'fixed' } : null}
 				className={
 					currentLocation() === 'http://localhost:3000/'
 						? classes.containerHome

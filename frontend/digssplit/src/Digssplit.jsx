@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-	BrowserRouter,
-	Route,
-	Switch,
-	withRouter,
-	Redirect
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 import Home from './pages/Home';
@@ -65,8 +59,6 @@ const categoriesList = [
 class App extends Component {
 	state = getInitialState();
 
-	// axios.defaults.headers.common['Authorization'] = this.state.AUTH_TOKEN;
-
 	toggleDrawer = open => event => {
 		if (
 			event.type === 'keydown' &&
@@ -98,7 +90,6 @@ class App extends Component {
 	clearConfirmationMsg = () => this.setState({ confirmationMsg: '' });
 
 	signIn = async () => {
-		console.log('You are trying to login');
 		try {
 			const signIn = await axios.post(
 				'http://localhost:8000/rest-auth/login/',
@@ -143,8 +134,6 @@ class App extends Component {
 			localStorage.setItem('digsMates', JSON.stringify(digsMates));
 			localStorage.setItem('expenses', JSON.stringify(expenses));
 		} catch (err) {
-			// console.log(err.response.data.non_field_errors);
-			// this.setState({ error: err.response.data.non_field_errors });
 			this.setState({ error: err.response.data, loading: false });
 		}
 	};
@@ -240,7 +229,6 @@ class App extends Component {
 	handleChange = event => {
 		let name = event.target.name;
 		this.setState({ ...this.state, [name]: event.target.value });
-		console.log('THis works?');
 	};
 
 	handleChangeRadio = event => {
@@ -273,6 +261,7 @@ class App extends Component {
 
 	sendInvite = () => {
 		const { inviteName, inviteEmail } = this.state;
+		this.setState({ loading: true, inviteModal: false });
 		const message = `You are being invited by ${
 			this.state.user.username
 		} to join digssplit, go to
@@ -283,18 +272,17 @@ class App extends Component {
 				headers: { Authorization: `${this.state.AUTH_TOKEN}` }
 			})
 			.then(response => {
-				this.setState({ inviteName: '', inviteEmail: '', inviteModal: false });
+				this.setState({
+					inviteName: '',
+					inviteEmail: '',
+					loading: false,
+					confirmationMsg: `${inviteName} was invited succefully`
+				});
 			})
 			.catch(error => {
 				console.log(error);
 			});
 	};
-
-	confirmation = confirmationText =>
-		setTimeout(() => {
-			this.setState({ expenseDeleted: false });
-			return <Confirmation confirmationText={confirmationText} />;
-		}, 2000);
 
 	//returns the digsmates id given the name of the user
 	digsMateId = name => {
@@ -306,7 +294,9 @@ class App extends Component {
 
 	//updates expenses when digmates who have payed are selected
 	updatePayments = () => {
+		window.scrollTo(0, 0);
 		const { expenses, payed } = this.state;
+		this.setState({ loading: true });
 
 		//get the expenses name from state payed which looks like ['username,expensename']
 		let payedExpenses = payed.map(payer => {
@@ -362,11 +352,18 @@ class App extends Component {
 					.then(response => {
 						console.log(response);
 						expenses[indexes[index]] = expense;
-						this.setState({ expenses, payed: [] }, () =>
-							localStorage.setItem(
-								'expenses',
-								JSON.stringify(this.state.expenses)
-							)
+						this.setState(
+							{
+								expenses,
+								payed: [],
+								loading: false,
+								confirmationMsg: `Expenses Updated`
+							},
+							() =>
+								localStorage.setItem(
+									'expenses',
+									JSON.stringify(this.state.expenses)
+								)
 						);
 					})
 					.catch(error => {
@@ -394,6 +391,7 @@ class App extends Component {
 
 	handleDeleteExpense = id => {
 		const { expenses } = this.state;
+		this.setState({loading:true})
 		const index = expenses.findIndex(expense => expense.id === id);
 		expenses.splice(index, 1);
 
@@ -403,7 +401,7 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log(response);
-				this.setState({ expenses, expenseDeleted: true }, () =>
+				this.setState({ expenses, loading:false,confirmationMsg:'Expense Deleted' }, () =>
 					localStorage.setItem('expenses', JSON.stringify(this.state.expenses))
 				);
 			})
@@ -422,6 +420,7 @@ class App extends Component {
 			user,
 			categories
 		} = this.state;
+		this.setState({loading:true})
 		let selectedDigsMatesID = this.DigsmateId(selecteddigsMates);
 
 		let expense = {
@@ -446,7 +445,9 @@ class App extends Component {
 						selectedCategory: '',
 						amount: '',
 						selecteddigsMates: [],
-						categories
+						categories,
+						loading:false,
+						confirmationMsg:'Expense Added'
 					},
 					() => {
 						localStorage.setItem(

@@ -11,6 +11,7 @@ export default function confirmation(props) {
 			justifyContent: 'center',
 			height: '25vh',
 			borderRadius: '20px',
+			textAlign: 'center',
 			zIndex: '1',
 			position: 'absolute',
 			width: '65vw',
@@ -26,14 +27,14 @@ export default function confirmation(props) {
 			width: '40px'
 		}
 	};
-	const clearConfirm = setTimeout(() => props.clearConfirmationMsg(), 10000);
+	const clearConfirm = setTimeout(() => props.clearConfirmationMsg(), 3000);
 	return (
 		<div style={styles.confirm}>
 			<div style={styles.checkDiv}>
 				<Check style={styles.check} color="secondary" />
 			</div>
 			<div>
-				<Typography color="secondary" variant="h5">
+				<Typography color="secondary" variant="h6">
 					{props.confirmationMsg}
 				</Typography>
 			</div>
