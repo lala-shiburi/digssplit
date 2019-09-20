@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import Downshift from 'downshift';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles, TextField, Paper, MenuItem } from '@material-ui/core';
 
 function renderInput(inputProps) {
 	const { InputProps, classes, ref, classesUnderline, ...other } = inputProps;
@@ -52,13 +49,6 @@ function renderSuggestion(suggestionProps) {
 		</MenuItem>
 	);
 }
-renderSuggestion.propTypes = {
-	highlightedIndex: PropTypes.number,
-	index: PropTypes.number,
-	itemProps: PropTypes.object,
-	selectedItem: PropTypes.string,
-	suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired
-};
 
 function getSuggestions(value, suggestions, { showEmpty = false } = {}) {
 	const inputValue = deburr(value.trim()).toLowerCase();
@@ -93,13 +83,11 @@ const useStyles = makeStyles(theme => ({
 		width: '100%',
 		zIndex: 1,
 		marginTop: theme.spacing(1),
-		// left: '18%',
 		right: 0
 	},
 	inputRoot: {
 		flexWrap: 'wrap',
 		width: '100%'
-		// left: '18%'
 	},
 	inputInput: {
 		width: 'auto',
@@ -115,7 +103,6 @@ export default function IntegrationDownshift(props) {
 		<div className={classes.root}>
 			<Downshift
 				id="downshift-simple"
-				// onStateChange={state => }
 				onChange={selection => {
 					handleAutoComplete(selection);
 				}}

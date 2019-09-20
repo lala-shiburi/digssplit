@@ -1,21 +1,21 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import { withRouter } from 'react-router-dom';
-
-import TemporaryDrawer from '../components/Drawer';
-import Loader from '../components/loader';
-import InviteModal from '../components/InviteModal';
-import logo from './../img/digssplit_logo.png';
-import logoBlack from './../img/digssplit_logo_black.png';
-import backgroundImgHome from './../img/background.jpg';
-import backgroundImg from './../img/tile_subtlebg.png';
-import Confirmation from '../components/Confirmation';
+import {
+	CssBaseline,
+	Container,
+	makeStyles,
+	AppBar,
+	Toolbar,
+	IconButton
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import {
+	TemporaryDrawer,
+	Loader,
+	InviteModal,
+	Confirmation
+} from '../components/';
+import { logo, logoBlack, backgroundImgHome, backgroundImg } from './../img/';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
 		background: 'transparent'
 	},
 	menuButton: {
-		// marginRight: theme.spacing(2),
 		marginLeft: 'auto',
 		color: 'black'
 	},
@@ -96,7 +95,7 @@ function TemplatePage(props) {
 						: currentLocation() === 'http://localhost:3000/expenses'
 						? classes.containerExpenses
 						: classes.containerOther
-				}
+				} //change background image based on the current location
 			>
 				<div className={classes.root}>
 					<AppBar position="static" className={classes.AppBar}>

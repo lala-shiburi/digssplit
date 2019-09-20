@@ -2,7 +2,6 @@ import React from 'react';
 import {
 	Box,
 	Grid,
-	Button,
 	Divider,
 	Typography,
 	FormControl,
@@ -12,13 +11,9 @@ import {
 } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { KeyboardArrowLeft, Email, LockOutlined } from '@material-ui/icons';
-import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
-import LinkButton from './../components/LinkButton';
-import Loader from './../components/loader';
-import CustomButton from './../components/Button';
-import Textfield from './../components/Textfield';
+import { LinkButton, Button } from './../components';
 import logoblack from './../img/digssplit_logo_black.png';
 
 const useStyles = makeStyles({
@@ -43,7 +38,6 @@ export default function Login(props) {
 		password,
 		handleSubmit,
 		error,
-		loading,
 		AUTHENTICATED
 	} = props;
 
@@ -195,7 +189,7 @@ export default function Login(props) {
 						>
 							Sign in
 						</LinkButton> */}
-							<CustomButton
+							<Button
 								type="submit"
 								style={styles.signInButton}
 								text={'Sign in'}

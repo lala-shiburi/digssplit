@@ -9,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Add, PersonAdd, RemoveRedEye } from '@material-ui/icons';
 
-import LinkButton from './../components/LinkButton';
+import LinkButton from './LinkButton';
 
 const useStyles = makeStyles({
 	list: {

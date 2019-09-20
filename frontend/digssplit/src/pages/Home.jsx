@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Grid, Paper } from '@material-ui/core';
 
-import CustomButton from '../components/Button';
-import LinkButton from '../components/LinkButton';
+import { LinkButton } from '../components';
 
 export default class Home extends Component {
 	handlesClick = ButtonEvent => {
@@ -40,11 +39,6 @@ export default class Home extends Component {
 
 					<Grid item xs={12}>
 						<Paper elevation={14} style={styles.paper}>
-							{/* <CustomButton
-								style={styles.button}
-								text={'LOG IN / SIGN UP'}
-								onClick={this.handlesClick}
-							/> */}
 							<LinkButton style={styles.button} to="/login">
 								LOG IN / SIGN UP
 							</LinkButton>

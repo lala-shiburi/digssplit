@@ -2,7 +2,6 @@ import React from 'react';
 import {
 	Box,
 	Grid,
-	Button,
 	Divider,
 	Typography,
 	RadioGroup,
@@ -24,11 +23,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
-import CustomButton from './../components/Button';
-import Loader from './../components/loader';
-import Textfield from './../components/Textfield';
-import LinkButton from './../components/LinkButton';
-import AutoComplete from './../components/AutoComplete';
+import { Button, Loader, LinkButton, AutoComplete } from './../components';
 import logoblack from './../img/digssplit_logo_black.png';
 
 const useStyles = makeStyles({
@@ -57,7 +52,6 @@ export default function Signup(props) {
 		createDigs,
 		handleAutoComplete,
 		digs,
-		signUp,
 		suggestions,
 		handleSubmit,
 		error,
@@ -110,11 +104,6 @@ export default function Signup(props) {
 		radioButton: {
 			color: '#495057'
 		}
-		// digs: {
-		// 	margin: '15px 0 15px',
-		// 	color: '#495057'
-		// 	// marginLeft: '27%',
-		// }
 	};
 
 	if (AUTHENTICATED) {
@@ -324,14 +313,7 @@ export default function Signup(props) {
 						</Grid>
 
 						<Grid Item xs={12}>
-							{/* <LinkButton
-							onClick={signUp}
-							style={styles.signInButton}
-							to="/expenses"
-						>
-							Sign up
-						</LinkButton> */}
-							<CustomButton
+							<Button
 								disabled={doesDigsExist(digs).length ? true : false}
 								type="submit"
 								style={styles.signInButton}

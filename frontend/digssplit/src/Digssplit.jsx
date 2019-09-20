@@ -38,7 +38,7 @@ const getInitialState = () => ({
 	inviteName: '',
 	inviteEmail: '',
 	expenseDeleted: false,
-	confirmationMsg: 'heyy'
+	confirmationMsg: ''
 });
 
 //catogories of our expenses, it's important that they match the backend categories
@@ -477,7 +477,6 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		// this.setState({ path: window.location.href });
 		this.getDigs();
 	}
 
@@ -500,7 +499,7 @@ class App extends Component {
 						confirmationMsg={this.state.confirmationMsg}
 						clearConfirmationMsg={this.clearConfirmationMsg}
 						handleDialog={this.handleDialog}
-						path={this.state.path}
+						
 					>
 						<Switch>
 							<Route exact path="/" component={Home} />
@@ -537,7 +536,6 @@ class App extends Component {
 										loading={this.state.loading}
 										AUTHENTICATED={this.state.AUTHENTICATED}
 										digs={this.state.digs}
-										signUp={this.signUp}
 										suggestions={this.state.existingDigs}
 										handleSubmit={this.handleSubmitSignUp}
 									/>
