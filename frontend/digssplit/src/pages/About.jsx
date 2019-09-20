@@ -1,8 +1,6 @@
 import React from 'react';
 import { Box, Grid, Divider, Typography, Paper } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
 import { KeyboardArrowLeft } from '@material-ui/icons';
-import { NavLink } from 'react-router-dom';
 import 'typeface-roboto';
 
 import LinkButton from './../components/LinkButton';
@@ -28,9 +26,10 @@ export default function About(props) {
 			position: 'relative',
 			left: '130px',
 			marginBottom: '20px'
-		},paper:{
-            padding:'10px 10px'
-        }
+		},
+		paper: {
+			padding: '10px 10px'
+		}
 	};
 
 	return (
@@ -70,9 +69,9 @@ export default function About(props) {
 				<Grid item xs={12} style={{ textAlign: 'center' }}>
 					<Paper style={styles.paper}>
 						<Typography component="p">
-							Digssplit is web application that aims to help digsmates who are tired
-                            of the good old fridge stickers by providing an easy secure way to manage bills between mates.
-
+							Digssplit is web application that aims to help digsmates who are
+							tired of the good old fridge stickers by providing an easy secure
+							way to manage bills between mates.
 						</Typography>
 					</Paper>
 				</Grid>

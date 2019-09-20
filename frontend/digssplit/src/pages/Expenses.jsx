@@ -1,12 +1,10 @@
 import React from 'react';
-import { Grid, Button, Fab } from '@material-ui/core';
+import { Grid, Fab } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { Add, Refresh } from '@material-ui/icons/';
 import 'typeface-roboto';
 
-import ExpenseCategory from './../components/ExpenseCategory';
-import CustomButton from './../components/Button';
-import Modal from './../components/Modal';
+import { ExpenseCategory, Button, Modal } from './../components';
 
 const styles = {
 	button: {
@@ -36,9 +34,7 @@ export default function Expenses(props) {
 		expensename,
 		amount,
 		selecteddigsMates,
-		AUTHENTICATED,
-		confirmation,
-		expenseDeleted
+		AUTHENTICATED
 	} = props;
 	return (
 		<React.Fragment>
@@ -56,12 +52,9 @@ export default function Expenses(props) {
 									digsMates={digsMates}
 									expenses={expenses}
 									handleDeleteExpense={handleDeleteExpense}
-									confirmation={confirmation}
-									expenseDeleted={expenseDeleted}
 								/>
 								<Grid item>
-									{/* <Button onClick={updatePayments}>Update payments</Button> */}
-									<CustomButton
+									<Button
 										icon={<Refresh style={{ marginRight: '5px' }} />}
 										text={'Update Payments'}
 										onClick={updatePayments}

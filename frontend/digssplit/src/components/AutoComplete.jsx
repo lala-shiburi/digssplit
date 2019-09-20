@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import Downshift from 'downshift';
 import { makeStyles, TextField, Paper, MenuItem } from '@material-ui/core';

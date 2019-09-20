@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import React from 'react';
+import {
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Slide
+} from '@material-ui/core';
 
-import Textfield from './../components/Textfield';
-import Select from './../components/Select';
-import MultiSelect from './../components/MultiSelect';
-import CustomButton from './../components/Button';
+import { Textfield, Button } from './../components';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="left" ref={ref} {...props} />;
@@ -75,13 +72,13 @@ export default function InviteModal(props) {
 				</DialogContent>
 
 				<DialogActions style={styles.dialogActions}>
-					<CustomButton
+					<Button
 						onClick={sendInvite}
 						style={styles.signInButton}
 						text={'Invite'}
 					/>
 
-					<CustomButton
+					<Button
 						onClick={handleInviteModal}
 						style={styles.signInButton}
 						text={'Cancel'}

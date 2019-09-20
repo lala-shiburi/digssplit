@@ -1,7 +1,5 @@
 import React from 'react';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import { FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
 
 export default function CheckBox(props) {
 	const { digsMate, handleCheckBox, index, item } = props;
@@ -11,7 +9,6 @@ export default function CheckBox(props) {
 				<FormControlLabel
 					control={
 						<Checkbox
-							// checked={checked}
 							onChange={e => handleCheckBox(e, index)}
 							value={digsMate + ',' + item}
 							key={digsMate + ',' + item}

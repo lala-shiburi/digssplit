@@ -37,7 +37,6 @@ const getInitialState = () => ({
 	inviteModal: false,
 	inviteName: '',
 	inviteEmail: '',
-	expenseDeleted: false,
 	confirmationMsg: ''
 });
 
@@ -566,8 +565,8 @@ class App extends Component {
 										handleChangeSelect={this.handleChangeSelect}
 										open={this.state.isDialogOpen}
 										selecteddigsMates={this.state.selecteddigsMates}
-										confirmation={this.confirmation}
-										expenseDeleted={this.state.expenseDeleted}
+										
+										
 									/>
 								)}
 							/>

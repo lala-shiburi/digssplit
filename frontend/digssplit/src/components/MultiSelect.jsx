@@ -1,14 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
-import Chip from '@material-ui/core/Chip';
+import { Input, MenuItem, FormControl, Select } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -43,10 +36,6 @@ const MenuProps = {
 	}
 };
 
-const styles = {
-	formControl: {}
-};
-
 function getStyles(name, personName, theme) {
 	return {};
 }
@@ -71,7 +60,10 @@ export default function MultipleSelect(props) {
 				name={name}
 				onChange={handleChange}
 				input={
-					<Input id="select-multiple-placeholder" classes={{underline:classesUnderline}} />
+					<Input
+						id="select-multiple-placeholder"
+						classes={{ underline: classesUnderline }}
+					/>
 				}
 				renderValue={selected => {
 					if (selected.length === 0) {

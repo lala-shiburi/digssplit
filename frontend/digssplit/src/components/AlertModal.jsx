@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-
-import Textfield from './../components/Textfield';
-import Select from './../components/Select';
-import MultiSelect from './../components/MultiSelect';
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Slide
+} from '@material-ui/core';
 import CustomButton from './../components/Button';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -55,7 +52,6 @@ export default class AlertModal extends Component {
 	render() {
 		return (
 			<div>
-				{this.props.expenseDeleted}
 				<Button onClick={this.handleAlert}>Delete</Button>
 				<Dialog
 					open={this.state.showing}

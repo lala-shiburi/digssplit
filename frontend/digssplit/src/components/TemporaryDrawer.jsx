@@ -1,13 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Add, PersonAdd, RemoveRedEye } from '@material-ui/icons';
+import {
+	makeStyles,
+	Drawer,
+	List,
+	Divider,
+	ListItem,
+	ListItemIcon,
+	ListItemText
+} from '@material-ui/core';
+import { Add, PersonAdd } from '@material-ui/icons';
 
 import LinkButton from './LinkButton';
 

@@ -312,7 +312,7 @@ export default function Signup(props) {
 							</Grid>
 						</Grid>
 
-						<Grid Item xs={12}>
+						<Grid item xs={12}>
 							<Button
 								disabled={doesDigsExist(digs).length ? true : false}
 								type="submit"

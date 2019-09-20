@@ -1,13 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import {
+	Input,
+	MenuItem,
+	FormControl,
+	Select,
+	makeStyles
+} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -31,7 +29,6 @@ export default function SimpleSelect(props) {
 		handleChange,
 		categoriesList,
 		selectedCategory,
-		name,
 		classesUnderline
 	} = props;
 
@@ -40,11 +37,7 @@ export default function SimpleSelect(props) {
 			<Select
 				value={selectedCategory}
 				onChange={handleChange}
-				input={
-					<Input
-						classes={{ underline: classesUnderline }}
-					/>
-				}
+				input={<Input classes={{ underline: classesUnderline }} />}
 				name="selectedCategory"
 				displayEmpty
 				className={classes.selectEmpty}

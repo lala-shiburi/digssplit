@@ -43,9 +43,7 @@ export default function ExpenseCategory(props) {
 		handleDeleteExpense,
 		username,
 		updatePayments,
-		digsMates,
-		confirmation,
-		expenseDeleted
+		digsMates
 	} = props;
 	return (
 		<React.Fragment>
@@ -62,8 +60,6 @@ export default function ExpenseCategory(props) {
 								updatePayments={updatePayments}
 								handleCheckBox={handleCheckBox}
 								handleDeleteExpense={handleDeleteExpense}
-								confirmation={confirmation}
-								expenseDeleted={expenseDeleted}
 								username={username}
 								digsMates={digsMates}
 								category={category}
